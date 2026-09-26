@@ -1,6 +1,7 @@
 import { put, get } from "@vercel/blob";
 
-const MAX_SIZE = 4 * 1024 * 1024;
+const MAX_SIZE =
+    1024 * 1024 * 1024;
 
 const ALLOWED_TYPES = [
     "image/png",
@@ -54,7 +55,7 @@ function getContentType(filename){
 
 
 /* =========================
-   POST UPLOAD
+   UPLOAD
 ========================= */
 
 export async function POST(request){
@@ -109,17 +110,13 @@ export async function POST(request){
             return json(
                 {
                     success:false,
-                    error:"Ảnh vượt quá 4 MB."
+                    error:"Ảnh vượt quá dung lượng tối đa 1 GB."
                 },
                 400
             );
 
         }
 
-
-        /*
-           Tên file ngắn được tạo từ index.html
-        */
 
         let filename =
             String(file.name || "")
@@ -139,23 +136,6 @@ export async function POST(request){
         }
 
 
-        /*
-           ĐẢM BẢO KHÔNG GHI ĐÈ
-           Nếu tên đã tồn tại thì tạo tên mới.
-        */
-
-        const ext =
-            filename.includes(".")
-                ? filename
-                    .split(".")
-                    .pop()
-                : "png";
-
-
-        /*
-           Upload Blob
-        */
-
         const blob =
             await put(
                 filename,
@@ -169,17 +149,10 @@ export async function POST(request){
             );
 
 
-        /*
-           filename CHÍNH LÀ GIÁ TRỊ
-           MÀ FRONTEND CẦN.
-        */
-
         return json(
             {
                 success:true,
-
                 filename:filename,
-
                 url:
                     `/images/` +
                     encodeURIComponent(
@@ -197,11 +170,9 @@ export async function POST(request){
             error
         );
 
-
         return json(
             {
                 success:false,
-
                 error:
                     error?.message ||
                     "Upload thất bại."
@@ -270,19 +241,16 @@ export async function GET(request){
         const headers =
             new Headers();
 
-
         headers.set(
             "Content-Type",
             result.blob?.contentType ||
             getContentType(filename)
         );
 
-
         headers.set(
             "Content-Disposition",
             "inline"
         );
-
 
         headers.set(
             "Cache-Control",
@@ -302,10 +270,9 @@ export async function GET(request){
     }catch(error){
 
         console.error(
-            "GET ERROR:",
+            "GET IMAGE ERROR:",
             error
         );
-
 
         return new Response(
             "Không thể tải hình ảnh.",
@@ -316,4 +283,4 @@ export async function GET(request){
 
     }
 
-                }
+}
