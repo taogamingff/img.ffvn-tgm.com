@@ -1,49 +1,21 @@
-import { put } from "@vercel/blob";
+import { put, head } from "@vercel/blob";
 
 export const config = {
   api: {
     bodyParser: false,
-    responseLimit: "6mb"
+    responseLimit: "10mb"
   }
 };
 
+const MAX_SIZE = 4 * 1024 * 1024;
 
-/*
-|--------------------------------------------------------------------------
-| URL cố định của website
-|--------------------------------------------------------------------------
-*/
-
-const PUBLIC_URL =
-  "https://img-ffvn-tgm-com.vercel.app/images.png";
+const DOMAIN =
+  "https://img-ffvn-tgm-com.vercel.app";
 
 
 /*
 |--------------------------------------------------------------------------
-| URL Blob hiện tại
-|--------------------------------------------------------------------------
-|
-| Đây là URL Blob thật đang chứa images.png.
-|
-*/
-
-const BLOB_URL =
-  "https://qgsepgnqgymmbrtx.public.blob.vercel-storage.com/images.png";
-
-
-/*
-|--------------------------------------------------------------------------
-| Giới hạn ảnh
-|--------------------------------------------------------------------------
-*/
-
-const MAX_SIZE =
-  4 * 1024 * 1024;
-
-
-/*
-|--------------------------------------------------------------------------
-| Đọc raw request body
+| Đọc raw body
 |--------------------------------------------------------------------------
 */
 
@@ -67,20 +39,7 @@ async function readBody(req) {
 
 /*
 |--------------------------------------------------------------------------
-| Kiểm tra Blob credentials
-|--------------------------------------------------------------------------
-|
-| Ưu tiên:
-|
-| OIDC:
-|   VERCEL_OIDC_TOKEN
-|   +
-|   BLOB_STORE_ID
-|
-| Fallback:
-|
-|   BLOB_READ_WRITE_TOKEN
-|
+| Blob credentials
 |--------------------------------------------------------------------------
 */
 
@@ -92,7 +51,7 @@ function getBlobOptions() {
   const oidcToken =
     process.env.VERCEL_OIDC_TOKEN?.trim();
 
-  const readWriteToken =
+  const token =
     process.env.BLOB_READ_WRITE_TOKEN?.trim();
 
 
@@ -100,10 +59,6 @@ function getBlobOptions() {
   |--------------------------------------------------------------------------
   | OIDC
   |--------------------------------------------------------------------------
-  |
-  | Khi chạy trên Vercel, @vercel/blob có thể tự lấy
-  | Vercel OIDC token.
-  |
   */
 
   if (storeId) {
@@ -112,50 +67,32 @@ function getBlobOptions() {
       storeId
     };
 
-
-    /*
-    | Nếu VERCEL_OIDC_TOKEN tồn tại thì truyền rõ ràng.
-    */
-
     if (oidcToken) {
-
-      options.oidcToken =
-        oidcToken;
-
+      options.oidcToken = oidcToken;
     }
 
-
     return options;
-
   }
 
 
   /*
   |--------------------------------------------------------------------------
-  | Token cũ
+  | Token fallback
   |--------------------------------------------------------------------------
   */
 
-  if (readWriteToken) {
+  if (token) {
 
     return {
-      token:
-        readWriteToken
+      token
     };
 
   }
 
 
-  /*
-  |--------------------------------------------------------------------------
-  | Không có credential
-  |--------------------------------------------------------------------------
-  */
-
   throw new Error(
     "Không tìm thấy Vercel Blob credentials. " +
-    "Hãy kết nối Blob Store với project hoặc kiểm tra " +
-    "BLOB_STORE_ID / VERCEL_OIDC_TOKEN / BLOB_READ_WRITE_TOKEN."
+    "Kiểm tra BLOB_STORE_ID hoặc BLOB_READ_WRITE_TOKEN."
   );
 
 }
@@ -163,101 +100,171 @@ function getBlobOptions() {
 
 /*
 |--------------------------------------------------------------------------
-| API
+| Tạo tên ảnh
 |--------------------------------------------------------------------------
+|
+| images-YYYYMMDD-HHMMSS-random.png
+|
 */
 
-export default async function handler(req, res) {
+function createFilename() {
 
+  const now =
+    new Date();
+
+  const year =
+    now.getUTCFullYear();
+
+  const month =
+    String(
+      now.getUTCMonth() + 1
+    ).padStart(2, "0");
+
+  const day =
+    String(
+      now.getUTCDate()
+    ).padStart(2, "0");
+
+  const hour =
+    String(
+      now.getUTCHours()
+    ).padStart(2, "0");
+
+  const minute =
+    String(
+      now.getUTCMinutes()
+    ).padStart(2, "0");
+
+  const second =
+    String(
+      now.getUTCSeconds()
+    ).padStart(2, "0");
+
+  const random =
+    Math.random()
+      .toString(36)
+      .slice(2, 8);
+
+  return (
+    `images-${year}` +
+    `${month}` +
+    `${day}-` +
+    `${hour}` +
+    `${minute}` +
+    `${second}-` +
+    `${random}.png`
+  );
+
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| GET IMAGE
+|--------------------------------------------------------------------------
+|
+| /images/filename.png
+|
+*/
+
+export default async function handler(
+  req,
+  res
+) {
 
   /*
   |--------------------------------------------------------------------------
   | GET
   |--------------------------------------------------------------------------
-  |
-  | /images.png
-  |
   */
 
   if (req.method === "GET") {
 
     try {
 
-      const response =
-        await fetch(
-          BLOB_URL,
-          {
-            cache: "no-store"
-          }
-        );
+      const filename =
+        req.query?.filename;
 
 
-      if (!response.ok) {
+      if (!filename) {
 
         return res
-          .status(response.status)
-          .send("Image not found");
+          .status(400)
+          .send(
+            "Thiếu tên ảnh."
+          );
 
       }
 
 
-      const contentType =
-        response.headers.get(
-          "content-type"
-        ) ||
-        "image/png";
+      const cleanName =
+        String(filename)
+          .replace(/^\/+/, "")
+          .trim();
 
 
-      const arrayBuffer =
-        await response.arrayBuffer();
+      if (
+        !cleanName ||
+        !cleanName.endsWith(".png") ||
+        cleanName.includes("..") ||
+        cleanName.includes("/")
+      ) {
 
+        return res
+          .status(400)
+          .send(
+            "Tên ảnh không hợp lệ."
+          );
 
-      const buffer =
-        Buffer.from(
-          arrayBuffer
-        );
-
-
-      res.setHeader(
-        "Content-Type",
-        contentType
-      );
-
-
-      res.setHeader(
-        "Content-Length",
-        buffer.length
-      );
+      }
 
 
       /*
       |--------------------------------------------------------------------------
-      | Cache ngắn
+      | Tìm Blob
       |--------------------------------------------------------------------------
       */
 
-      res.setHeader(
-        "Cache-Control",
-        "public, max-age=60, s-maxage=60"
+      const options =
+        getBlobOptions();
+
+
+      const blob =
+        await head(
+          cleanName,
+          options
+        );
+
+
+      /*
+      |--------------------------------------------------------------------------
+      | Redirect đến Blob public URL
+      |--------------------------------------------------------------------------
+      |
+      | Không cần proxy toàn bộ file qua Function.
+      | Điều này giúp ảnh tải nhanh hơn.
+      |
+      */
+
+      return res.redirect(
+        302,
+        blob.url
       );
-
-
-      return res
-        .status(200)
-        .send(buffer);
 
 
     } catch (error) {
 
       console.error(
-        "IMAGE ERROR:",
+        "GET IMAGE ERROR:",
         error
       );
 
 
       return res
-        .status(500)
-        .send("Cannot load image");
+        .status(404)
+        .send(
+          "Image not found."
+        );
 
     }
 
@@ -266,7 +273,7 @@ export default async function handler(req, res) {
 
   /*
   |--------------------------------------------------------------------------
-  | Chỉ cho POST upload
+  | POST UPLOAD
   |--------------------------------------------------------------------------
   */
 
@@ -276,7 +283,6 @@ export default async function handler(req, res) {
       "Allow",
       "GET, POST"
     );
-
 
     return res
       .status(405)
@@ -322,11 +328,14 @@ export default async function handler(req, res) {
 
     /*
     |--------------------------------------------------------------------------
-    | Kiểm tra kích thước
+    | Giới hạn 4MB
     |--------------------------------------------------------------------------
     */
 
-    if (buffer.length > MAX_SIZE) {
+    if (
+      buffer.length >
+      MAX_SIZE
+    ) {
 
       return res
         .status(413)
@@ -344,7 +353,17 @@ export default async function handler(req, res) {
 
     /*
     |--------------------------------------------------------------------------
-    | Lấy credential
+    | Tạo tên riêng
+    |--------------------------------------------------------------------------
+    */
+
+    const filename =
+      createFilename();
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Credentials
     |--------------------------------------------------------------------------
     */
 
@@ -354,59 +373,27 @@ export default async function handler(req, res) {
 
     /*
     |--------------------------------------------------------------------------
-    | Upload Vercel Blob
+    | Upload
     |--------------------------------------------------------------------------
     */
 
     const blob =
       await put(
-        "images.png",
+        filename,
         buffer,
         {
-
-          /*
-          | Ảnh công khai
-          */
 
           access:
             "public",
 
-
-          /*
-          | Không thêm chuỗi ngẫu nhiên
-          */
-
           addRandomSuffix:
             false,
-
-
-          /*
-          | Cho phép ghi đè images.png
-          */
-
-          allowOverwrite:
-            true,
-
-
-          /*
-          | Luôn lưu dưới dạng PNG
-          */
 
           contentType:
             "image/png",
 
-
-          /*
-          | Cache 60 giây
-          */
-
           cacheControlMaxAge:
-            60,
-
-
-          /*
-          | Credential OIDC/token
-          */
+            31536000,
 
           ...blobOptions
 
@@ -416,7 +403,17 @@ export default async function handler(req, res) {
 
     /*
     |--------------------------------------------------------------------------
-    | Upload thành công
+    | URL website
+    |--------------------------------------------------------------------------
+    */
+
+    const imageUrl =
+      `${DOMAIN}/${filename}`;
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Kết quả
     |--------------------------------------------------------------------------
     */
 
@@ -427,16 +424,8 @@ export default async function handler(req, res) {
         success:
           true,
 
-        /*
-        | URL mà người dùng cần
-        */
-
         url:
-          PUBLIC_URL,
-
-        /*
-        | URL Blob thật
-        */
+          imageUrl,
 
         blobUrl:
           blob.url,
@@ -444,8 +433,9 @@ export default async function handler(req, res) {
         pathname:
           blob.pathname,
 
+        filename,
+
         contentType:
-          blob.contentType ||
           "image/png",
 
         size:
