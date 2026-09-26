@@ -1,6 +1,6 @@
 {
   "name": "img-ffvn-tgm-com",
-  "version": "4.0.0",
+  "version": "6.0.0",
   "private": true,
   "description": "FFVN.TGM - Công cụ chèn ảnh tạo link URL",
   "dependencies": {
