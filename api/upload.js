@@ -11,16 +11,17 @@ const ALLOWED_TYPES = [
 ];
 
 
-function json(data, status = 200){
+function json(data,status=200){
 
     return new Response(
         JSON.stringify(data),
         {
             status,
-
             headers:{
                 "Content-Type":
-                    "application/json; charset=utf-8"
+                    "application/json; charset=utf-8",
+                "Cache-Control":
+                    "no-store"
             }
         }
     );
@@ -36,47 +37,35 @@ function getContentType(filename){
             .pop()
             .toLowerCase();
 
-
     const types = {
-
         png:"image/png",
-
         jpg:"image/jpeg",
-
         jpeg:"image/jpeg",
-
         webp:"image/webp",
-
         gif:"image/gif",
-
         avif:"image/avif"
-
     };
-
 
     return (
         types[ext] ||
         "application/octet-stream"
     );
-
 }
 
 
-/* ==================================
-   POST /api/upload
-   UPLOAD IMAGE
-================================== */
+/* =========================
+   POST UPLOAD
+========================= */
 
 export async function POST(request){
 
     try{
 
-        const form =
+        const formData =
             await request.formData();
 
-
         const file =
-            form.get("file");
+            formData.get("file");
 
 
         if(
@@ -87,7 +76,7 @@ export async function POST(request){
             return json(
                 {
                     success:false,
-                    error:"Không tìm thấy hình ảnh."
+                    error:"Không nhận được file."
                 },
                 400
             );
@@ -104,7 +93,7 @@ export async function POST(request){
             return json(
                 {
                     success:false,
-                    error:"Định dạng hình ảnh không được hỗ trợ."
+                    error:"Định dạng ảnh không được hỗ trợ."
                 },
                 400
             );
@@ -120,7 +109,7 @@ export async function POST(request){
             return json(
                 {
                     success:false,
-                    error:"Hình ảnh vượt quá 4 MB."
+                    error:"Ảnh vượt quá 4 MB."
                 },
                 400
             );
@@ -129,7 +118,7 @@ export async function POST(request){
 
 
         /*
-           Tên file được tạo từ index.html
+           Tên file ngắn được tạo từ index.html
         */
 
         let filename =
@@ -151,7 +140,20 @@ export async function POST(request){
 
 
         /*
-           UPLOAD VERCEL BLOB
+           ĐẢM BẢO KHÔNG GHI ĐÈ
+           Nếu tên đã tồn tại thì tạo tên mới.
+        */
+
+        const ext =
+            filename.includes(".")
+                ? filename
+                    .split(".")
+                    .pop()
+                : "png";
+
+
+        /*
+           Upload Blob
         */
 
         const blob =
@@ -160,37 +162,32 @@ export async function POST(request){
                 file,
                 {
                     access:"public",
-
                     addRandomSuffix:false,
-
-                    contentType:
-                        file.type,
-
-                    cacheControlMaxAge:
-                        31536000
+                    contentType:file.type,
+                    cacheControlMaxAge:31536000
                 }
             );
 
 
         /*
-           CHỈ TRẢ THÔNG TIN CẦN THIẾT.
-           KHÔNG TRẢ blobUrl.
+           filename CHÍNH LÀ GIÁ TRỊ
+           MÀ FRONTEND CẦN.
         */
 
-        return json({
+        return json(
+            {
+                success:true,
 
-            success:true,
+                filename:filename,
 
-            filename:filename,
-
-            url:
-                new URL(
-                    "/images/" +
-                    encodeURIComponent(filename),
-                    request.url
-                ).toString()
-
-        });
+                url:
+                    `/images/` +
+                    encodeURIComponent(
+                        filename
+                    )
+            },
+            200
+        );
 
 
     }catch(error){
@@ -207,7 +204,7 @@ export async function POST(request){
 
                 error:
                     error?.message ||
-                    "Lỗi máy chủ khi upload hình ảnh."
+                    "Upload thất bại."
             },
             500
         );
@@ -217,10 +214,9 @@ export async function POST(request){
 }
 
 
-/* ==================================
-   GET /api/upload?filename=xxx
-   TRẢ ẢNH
-================================== */
+/* =========================
+   GET IMAGE
+========================= */
 
 export async function GET(request){
 
@@ -228,7 +224,6 @@ export async function GET(request){
 
         const url =
             new URL(request.url);
-
 
         const filename =
             url.searchParams.get(
@@ -239,7 +234,7 @@ export async function GET(request){
         if(!filename){
 
             return new Response(
-                "Không tìm thấy tên hình ảnh.",
+                "Thiếu filename.",
                 {
                     status:400
                 }
@@ -307,7 +302,7 @@ export async function GET(request){
     }catch(error){
 
         console.error(
-            "GET IMAGE ERROR:",
+            "GET ERROR:",
             error
         );
 
@@ -321,4 +316,4 @@ export async function GET(request){
 
     }
 
-}
+                }
