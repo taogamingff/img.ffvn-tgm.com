@@ -1,437 +1,269 @@
 import { put, head } from "@vercel/blob";
 
-const DOMAIN =
-  "https://img-ffvn-tgm-com.vercel.app";
+const MAX_SIZE = 4 * 1024 * 1024;
 
-const MAX_SIZE =
-  4 * 1024 * 1024;
+const ALLOWED_TYPES = [
+  "image/png",
+  "image/jpeg",
+  "image/jpg",
+  "image/webp",
+  "image/gif",
+  "image/avif"
+];
 
+function getToken() {
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
 
-/*
-==================================================
-BLOB TOKEN
-==================================================
-*/
-
-function getBlobOptions() {
-
-  const token =
-    process.env.BLOB_READ_WRITE_TOKEN?.trim();
-
-  if (!token) {
-
+  if (!token || !token.trim()) {
     throw new Error(
       "BLOB_READ_WRITE_TOKEN chưa được cấu hình trên Vercel."
     );
-
   }
 
-  return {
-    token
-  };
+  return token.trim();
 }
 
-
-/*
-==================================================
-EXTENSION
-==================================================
-*/
-
-function getExtension(contentType) {
-
-  const type =
-    String(contentType || "")
-      .toLowerCase();
-
-  if (
-    type.includes("jpeg") ||
-    type.includes("jpg")
-  ) {
-    return "jpg";
+function validateFilename(filename) {
+  if (!filename) {
+    return false;
   }
 
-  if (
-    type.includes("webp")
-  ) {
-    return "webp";
+  if (!filename.startsWith("images-")) {
+    return false;
   }
 
-  if (
-    type.includes("gif")
-  ) {
-    return "gif";
+  if (filename.length > 180) {
+    return false;
   }
 
-  if (
-    type.includes("avif")
-  ) {
-    return "avif";
-  }
+  /*
+    Chỉ cho phép:
+    chữ
+    số
+    -
+    _
+    .
+  */
 
-  return "png";
+  return /^[a-zA-Z0-9._-]+$/.test(filename);
 }
 
+function getContentType(filename) {
 
-/*
-==================================================
-CREATE UNIQUE FILE NAME
-==================================================
-*/
+  const lower =
+    filename.toLowerCase();
 
-function createFilename(extension) {
+  if (lower.endsWith(".png")) {
+    return "image/png";
+  }
 
-  const now =
-    new Date();
+  if (
+    lower.endsWith(".jpg") ||
+    lower.endsWith(".jpeg")
+  ) {
+    return "image/jpeg";
+  }
 
-  const date =
-    now.getUTCFullYear() +
-    String(
-      now.getUTCMonth() + 1
-    ).padStart(2, "0") +
-    String(
-      now.getUTCDate()
-    ).padStart(2, "0");
+  if (lower.endsWith(".webp")) {
+    return "image/webp";
+  }
 
+  if (lower.endsWith(".gif")) {
+    return "image/gif";
+  }
 
-  const time =
-    String(
-      now.getUTCHours()
-    ).padStart(2, "0") +
+  if (lower.endsWith(".avif")) {
+    return "image/avif";
+  }
 
-    String(
-      now.getUTCMinutes()
-    ).padStart(2, "0") +
-
-    String(
-      now.getUTCSeconds()
-    ).padStart(2, "0");
-
-
-  const random =
-    Math.random()
-      .toString(36)
-      .substring(2, 10);
-
-
-  return (
-    `images-${date}-${time}-${random}.${extension}`
-  );
+  return null;
 }
 
-
-/*
-==================================================
-READ REQUEST BODY
-==================================================
-*/
-
-async function readRequestBody(req) {
+async function readBody(req) {
 
   const chunks = [];
 
   let total = 0;
 
-
-  for await (
-    const chunk of req
-  ) {
+  for await (const chunk of req) {
 
     const buffer =
       Buffer.isBuffer(chunk)
         ? chunk
         : Buffer.from(chunk);
 
+    total += buffer.length;
 
-    total +=
-      buffer.length;
-
-
-    if (
-      total > MAX_SIZE
-    ) {
+    if(total > MAX_SIZE){
 
       const error =
         new Error(
           "Ảnh vượt quá giới hạn 4MB."
         );
 
-      error.statusCode =
-        413;
+      error.statusCode = 413;
 
       throw error;
     }
 
-
     chunks.push(buffer);
   }
 
-
-  return Buffer.concat(
-    chunks
-  );
+  return Buffer.concat(chunks);
 }
 
+async function handleGet(req,res){
 
-/*
-==================================================
-HANDLER
-==================================================
-*/
+  try{
 
-export default async function handler(
-  req,
-  res
-) {
+    const rawFilename =
+      String(
+        req.query?.filename || ""
+      );
 
-
-  /*
-  ================================================
-  GET IMAGE
-  ================================================
-  */
-
-  if (
-    req.method === "GET"
-  ) {
-
-    try {
-
-      const filename =
-        String(
-          req.query?.filename || ""
-        )
+    const filename =
+      rawFilename
         .split("/")
         .pop();
 
+    if(!validateFilename(filename)){
 
-      if (
-        !filename ||
-        !filename.startsWith(
-          "images-"
-        )
-      ) {
+      return res
+        .status(400)
+        .send("Tên hình ảnh không hợp lệ.");
+    }
 
-        return res
-          .status(400)
-          .send(
-            "Tên hình ảnh không hợp lệ."
-          );
-      }
-
-
-      const blob =
-        await head(
-          filename,
-          getBlobOptions()
-        );
-
-
-      if (
-        !blob ||
-        !blob.url
-      ) {
-
-        return res
-          .status(404)
-          .send(
-            "Không tìm thấy hình ảnh."
-          );
-      }
-
-
-      res.setHeader(
-        "Cache-Control",
-        "public, max-age=31536000, immutable"
+    const blob =
+      await head(
+        filename,
+        {
+          token:getToken()
+        }
       );
 
-
-      return res.redirect(
-        302,
-        blob.url
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "GET IMAGE ERROR:",
-        error
-      );
-
+    if(!blob?.url){
 
       return res
         .status(404)
-        .send(
-          "Không tìm thấy hình ảnh."
-        );
+        .send("Không tìm thấy hình ảnh.");
     }
-  }
-
-
-  /*
-  ================================================
-  ONLY POST
-  ================================================
-  */
-
-  if (
-    req.method !== "POST"
-  ) {
 
     res.setHeader(
-      "Allow",
-      "GET, POST"
+      "Cache-Control",
+      "public, max-age=31536000, immutable"
     );
 
+    /*
+      Redirect tới Blob URL thật.
+    */
+
+    return res.redirect(
+      302,
+      blob.url
+    );
+
+  }catch(error){
+
+    console.error(
+      "GET IMAGE ERROR:",
+      error
+    );
 
     return res
-      .status(405)
-      .json({
-
-        success: false,
-
-        error:
-          "Method Not Allowed"
-
-      });
+      .status(404)
+      .send("Không tìm thấy hình ảnh.");
   }
+}
 
+async function handlePost(req,res){
 
-  /*
-  ================================================
-  UPLOAD
-  ================================================
-  */
+  try{
 
-  try {
+    const token =
+      getToken();
 
-    const blobOptions =
-      getBlobOptions();
+    const rawFilename =
+      String(
+        req.query?.filename || ""
+      );
 
+    const filename =
+      rawFilename
+        .split("/")
+        .pop();
 
-    /*
-    CONTENT TYPE
-    */
+    if(!validateFilename(filename)){
+
+      return res.status(400).json({
+        success:false,
+        error:"Tên hình ảnh không hợp lệ."
+      });
+    }
 
     const contentType =
       String(
-        req.headers[
-          "content-type"
-        ] || ""
+        req.headers["content-type"] || ""
       )
       .split(";")[0]
       .trim()
       .toLowerCase();
 
+    if(!ALLOWED_TYPES.includes(contentType)){
 
-    const allowedTypes = [
-
-      "image/png",
-
-      "image/jpeg",
-
-      "image/jpg",
-
-      "image/webp",
-
-      "image/gif",
-
-      "image/avif"
-
-    ];
-
-
-    if (
-      !allowedTypes.includes(
-        contentType
-      )
-    ) {
-
-      return res
-        .status(415)
-        .json({
-
-          success: false,
-
-          error:
-            "Định dạng hình ảnh không được hỗ trợ."
-
-        });
+      return res.status(415).json({
+        success:false,
+        error:
+          "Định dạng hình ảnh không được hỗ trợ."
+      });
     }
 
-
     /*
-    READ IMAGE
+      Kiểm tra extension và Content-Type
+      phải khớp nhau.
     */
+
+    const expectedType =
+      getContentType(filename);
+
+    if(
+      expectedType &&
+      expectedType !== contentType &&
+      !(
+        expectedType === "image/jpeg" &&
+        contentType === "image/jpg"
+      )
+    ){
+
+      return res.status(415).json({
+        success:false,
+        error:
+          "Định dạng hình ảnh không khớp."
+      });
+    }
 
     const buffer =
-      await readRequestBody(
-        req
-      );
+      await readBody(req);
 
+    if(!buffer.length){
 
-    if (
-      !buffer.length
-    ) {
-
-      return res
-        .status(400)
-        .json({
-
-          success: false,
-
-          error:
-            "Không nhận được dữ liệu hình ảnh."
-
-        });
+      return res.status(400).json({
+        success:false,
+        error:
+          "Không nhận được dữ liệu hình ảnh."
+      });
     }
 
+    if(buffer.length > MAX_SIZE){
 
-    /*
-    SIZE
-    */
-
-    if (
-      buffer.length >
-      MAX_SIZE
-    ) {
-
-      return res
-        .status(413)
-        .json({
-
-          success: false,
-
-          error:
-            "Ảnh vượt quá giới hạn 4MB."
-
-        });
+      return res.status(413).json({
+        success:false,
+        error:
+          "Ảnh vượt quá giới hạn 4MB."
+      });
     }
 
-
     /*
-    EXTENSION
-    */
-
-    const extension =
-      getExtension(
-        contentType
-      );
-
-
-    /*
-    UNIQUE NAME
-    */
-
-    const filename =
-      createFilename(
-        extension
-      );
-
-
-    /*
-    UPLOAD BLOB
+      Upload vào Vercel Blob.
     */
 
     const blob =
@@ -439,86 +271,101 @@ export default async function handler(
         filename,
         buffer,
         {
+          token,
 
-          ...blobOptions,
+          access:"public",
 
-          access:
-            "public",
-
-          addRandomSuffix:
-            false,
+          addRandomSuffix:false,
 
           contentType,
 
-          cacheControlMaxAge:
-            31536000
-
+          cacheControlMaxAge:31536000
         }
       );
 
-
-    /*
-    WEBSITE URL
-    */
+    const origin =
+      process.env.VERCEL_PROJECT_PRODUCTION_URL
+        ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+        : "https://img-ffvn-tgm-com.vercel.app";
 
     const publicUrl =
-      `${DOMAIN}/images/${encodeURIComponent(
-        filename
-      )}`;
+      `${origin}/images/${encodeURIComponent(filename)}`;
 
+    return res.status(200).json({
 
-    /*
-    RESPONSE
-    */
+      success:true,
 
-    return res
-      .status(200)
-      .json({
+      message:
+        "Upload hình ảnh thành công.",
 
-        success: true,
+      filename,
 
-        message:
-          "Upload hình ảnh thành công.",
+      url:publicUrl,
 
-        filename,
+      blobUrl:blob.url,
 
-        url:
-          publicUrl,
+      pathname:blob.pathname,
 
-        blobUrl:
-          blob.url,
+      contentType,
 
-        pathname:
-          blob.pathname,
+      size:buffer.length
+    });
 
-        contentType,
-
-        size:
-          buffer.length
-
-      });
-
-
-  } catch (error) {
+  }catch(error){
 
     console.error(
       "FFVN.TGM UPLOAD ERROR:",
       error
     );
 
+    return res.status(
+      error?.statusCode || 500
+    ).json({
 
-    return res
-      .status(
-        error?.statusCode || 500
-      )
-      .json({
+      success:false,
 
-        success: false,
-
-        error:
-          error?.message ||
-          "Upload hình ảnh thất bại."
-
-      });
+      error:
+        error?.message ||
+        "Upload hình ảnh thất bại."
+    });
   }
+}
+
+export default async function handler(req,res){
+
+  /*
+    GET:
+    /api/upload?filename=images-xxx.png
+
+    POST:
+    /api/upload?filename=images-xxx.png
+  */
+
+  if(req.method === "GET"){
+
+    return handleGet(
+      req,
+      res
+    );
+  }
+
+  if(req.method === "POST"){
+
+    return handlePost(
+      req,
+      res
+    );
+  }
+
+  res.setHeader(
+    "Allow",
+    "GET, POST"
+  );
+
+  return res.status(405).json({
+
+    success:false,
+
+    error:"Method Not Allowed"
+  });
         }
