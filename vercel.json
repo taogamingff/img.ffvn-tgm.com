@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/images.png",
-      "destination": "/api/upload"
+      "source": "/images/:filename",
+      "destination": "/api/upload?filename=:filename"
     }
   ]
 }
