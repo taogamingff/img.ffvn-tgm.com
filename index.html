@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
 <title>FFVN.TGM - CÔNG CỤ CHÈN ẢNH TẠO LINK URL</title>
 
@@ -24,39 +24,53 @@
 }
 
 :root{
-    --orange:#ff6a00;
-    --orange2:#ff9d2e;
-    --bg:#070707;
-    --card:rgba(20,20,20,.72);
+    --orange:#ff6500;
+    --orange2:#ff9b2f;
+    --black:#050505;
+    --card:rgba(18,18,18,.76);
     --border:rgba(255,106,0,.28);
-    --text:#fff;
-    --muted:#a9a9a9;
-}
-
-html{
-    scroll-behavior:smooth;
+    --white:#fff;
+    --gray:#999;
 }
 
 body{
     min-height:100vh;
-    color:var(--text);
+    color:var(--white);
     font-family:"GFF-Latin-Bold",Arial,sans-serif;
+
     background:
-        radial-gradient(circle at 15% 15%,rgba(255,106,0,.20),transparent 28%),
-        radial-gradient(circle at 85% 20%,rgba(255,155,45,.12),transparent 25%),
-        radial-gradient(circle at 50% 100%,rgba(255,106,0,.10),transparent 35%),
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255,106,0,.20),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(255,150,40,.13),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(255,70,0,.12),
+            transparent 35%
+        ),
         #050505;
-    overflow-x:hidden;
 }
 
-body::before{
+body:before{
     content:"";
     position:fixed;
     inset:0;
     pointer-events:none;
-    background:
-        linear-gradient(120deg,transparent 0%,rgba(255,255,255,.015) 50%,transparent 100%);
     z-index:-1;
+
+    background:
+        linear-gradient(
+            125deg,
+            transparent,
+            rgba(255,255,255,.018),
+            transparent
+        );
 }
 
 .container{
@@ -66,55 +80,60 @@ body::before{
 
 /* HEADER */
 
-.header{
-    padding:20px 0 10px;
+header{
+    text-align:center;
+    padding:25px 0 15px;
 }
 
 .logo{
-    width:74px;
-    height:74px;
+    width:78px;
+    height:78px;
     border-radius:22px;
     object-fit:cover;
-    display:block;
-    margin:auto;
-    border:2px solid rgba(255,106,0,.55);
+
+    border:2px solid rgba(255,106,0,.5);
+
     box-shadow:
         0 0 25px rgba(255,106,0,.25),
         0 0 70px rgba(255,106,0,.08);
 }
 
-.title{
-    text-align:center;
+h1{
+    margin-top:16px;
     font-size:clamp(24px,6vw,42px);
-    margin-top:15px;
-    letter-spacing:.5px;
-    text-shadow:0 0 18px rgba(255,106,0,.22);
+    line-height:1.15;
 }
 
 .subtitle{
-    text-align:center;
-    color:var(--muted);
+    max-width:700px;
+    margin:10px auto 0;
+
+    color:#999;
     font-family:Arial,sans-serif;
     font-size:14px;
     line-height:1.6;
-    max-width:700px;
-    margin:10px auto 0;
 }
 
-/* MAIN CARD */
+/* CARD */
 
-.main-card{
-    margin:28px auto;
+.card{
+    margin:25px auto;
     padding:22px;
-    border:1px solid var(--border);
+
     border-radius:28px;
-    background:linear-gradient(
-        145deg,
-        rgba(255,106,0,.09),
-        rgba(255,255,255,.025)
-    );
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,106,0,.09),
+            rgba(255,255,255,.025)
+        );
+
+    border:1px solid var(--border);
+
     backdrop-filter:blur(20px);
     -webkit-backdrop-filter:blur(20px);
+
     box-shadow:
         0 25px 80px rgba(0,0,0,.5),
         inset 0 1px rgba(255,255,255,.05);
@@ -122,22 +141,29 @@ body::before{
 
 /* UPLOAD */
 
-.upload-box{
-    border:2px dashed rgba(255,106,0,.48);
-    border-radius:22px;
+.upload{
     min-height:220px;
+
     display:flex;
     flex-direction:column;
-    justify-content:center;
     align-items:center;
+    justify-content:center;
+
     text-align:center;
+
     padding:25px;
-    cursor:pointer;
+
+    border:2px dashed rgba(255,106,0,.45);
+    border-radius:22px;
+
     background:rgba(255,106,0,.035);
-    transition:.25s ease;
+
+    cursor:pointer;
+
+    transition:.25s;
 }
 
-.upload-box:hover{
+.upload:hover{
     border-color:var(--orange);
     background:rgba(255,106,0,.08);
     transform:translateY(-2px);
@@ -146,13 +172,25 @@ body::before{
 .upload-icon{
     width:68px;
     height:68px;
-    border-radius:20px;
+
     display:grid;
     place-items:center;
-    font-size:31px;
-    background:linear-gradient(145deg,var(--orange),#ff3d00);
-    box-shadow:0 12px 30px rgba(255,106,0,.25);
+
     margin-bottom:15px;
+
+    border-radius:20px;
+
+    font-size:32px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7600,
+            #ff3b00
+        );
+
+    box-shadow:
+        0 12px 30px rgba(255,106,0,.25);
 }
 
 .upload-title{
@@ -160,11 +198,13 @@ body::before{
 }
 
 .upload-desc{
-    color:#aaa;
+    margin-top:8px;
+
+    color:#999;
+
     font-family:Arial,sans-serif;
     font-size:13px;
-    margin-top:8px;
-    line-height:1.5;
+    line-height:1.6;
 }
 
 #fileInput{
@@ -175,17 +215,22 @@ body::before{
 
 .preview-section{
     display:none;
-    margin-top:22px;
+    margin-top:20px;
 }
 
 .preview{
     width:100%;
     max-height:430px;
-    object-fit:contain;
+
     display:block;
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,.1);
+
+    object-fit:contain;
+
     background:#000;
+
+    border-radius:20px;
+
+    border:1px solid rgba(255,255,255,.1);
 }
 
 /* INFO */
@@ -194,32 +239,83 @@ body::before{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:10px;
-    margin-top:14px;
+
+    margin-top:12px;
 }
 
-.info-item{
-    padding:13px;
-    border-radius:15px;
-    background:rgba(255,255,255,.035);
-    border:1px solid rgba(255,255,255,.06);
+.info-box{
     min-width:0;
+
+    padding:13px;
+
+    border-radius:15px;
+
+    background:rgba(255,255,255,.035);
+
+    border:1px solid rgba(255,255,255,.06);
 }
 
 .info-label{
-    color:#888;
+    color:#777;
     font-family:Arial,sans-serif;
     font-size:11px;
 }
 
 .info-value{
     margin-top:5px;
-    font-size:13px;
+
     overflow:hidden;
     text-overflow:ellipsis;
     white-space:nowrap;
+
+    font-size:13px;
 }
 
-/* URL */
+/* CREATE URL */
+
+.create-url{
+    display:none;
+
+    margin-top:18px;
+}
+
+.create-url button{
+    width:100%;
+    min-height:52px;
+
+    border:0;
+    border-radius:15px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-family:"GFF-Latin-Bold",Arial,sans-serif;
+    font-size:16px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7600,
+            #ff3c00
+        );
+
+    box-shadow:
+        0 10px 25px rgba(255,90,0,.18);
+
+    transition:.2s;
+}
+
+.create-url button:hover{
+    filter:brightness(1.08);
+    transform:translateY(-1px);
+}
+
+.create-url button:active{
+    transform:scale(.98);
+}
+
+/* RESULT */
 
 .result{
     display:none;
@@ -227,92 +323,128 @@ body::before{
 }
 
 .result-title{
-    font-size:18px;
     margin-bottom:9px;
+    font-size:18px;
 }
 
 .url-box{
     display:flex;
     gap:8px;
+
     padding:8px;
-    background:#080808;
-    border:1px solid rgba(255,106,0,.38);
+
     border-radius:16px;
+
+    background:#070707;
+
+    border:1px solid rgba(255,106,0,.38);
 }
 
 .url-input{
     flex:1;
     min-width:0;
+
+    padding:10px;
+
     border:0;
     outline:0;
+
     background:transparent;
-    color:#fff;
+
+    color:white;
+
     font-family:Arial,sans-serif;
     font-size:13px;
-    padding:10px;
 }
 
-.btn{
-    border:0;
-    cursor:pointer;
-    border-radius:12px;
-    padding:11px 15px;
-    font-family:"GFF-Latin-Bold",Arial,sans-serif;
-    color:#fff;
-    background:linear-gradient(135deg,#ff7200,#ff3b00);
-    transition:.2s;
-    white-space:nowrap;
-}
-
-.btn:hover{
-    transform:translateY(-1px);
-    filter:brightness(1.08);
-}
-
-.btn.secondary{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.1);
-}
-
-.actions{
+.buttons{
     display:grid;
     grid-template-columns:repeat(3,1fr);
+
     gap:10px;
-    margin-top:12px;
+
+    margin-top:10px;
+}
+
+button{
+    min-height:46px;
+
+    border-radius:13px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    cursor:pointer;
+
+    color:white;
+
+    font-family:"GFF-Latin-Bold",Arial,sans-serif;
+
+    background:rgba(255,255,255,.07);
+
+    transition:.2s;
+}
+
+button:hover{
+    background:rgba(255,255,255,.12);
+    transform:translateY(-1px);
+}
+
+.primary{
+    background:
+        linear-gradient(
+            135deg,
+            #ff7600,
+            #ff3b00
+        );
+
+    border:0;
 }
 
 /* MESSAGE */
 
 .message{
     display:none;
-    margin-top:14px;
+
+    margin-top:15px;
+
     padding:13px 15px;
+
     border-radius:14px;
+
     font-family:Arial,sans-serif;
     font-size:13px;
     line-height:1.5;
 }
 
-.message.error{
-    display:block;
-    color:#ffb5a9;
-    background:rgba(255,50,30,.08);
-    border:1px solid rgba(255,70,50,.2);
-}
-
 .message.success{
     display:block;
-    color:#bfffc9;
-    background:rgba(50,255,100,.06);
-    border:1px solid rgba(50,255,100,.15);
+
+    color:#baffc4;
+
+    background:rgba(40,255,100,.06);
+
+    border:1px solid rgba(40,255,100,.16);
+}
+
+.message.error{
+    display:block;
+
+    color:#ffb6aa;
+
+    background:rgba(255,40,20,.07);
+
+    border:1px solid rgba(255,50,30,.17);
 }
 
 /* FOOTER */
 
-.footer{
+footer{
+    padding:10px 20px 30px;
+
     text-align:center;
-    padding:15px 20px 30px;
+
     color:#777;
+
     font-family:Arial,sans-serif;
     font-size:12px;
 }
@@ -321,7 +453,7 @@ body::before{
 
 @media(max-width:650px){
 
-    .main-card{
+    .card{
         padding:15px;
         border-radius:22px;
     }
@@ -334,19 +466,15 @@ body::before{
         flex-direction:column;
     }
 
-    .url-input{
-        width:100%;
-    }
-
-    .actions{
+    .buttons{
         grid-template-columns:1fr;
     }
 
-    .upload-box{
+    .upload{
         min-height:190px;
     }
 
-    .title{
+    h1{
         font-size:25px;
     }
 }
@@ -357,29 +485,34 @@ body::before{
 
 <div class="container">
 
-<header class="header">
+<header>
 
 <img
     class="logo"
     src="https://cdn.imagetourls.com/uploads/tyImg/1ggIdgxtr.jpg"
     alt="FFVN.TGM">
 
-<h1 class="title">
+<h1>
     FFVN.TGM - CÔNG CỤ CHÈN ẢNH TẠO LINK URL
 </h1>
 
 <p class="subtitle">
-    Upload hình ảnh và tạo link URL trực tiếp nhanh chóng.
+    Công cụ chèn ảnh và tạo link URL trực tiếp nhanh chóng từ FFVN.TGM.
     Hỗ trợ Android, iPhone và máy tính.
 </p>
 
 </header>
 
-<main class="main-card">
 
-<label class="upload-box" for="fileInput">
+<main class="card">
 
-    <div class="upload-icon">＋</div>
+<!-- UPLOAD -->
+
+<label class="upload" for="fileInput">
+
+    <div class="upload-icon">
+        ＋
+    </div>
 
     <div class="upload-title">
         CHỌN HÌNH ẢNH
@@ -398,7 +531,12 @@ body::before{
     type="file"
     accept="image/png,image/jpeg,image/webp,image/gif,image/avif">
 
-<section class="preview-section" id="previewSection">
+
+<!-- PREVIEW -->
+
+<section
+    class="preview-section"
+    id="previewSection">
 
     <img
         id="preview"
@@ -407,26 +545,68 @@ body::before{
 
     <div class="info">
 
-        <div class="info-item">
-            <div class="info-label">TÊN FILE</div>
-            <div class="info-value" id="fileName">-</div>
+        <div class="info-box">
+            <div class="info-label">
+                TÊN FILE
+            </div>
+
+            <div
+                class="info-value"
+                id="fileName">
+                -
+            </div>
         </div>
 
-        <div class="info-item">
-            <div class="info-label">DUNG LƯỢNG</div>
-            <div class="info-value" id="fileSize">-</div>
+        <div class="info-box">
+            <div class="info-label">
+                DUNG LƯỢNG
+            </div>
+
+            <div
+                class="info-value"
+                id="fileSize">
+                -
+            </div>
         </div>
 
-        <div class="info-item">
-            <div class="info-label">ĐỊNH DẠNG</div>
-            <div class="info-value" id="fileType">-</div>
+        <div class="info-box">
+            <div class="info-label">
+                ĐỊNH DẠNG
+            </div>
+
+            <div
+                class="info-value"
+                id="fileType">
+                -
+            </div>
         </div>
 
     </div>
 
 </section>
 
-<section class="result" id="result">
+
+<!-- CREATE URL BUTTON -->
+
+<div
+    class="create-url"
+    id="createURLBox">
+
+    <button
+        id="createURLBtn">
+
+        🔗 TẠO URL ẢNH
+
+    </button>
+
+</div>
+
+
+<!-- RESULT -->
+
+<section
+    class="result"
+    id="result">
 
     <div class="result-title">
         🔗 LINK URL ẢNH
@@ -441,30 +621,27 @@ body::before{
             readonly>
 
         <button
-            class="btn"
-            id="copyBtn">
+            id="copyBtn"
+            class="primary">
+
             SAO CHÉP
+
         </button>
 
     </div>
 
-    <div class="actions">
 
-        <button
-            class="btn secondary"
-            id="openBtn">
+    <div class="buttons">
+
+        <button id="openBtn">
             MỞ ẢNH
         </button>
 
-        <button
-            class="btn secondary"
-            id="htmlBtn">
+        <button id="htmlBtn">
             COPY HTML
         </button>
 
-        <button
-            class="btn secondary"
-            id="newBtn">
+        <button id="newBtn">
             ẢNH MỚI
         </button>
 
@@ -472,37 +649,79 @@ body::before{
 
 </section>
 
-<div id="message" class="message"></div>
+
+<div
+    id="message"
+    class="message">
+</div>
 
 </main>
 
-<footer class="footer">
+
+<footer>
     © 2026 FFVN.TGM - ALL RIGHTS RESERVED.
 </footer>
 
 </div>
 
+
 <script>
 
 const API_URL = "/api/upload";
 
-const input = document.getElementById("fileInput");
-const preview = document.getElementById("preview");
-const previewSection = document.getElementById("previewSection");
+const SITE_URL =
+    "https://img-ffvn-tgm-com.vercel.app";
 
-const result = document.getElementById("result");
-const urlInput = document.getElementById("urlInput");
 
-const fileName = document.getElementById("fileName");
-const fileSize = document.getElementById("fileSize");
-const fileType = document.getElementById("fileType");
+const input =
+    document.getElementById("fileInput");
 
-const message = document.getElementById("message");
+const preview =
+    document.getElementById("preview");
 
-const copyBtn = document.getElementById("copyBtn");
-const openBtn = document.getElementById("openBtn");
-const htmlBtn = document.getElementById("htmlBtn");
-const newBtn = document.getElementById("newBtn");
+const previewSection =
+    document.getElementById("previewSection");
+
+const createURLBox =
+    document.getElementById("createURLBox");
+
+const createURLBtn =
+    document.getElementById("createURLBtn");
+
+const result =
+    document.getElementById("result");
+
+const urlInput =
+    document.getElementById("urlInput");
+
+const fileName =
+    document.getElementById("fileName");
+
+const fileSize =
+    document.getElementById("fileSize");
+
+const fileType =
+    document.getElementById("fileType");
+
+const message =
+    document.getElementById("message");
+
+const copyBtn =
+    document.getElementById("copyBtn");
+
+const openBtn =
+    document.getElementById("openBtn");
+
+const htmlBtn =
+    document.getElementById("htmlBtn");
+
+const newBtn =
+    document.getElementById("newBtn");
+
+
+let selectedFile = null;
+
+let uploadedFilename = "";
 
 let currentURL = "";
 
@@ -514,19 +733,27 @@ let currentURL = "";
 function formatSize(bytes){
 
     if(bytes < 1024){
+
         return bytes + " B";
+
     }
 
     if(bytes < 1024 * 1024){
-        return (bytes / 1024).toFixed(1) + " KB";
+
+        return (
+            bytes / 1024
+        ).toFixed(1) + " KB";
+
     }
 
-    return (bytes / 1024 / 1024).toFixed(2) + " MB";
+    return (
+        bytes / 1024 / 1024
+    ).toFixed(2) + " MB";
 }
 
 
 /* =========================
-   RANDOM FILENAME
+   RANDOM NAME
 ========================= */
 
 function randomName(ext){
@@ -534,15 +761,20 @@ function randomName(ext){
     const chars =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    let random = "";
+    let name = "";
 
     for(let i = 0; i < 8; i++){
-        random += chars[
-            Math.floor(Math.random() * chars.length)
-        ];
+
+        name +=
+            chars[
+                Math.floor(
+                    Math.random() * chars.length
+                )
+            ];
+
     }
 
-    return random + "." + ext;
+    return name + "." + ext;
 }
 
 
@@ -565,21 +797,32 @@ function showMessage(text,type){
 
 function resetAll(){
 
+    selectedFile = null;
+
+    uploadedFilename = "";
+
+    currentURL = "";
+
     input.value = "";
 
     preview.removeAttribute("src");
 
-    previewSection.style.display = "none";
+    previewSection.style.display =
+        "none";
 
-    result.style.display = "none";
+    createURLBox.style.display =
+        "none";
+
+    result.style.display =
+        "none";
 
     urlInput.value = "";
 
-    currentURL = "";
-
-    message.className = "message";
-
     message.textContent = "";
+
+    message.className =
+        "message";
+
 }
 
 
@@ -587,97 +830,142 @@ function resetAll(){
    SELECT IMAGE
 ========================= */
 
-input.addEventListener("change", async function(){
+input.addEventListener(
+    "change",
+    async function(){
 
-    const file = this.files[0];
+        const file =
+            this.files[0];
 
-    if(!file) return;
+        if(!file) return;
 
 
-    /* CHECK SIZE */
+        /* SIZE */
 
-    if(file.size > 4 * 1024 * 1024){
+        if(
+            file.size >
+            4 * 1024 * 1024
+        ){
 
-        showMessage(
-            "❌ Hình ảnh vượt quá dung lượng tối đa 4 MB.",
-            "error"
-        );
+            showMessage(
+                "❌ Hình ảnh vượt quá dung lượng tối đa 4 MB.",
+                "error"
+            );
 
-        input.value = "";
+            input.value = "";
 
-        return;
+            return;
+        }
+
+
+        /* TYPE */
+
+        const allowed = [
+
+            "image/png",
+            "image/jpeg",
+            "image/webp",
+            "image/gif",
+            "image/avif"
+
+        ];
+
+
+        if(
+            !allowed.includes(file.type)
+        ){
+
+            showMessage(
+                "❌ Định dạng hình ảnh không được hỗ trợ.",
+                "error"
+            );
+
+            input.value = "";
+
+            return;
+        }
+
+
+        selectedFile = file;
+
+
+        /* PREVIEW */
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        previewSection.style.display =
+            "block";
+
+
+        fileName.textContent =
+            file.name;
+
+        fileSize.textContent =
+            formatSize(file.size);
+
+        fileType.textContent =
+            file.type;
+
+
+        /*
+           XÓA URL CŨ
+        */
+
+        result.style.display =
+            "none";
+
+        currentURL = "";
+
+        uploadedFilename = "";
+
+
+        /*
+           HIỆN NÚT TẠO URL
+        */
+
+        createURLBox.style.display =
+            "block";
+
+
+        /*
+           TỰ ĐỘNG UPLOAD
+        */
+
+        await uploadImage(file);
+
     }
-
-
-    /* CHECK TYPE */
-
-    const allowed = [
-        "image/png",
-        "image/jpeg",
-        "image/webp",
-        "image/gif",
-        "image/avif"
-    ];
-
-    if(!allowed.includes(file.type)){
-
-        showMessage(
-            "❌ Định dạng hình ảnh không được hỗ trợ.",
-            "error"
-        );
-
-        input.value = "";
-
-        return;
-    }
-
-
-    /* PREVIEW */
-
-    const objectURL = URL.createObjectURL(file);
-
-    preview.src = objectURL;
-
-    previewSection.style.display = "block";
-
-    fileName.textContent = file.name;
-
-    fileSize.textContent = formatSize(file.size);
-
-    fileType.textContent = file.type || "IMAGE";
-
-
-    /*
-       UPLOAD NGAY
-       Không hiện loading/progress.
-    */
-
-    await uploadImage(file);
-
-});
+);
 
 
 /* =========================
-   UPLOAD
+   UPLOAD IMAGE
 ========================= */
 
 async function uploadImage(file){
 
     try{
 
-        const originalExt =
-            file.name.split(".").pop().toLowerCase();
+        const oldExt =
+            file.name
+                .split(".")
+                .pop()
+                .toLowerCase();
+
 
         const ext =
-            originalExt === "jpeg"
+            oldExt === "jpeg"
                 ? "jpg"
-                : originalExt;
+                : oldExt;
 
 
-        const filename = randomName(ext);
+        const filename =
+            randomName(ext);
 
 
-        const formData = new FormData();
+        const formData =
+            new FormData();
+
 
         formData.append(
             "file",
@@ -686,62 +974,63 @@ async function uploadImage(file){
         );
 
 
-        const response = await fetch(
-            API_URL,
-            {
-                method:"POST",
-                body:formData
-            }
-        );
+        const response =
+            await fetch(
+                API_URL,
+                {
+                    method:"POST",
+                    body:formData
+                }
+            );
 
 
-        const data = await response.json();
+        let data;
+
+        try{
+
+            data =
+                await response.json();
+
+        }catch{
+
+            throw new Error(
+                "Máy chủ không trả dữ liệu hợp lệ."
+            );
+
+        }
 
 
-        if(!response.ok || !data.success){
+        if(
+            !response.ok ||
+            !data.success
+        ){
 
             throw new Error(
                 data.error ||
                 "Upload hình ảnh thất bại."
             );
+
         }
 
 
         /*
-           URL CUSTOM CỦA WEBSITE
+           LƯU TÊN FILE ĐÃ UPLOAD
         */
 
-        currentURL =
-            "https://img-ffvn-tgm-com.vercel.app/images/" +
-            encodeURIComponent(data.filename || filename);
+        uploadedFilename =
+            data.filename ||
+            filename;
 
 
         /*
-           HIỆN LINK URL NGAY SAU KHI UPLOAD THÀNH CÔNG
+           KHÔNG BẮT BUỘC HIỆN URL TỰ ĐỘNG.
+           URL CÓ THỂ TẠO BẰNG NÚT.
         */
-
-        urlInput.value = currentURL;
-
-        result.style.display = "block";
 
         showMessage(
-            "✅ Tạo link URL ảnh thành công.",
+            "✅ Hình ảnh đã được tải lên. Nhấn “TẠO URL ẢNH” để lấy link.",
             "success"
         );
-
-
-        /*
-           Cuộn nhẹ xuống phần URL
-        */
-
-        setTimeout(() => {
-
-            result.scrollIntoView({
-                behavior:"smooth",
-                block:"center"
-            });
-
-        },100);
 
 
     }catch(error){
@@ -749,9 +1038,10 @@ async function uploadImage(file){
         console.error(error);
 
         showMessage(
-            "❌ " + (
+            "❌ " +
+            (
                 error.message ||
-                "Không thể tạo link URL ảnh."
+                "Không thể upload hình ảnh."
             ),
             "error"
         );
@@ -762,95 +1052,195 @@ async function uploadImage(file){
 
 
 /* =========================
-   COPY URL
+   TẠO URL ẢNH
 ========================= */
 
-copyBtn.addEventListener("click", async function(){
+createURLBtn.addEventListener(
+    "click",
+    function(){
 
-    if(!currentURL) return;
+        if(!uploadedFilename){
 
-    try{
+            showMessage(
+                "❌ Hình ảnh chưa upload thành công. Vui lòng thử lại.",
+                "error"
+            );
 
-        await navigator.clipboard.writeText(currentURL);
+            return;
+        }
 
-        copyBtn.textContent = "ĐÃ SAO CHÉP";
 
-        setTimeout(() => {
-            copyBtn.textContent = "SAO CHÉP";
-        },1500);
+        /*
+           TẠO CUSTOM URL
+        */
 
-    }catch{
+        currentURL =
+            SITE_URL +
+            "/images/" +
+            encodeURIComponent(
+                uploadedFilename
+            );
 
-        urlInput.select();
 
-        document.execCommand("copy");
+        /*
+           HIỆN URL
+        */
+
+        urlInput.value =
+            currentURL;
+
+        result.style.display =
+            "block";
+
+
+        /*
+           Đổi trạng thái nút
+        */
+
+        createURLBtn.textContent =
+            "✅ URL ĐÃ ĐƯỢC TẠO";
+
+
+        showMessage(
+            "✅ Link URL ảnh đã được tạo thành công.",
+            "success"
+        );
+
+
+        result.scrollIntoView({
+            behavior:"smooth",
+            block:"center"
+        });
 
     }
-
-});
+);
 
 
 /* =========================
-   OPEN IMAGE
+   COPY URL
 ========================= */
 
-openBtn.addEventListener("click", function(){
+copyBtn.addEventListener(
+    "click",
+    async function(){
 
-    if(!currentURL) return;
+        if(!currentURL) return;
 
-    window.open(
-        currentURL,
-        "_blank",
-        "noopener,noreferrer"
-    );
 
-});
+        try{
+
+            await navigator.clipboard.writeText(
+                currentURL
+            );
+
+            copyBtn.textContent =
+                "ĐÃ SAO CHÉP";
+
+            setTimeout(
+                () => {
+
+                    copyBtn.textContent =
+                        "SAO CHÉP";
+
+                },
+                1500
+            );
+
+        }catch{
+
+            urlInput.select();
+
+            document.execCommand(
+                "copy"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================
+   OPEN
+========================= */
+
+openBtn.addEventListener(
+    "click",
+    function(){
+
+        if(!currentURL) return;
+
+        window.open(
+            currentURL,
+            "_blank",
+            "noopener,noreferrer"
+        );
+
+    }
+);
 
 
 /* =========================
    COPY HTML
 ========================= */
 
-htmlBtn.addEventListener("click", async function(){
+htmlBtn.addEventListener(
+    "click",
+    async function(){
 
-    if(!currentURL) return;
+        if(!currentURL) return;
 
-    const html =
-        `<img src="${currentURL}" alt="FFVN.TGM">`;
 
-    try{
+        const html =
+            `<img src="${currentURL}" alt="FFVN.TGM">`;
 
-        await navigator.clipboard.writeText(html);
 
-        htmlBtn.textContent = "ĐÃ SAO CHÉP";
+        try{
 
-        setTimeout(() => {
-            htmlBtn.textContent = "COPY HTML";
-        },1500);
+            await navigator.clipboard.writeText(
+                html
+            );
 
-    }catch{
+            htmlBtn.textContent =
+                "ĐÃ SAO CHÉP";
 
-        alert(html);
+            setTimeout(
+                () => {
+
+                    htmlBtn.textContent =
+                        "COPY HTML";
+
+                },
+                1500
+            );
+
+        }catch{
+
+            alert(html);
+
+        }
 
     }
-
-});
+);
 
 
 /* =========================
    NEW IMAGE
 ========================= */
 
-newBtn.addEventListener("click", function(){
+newBtn.addEventListener(
+    "click",
+    function(){
 
-    resetAll();
+        resetAll();
 
-    window.scrollTo({
-        top:0,
-        behavior:"smooth"
-    });
+        window.scrollTo({
+            top:0,
+            behavior:"smooth"
+        });
 
-});
+    }
+);
 
 </script>
 
