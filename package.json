@@ -1,8 +1,9 @@
 {
-  "name": "ffvn-tgm-image-upload",
+  "name": "img-ffvn-tgm-com",
   "version": "1.0.0",
   "private": true,
+  "description": "FFVN.TGM Image Hosting",
   "dependencies": {
-    "@vercel/blob": "^2.6.1"
+    "@vercel/blob": "^2.8.0"
   }
 }
