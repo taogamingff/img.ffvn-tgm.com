@@ -10,21 +10,25 @@ const ALLOWED_TYPES = [
     "image/avif"
 ];
 
+
 function json(data, status = 200){
 
     return new Response(
         JSON.stringify(data),
         {
             status,
+
             headers:{
-                "Content-Type":"application/json; charset=utf-8"
+                "Content-Type":
+                    "application/json; charset=utf-8"
             }
         }
     );
 
 }
 
-function contentTypeFromName(filename){
+
+function getContentType(filename){
 
     const ext =
         filename
@@ -32,23 +36,36 @@ function contentTypeFromName(filename){
             .pop()
             .toLowerCase();
 
+
     const types = {
+
         png:"image/png",
+
         jpg:"image/jpeg",
+
         jpeg:"image/jpeg",
+
         webp:"image/webp",
+
         gif:"image/gif",
+
         avif:"image/avif"
+
     };
 
-    return types[ext] || "application/octet-stream";
+
+    return (
+        types[ext] ||
+        "application/octet-stream"
+    );
 
 }
 
 
-/* =========================
-   POST - UPLOAD
-========================= */
+/* ==================================
+   POST /api/upload
+   UPLOAD IMAGE
+================================== */
 
 export async function POST(request){
 
@@ -57,11 +74,15 @@ export async function POST(request){
         const form =
             await request.formData();
 
+
         const file =
             form.get("file");
 
 
-        if(!file || typeof file.arrayBuffer !== "function"){
+        if(
+            !file ||
+            typeof file.arrayBuffer !== "function"
+        ){
 
             return json(
                 {
@@ -74,7 +95,11 @@ export async function POST(request){
         }
 
 
-        if(!ALLOWED_TYPES.includes(file.type)){
+        if(
+            !ALLOWED_TYPES.includes(
+                file.type
+            )
+        ){
 
             return json(
                 {
@@ -87,7 +112,10 @@ export async function POST(request){
         }
 
 
-        if(file.size > MAX_SIZE){
+        if(
+            file.size >
+            MAX_SIZE
+        ){
 
             return json(
                 {
@@ -101,13 +129,15 @@ export async function POST(request){
 
 
         /*
-           Lấy tên file từ FormData.
-           index.html đã tạo tên ngắn 8 ký tự.
+           Tên file được tạo từ index.html
         */
 
         let filename =
-            file.name
-                .replace(/[^a-zA-Z0-9._-]/g,"");
+            String(file.name || "")
+                .replace(
+                    /[^a-zA-Z0-9._-]/g,
+                    ""
+                );
 
 
         if(!filename){
@@ -130,34 +160,38 @@ export async function POST(request){
                 file,
                 {
                     access:"public",
+
                     addRandomSuffix:false,
-                    contentType:file.type,
-                    cacheControlMaxAge:31536000
+
+                    contentType:
+                        file.type,
+
+                    cacheControlMaxAge:
+                        31536000
                 }
             );
 
 
         /*
-           CHỈ TRẢ CUSTOM URL.
-           Không trả raw blobUrl.
+           CHỈ TRẢ THÔNG TIN CẦN THIẾT.
+           KHÔNG TRẢ blobUrl.
         */
-
-        const customURL =
-            new URL(
-                `/images/${encodeURIComponent(filename)}`,
-                request.url
-            ).toString();
-
 
         return json({
 
             success:true,
 
-            filename,
+            filename:filename,
 
-            url:customURL
+            url:
+                new URL(
+                    "/images/" +
+                    encodeURIComponent(filename),
+                    request.url
+                ).toString()
 
         });
+
 
     }catch(error){
 
@@ -166,9 +200,11 @@ export async function POST(request){
             error
         );
 
+
         return json(
             {
                 success:false,
+
                 error:
                     error?.message ||
                     "Lỗi máy chủ khi upload hình ảnh."
@@ -181,9 +217,10 @@ export async function POST(request){
 }
 
 
-/* =========================
-   GET - /images/filename
-========================= */
+/* ==================================
+   GET /api/upload?filename=xxx
+   TRẢ ẢNH
+================================== */
 
 export async function GET(request){
 
@@ -192,8 +229,11 @@ export async function GET(request){
         const url =
             new URL(request.url);
 
+
         const filename =
-            url.searchParams.get("filename");
+            url.searchParams.get(
+                "filename"
+            );
 
 
         if(!filename){
@@ -219,7 +259,6 @@ export async function GET(request){
 
         if(
             !result ||
-            result.statusCode !== 200 ||
             !result.stream
         ){
 
@@ -236,16 +275,19 @@ export async function GET(request){
         const headers =
             new Headers();
 
+
         headers.set(
             "Content-Type",
             result.blob?.contentType ||
-            contentTypeFromName(filename)
+            getContentType(filename)
         );
+
 
         headers.set(
             "Content-Disposition",
             "inline"
         );
+
 
         headers.set(
             "Cache-Control",
@@ -261,12 +303,14 @@ export async function GET(request){
             }
         );
 
+
     }catch(error){
 
         console.error(
             "GET IMAGE ERROR:",
             error
         );
+
 
         return new Response(
             "Không thể tải hình ảnh.",
