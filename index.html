@@ -2,18 +2,12 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-
-<meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
->
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="theme-color" content="#080808">
 
 <title>FFVN.TGM - CÔNG CỤ CHÈN ẢNH TẠO LINK URL</title>
 
-<meta
-    name="description"
-    content="Công cụ chèn ảnh và tạo link URL trực tiếp nhanh chóng từ FFVN.TGM."
->
+<meta name="description" content="Công cụ chèn ảnh và tạo link URL trực tiếp nhanh chóng từ FFVN.TGM. Hỗ trợ upload hình ảnh từ điện thoại và máy tính, tự động tạo URL hình ảnh để sử dụng trên website, bài viết và các nền tảng khác.">
 
 <style>
 @font-face{
@@ -31,33 +25,18 @@
 }
 
 html{
-    min-height:100%;
-    background:#050505;
+    scroll-behavior:smooth;
 }
 
 body{
     min-height:100vh;
+    background:
+        radial-gradient(circle at 10% 10%,rgba(255,111,0,.20),transparent 28%),
+        radial-gradient(circle at 90% 15%,rgba(255,55,0,.14),transparent 30%),
+        radial-gradient(circle at 50% 100%,rgba(255,120,0,.10),transparent 35%),
+        #050505;
     color:#fff;
     font-family:"GFF-Latin-Bold",Arial,sans-serif;
-
-    background:
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(255,100,0,.20),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 85% 85%,
-            rgba(255,40,0,.16),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #030303,
-            #111,
-            #050505
-        );
-
     overflow-x:hidden;
 }
 
@@ -66,446 +45,323 @@ body::before{
     position:fixed;
     inset:0;
     pointer-events:none;
-
     background:
-        repeating-linear-gradient(
-            135deg,
-            rgba(255,255,255,.012) 0,
-            rgba(255,255,255,.012) 1px,
-            transparent 1px,
-            transparent 7px
-        );
+        linear-gradient(120deg,transparent 0%,rgba(255,255,255,.018) 45%,transparent 60%);
+    z-index:-1;
 }
 
 .container{
-    width:min(950px,calc(100% - 24px));
+    width:min(1100px,calc(100% - 28px));
     margin:auto;
-    padding:25px 0 35px;
 }
 
-.header{
-    text-align:center;
-    margin-bottom:20px;
+header{
+    padding:28px 0 18px;
 }
 
-.badge{
-    display:inline-flex;
-    padding:8px 14px;
-    border-radius:999px;
+.logo-box{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
 
-    border:1px solid rgba(255,100,0,.35);
+.logo{
+    width:58px;
+    height:58px;
+    object-fit:cover;
+    border-radius:18px;
+    border:1px solid rgba(255,255,255,.15);
+    box-shadow:
+        0 0 25px rgba(255,90,0,.28),
+        inset 0 0 20px rgba(255,255,255,.08);
+}
 
-    background:rgba(255,80,0,.08);
+.brand h1{
+    font-size:clamp(20px,4vw,31px);
+    line-height:1.05;
+    letter-spacing:.3px;
+}
 
-    color:#ff9b4a;
-
+.brand p{
+    margin-top:7px;
+    color:#aaa;
     font-size:12px;
-}
-
-.header h1{
-    margin-top:15px;
-
-    font-size:
-        clamp(24px,6vw,42px);
-
-    line-height:1.1;
-
-    text-shadow:
-        0 0 30px rgba(255,80,0,.25);
-}
-
-.header p{
-    margin-top:10px;
-
-    color:#999;
-
-    font-family:Arial,sans-serif;
-
-    font-size:14px;
-
-    line-height:1.6;
+    letter-spacing:.5px;
 }
 
 .card{
     position:relative;
-
-    padding:18px;
-
-    border-radius:25px;
-
-    border:1px solid rgba(255,255,255,.08);
-
+    margin:16px 0;
+    padding:22px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:26px;
     background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.025)
-        );
-
-    backdrop-filter:blur(22px);
-    -webkit-backdrop-filter:blur(22px);
-
+        linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
     box-shadow:
-        0 25px 80px rgba(0,0,0,.45),
-        inset 0 1px rgba(255,255,255,.08);
+        0 18px 60px rgba(0,0,0,.38),
+        inset 0 1px rgba(255,255,255,.06);
 }
 
-.upload-zone{
-    min-height:245px;
+.card-title{
+    font-size:18px;
+    margin-bottom:16px;
+}
 
+.upload-area{
+    position:relative;
+    min-height:260px;
     display:flex;
     align-items:center;
     justify-content:center;
-
     text-align:center;
-
-    border:2px dashed rgba(255,100,0,.40);
-
-    border-radius:20px;
-
-    cursor:pointer;
-
-    transition:.25s;
-
-    background:rgba(255,80,0,.025);
-}
-
-.upload-zone:hover,
-.upload-zone.drag{
-    border-color:#ff6900;
-
-    background:rgba(255,80,0,.07);
-
-    box-shadow:
-        0 0 35px rgba(255,80,0,.10);
-}
-
-.upload-content{
     padding:25px;
+    border:1px dashed rgba(255,112,0,.55);
+    border-radius:22px;
+    background:
+        radial-gradient(circle at center,rgba(255,100,0,.09),transparent 60%),
+        rgba(0,0,0,.20);
+    cursor:pointer;
+    transition:.25s ease;
+}
+
+.upload-area:hover,
+.upload-area.dragover{
+    border-color:#ff7300;
+    background:
+        radial-gradient(circle at center,rgba(255,100,0,.16),transparent 65%),
+        rgba(255,80,0,.035);
+    transform:translateY(-1px);
 }
 
 .upload-icon{
-    width:75px;
-    height:75px;
-
+    width:72px;
+    height:72px;
     margin:0 auto 15px;
-
     display:flex;
     align-items:center;
     justify-content:center;
-
     border-radius:22px;
-
     font-size:34px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff9800,
-            #ff3d00
-        );
-
-    box-shadow:
-        0 12px 35px rgba(255,70,0,.25);
+    background:linear-gradient(145deg,#ff8500,#ff3900);
+    box-shadow:0 12px 35px rgba(255,80,0,.30);
 }
 
-.upload-content h2{
+.upload-text{
     font-size:20px;
 }
 
-.upload-content p{
+.upload-sub{
     margin-top:9px;
-
     color:#999;
-
     font-family:Arial,sans-serif;
-
     font-size:13px;
+    line-height:1.5;
 }
 
 #fileInput{
     display:none;
 }
 
-.preview{
+.preview-wrap{
     display:none;
-    margin-top:18px;
 }
 
-.preview-image{
+.preview-wrap.show{
     display:block;
+}
 
-    width:100%;
-
-    max-height:400px;
-
-    object-fit:contain;
-
-    border-radius:18px;
-
-    background:#050505;
-
+.preview-box{
+    position:relative;
+    overflow:hidden;
+    min-height:180px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:20px;
+    background:#030303;
     border:1px solid rgba(255,255,255,.08);
+}
+
+.preview-box img{
+    display:block;
+    max-width:100%;
+    max-height:480px;
+    object-fit:contain;
 }
 
 .info-grid{
     display:grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
+    grid-template-columns:repeat(3,1fr);
     gap:10px;
-
     margin-top:12px;
 }
 
-.info-box{
-    padding:13px;
-
-    text-align:center;
-
-    border-radius:14px;
-
-    background:
-        rgba(255,255,255,.04);
-
-    border:1px solid
-        rgba(255,255,255,.06);
+.info{
+    padding:14px;
+    border-radius:15px;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.06);
 }
 
-.info-box span{
+.info small{
     display:block;
-
-    margin-bottom:5px;
-
-    color:#777;
-
-    font-family:Arial,sans-serif;
-
-    font-size:11px;
-}
-
-.info-box strong{
-    font-size:13px;
-}
-
-.status{
-    min-height:20px;
-
-    margin-top:12px;
-
-    color:#999;
-
-    font-family:Arial,sans-serif;
-
-    font-size:12px;
-
-    line-height:1.5;
-}
-
-.status.success{
-    color:#5dffab;
-}
-
-.status.error{
-    color:#ff7373;
-}
-
-.progress{
-    display:none;
-
-    margin-top:12px;
-}
-
-.progress-track{
-    width:100%;
-    height:9px;
-
-    padding:2px;
-
-    border-radius:99px;
-
-    background:#191919;
-
-    overflow:hidden;
-}
-
-.progress-bar{
-    width:0%;
-    height:100%;
-
-    border-radius:99px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ff3d00,
-            #ffab42
-        );
-
-    transition:
-        width .15s linear;
-
-    box-shadow:
-        0 0 15px
-        rgba(255,90,0,.5);
-}
-
-.progress-text{
-    margin-top:6px;
-
     color:#888;
-
     font-family:Arial,sans-serif;
-
     font-size:11px;
+    margin-bottom:6px;
+}
+
+.info strong{
+    display:block;
+    font-size:13px;
+    word-break:break-word;
 }
 
 .result{
     display:none;
-
-    margin-top:18px;
-
-    padding:17px;
-
-    border-radius:18px;
-
-    background:
-        rgba(0,255,120,.035);
-
-    border:1px solid
-        rgba(0,255,120,.20);
 }
 
-.result-title{
-    margin-bottom:10px;
-
-    color:#61ffab;
-
-    font-size:16px;
+.result.show{
+    display:block;
 }
 
-.url-row{
+.url-box{
     display:flex;
-
-    gap:8px;
+    align-items:center;
+    gap:9px;
+    padding:6px;
+    border-radius:17px;
+    background:#080808;
+    border:1px solid rgba(255,255,255,.10);
 }
 
 .url-input{
     flex:1;
-
     min-width:0;
-
-    height:48px;
-
+    height:46px;
     padding:0 12px;
-
-    border-radius:12px;
-
-    border:1px solid
-        rgba(255,255,255,.10);
-
-    background:#080808;
-
-    color:#fff;
-
+    border:0;
     outline:none;
-
+    color:#fff;
+    background:transparent;
     font-family:Arial,sans-serif;
-
-    font-size:12px;
+    font-size:13px;
 }
 
 .btn{
-    min-height:48px;
-
-    padding:0 16px;
-
+    min-height:46px;
     border:0;
-
     border-radius:13px;
-
+    padding:0 17px;
     color:#fff;
-
-    font-family:inherit;
-
+    background:linear-gradient(135deg,#ff8200,#ff3b00);
+    font-family:"GFF-Latin-Bold",Arial,sans-serif;
     cursor:pointer;
-
-    transition:.2s;
+    transition:.2s ease;
+    white-space:nowrap;
+    box-shadow:0 7px 20px rgba(255,70,0,.18);
 }
 
 .btn:hover{
     transform:translateY(-1px);
+    filter:brightness(1.08);
 }
 
-.btn-orange{
-    background:
-        linear-gradient(
-            135deg,
-            #ff9800,
-            #ff3d00
-        );
-
-    box-shadow:
-        0 8px 25px
-        rgba(255,70,0,.18);
+.btn.secondary{
+    background:rgba(255,255,255,.075);
+    border:1px solid rgba(255,255,255,.09);
+    box-shadow:none;
 }
 
-.btn-dark{
-    background:
-        rgba(255,255,255,.07);
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
+.actions{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:12px;
 }
 
-.result-buttons{
-    display:flex;
-
-    gap:8px;
-
-    margin-top:10px;
-}
-
-.result-buttons .btn{
-    flex:1;
-}
-
-.footer{
-    padding-top:22px;
-
-    text-align:center;
-
-    color:#666;
-
+.error{
+    display:none;
+    margin-top:12px;
+    padding:13px 15px;
+    border-radius:14px;
+    background:rgba(255,40,40,.09);
+    border:1px solid rgba(255,70,70,.25);
+    color:#ff9b9b;
     font-family:Arial,sans-serif;
+    font-size:13px;
+    line-height:1.45;
+}
 
+.error.show{
+    display:block;
+}
+
+.rules{
+    color:#aaa;
+    font-family:Arial,sans-serif;
+    font-size:12px;
+    line-height:1.7;
+}
+
+.rules b{
+    color:#fff;
+}
+
+footer{
+    padding:20px 0 35px;
+    text-align:center;
+    color:#666;
+    font-family:Arial,sans-serif;
     font-size:11px;
 }
 
-@media(max-width:600px){
+.hidden{
+    display:none!important;
+}
 
+@media(max-width:700px){
     .container{
-        width:calc(100% - 14px);
-        padding-top:12px;
+        width:min(100% - 18px,600px);
     }
 
     .card{
-        padding:12px;
-        border-radius:20px;
+        padding:16px;
+        border-radius:21px;
+    }
+
+    .logo{
+        width:50px;
+        height:50px;
+        border-radius:15px;
     }
 
     .info-grid{
         grid-template-columns:1fr;
     }
 
-    .url-row{
-        flex-direction:column;
+    .actions{
+        grid-template-columns:1fr;
     }
 
-    .result-buttons{
+    .url-box{
         flex-direction:column;
+        padding:7px;
+    }
+
+    .url-input{
+        width:100%;
+        height:43px;
+    }
+
+    .url-box .btn{
+        width:100%;
+    }
+
+    .upload-area{
+        min-height:230px;
     }
 }
 </style>
@@ -515,174 +371,156 @@ body::before{
 
 <div class="container">
 
-<header class="header">
+<header>
+    <div class="logo-box">
+        <img
+            class="logo"
+            src="https://cdn.imagetourls.com/uploads/tyImg/1ggIdgxtr.jpg"
+            alt="FFVN.TGM"
+        >
 
-    <div class="badge">
-        🔥 FFVN.TGM • IMAGE URL TOOL
+        <div class="brand">
+            <h1>FFVN.TGM</h1>
+            <p>CÔNG CỤ CHÈN ẢNH TẠO LINK URL</p>
+        </div>
     </div>
-
-    <h1>
-        FFVN.TGM - CÔNG CỤ CHÈN ẢNH TẠO LINK URL
-    </h1>
-
-    <p>
-        Upload hình ảnh và tạo link URL trực tiếp.
-        Hỗ trợ Android, iPhone và máy tính.
-    </p>
-
 </header>
 
-<main class="card">
+<section class="card">
+    <div class="card-title">CHÈN ẢNH</div>
 
-<label
-    class="upload-zone"
-    id="uploadZone"
-    for="fileInput"
->
+    <div
+        id="uploadArea"
+        class="upload-area"
+        role="button"
+        tabindex="0"
+    >
+        <div>
+            <div class="upload-icon">＋</div>
 
-<div class="upload-content">
+            <div class="upload-text">
+                CHỌN HÌNH ẢNH
+            </div>
 
-    <div class="upload-icon">
-        📷
+            <div class="upload-sub">
+                Nhấn để chọn ảnh từ điện thoại hoặc máy tính<br>
+                PNG • JPG • WEBP • GIF • AVIF • Tối đa 4MB
+            </div>
+        </div>
     </div>
 
-    <h2>
-        CHỌN HÌNH ẢNH
-    </h2>
+    <input
+        id="fileInput"
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/gif,image/avif"
+    >
+</section>
 
-    <p>
-        Nhấn để chọn ảnh từ Album
-    </p>
+<section id="previewSection" class="card preview-wrap">
 
-    <p>
-        PNG • JPG • JPEG • WEBP • GIF • AVIF • TỐI ĐA 4MB
-    </p>
+    <div class="card-title">
+        XEM TRƯỚC
+    </div>
 
-</div>
+    <div class="preview-box">
+        <img id="previewImage" alt="Ảnh xem trước">
+    </div>
 
-</label>
+    <div class="info-grid">
 
-<input
-    id="fileInput"
-    type="file"
-    accept="image/png,image/jpeg,image/jpg,image/webp,image/gif,image/avif"
->
+        <div class="info">
+            <small>TÊN FILE</small>
+            <strong id="fileName">-</strong>
+        </div>
 
-<section
-    class="preview"
-    id="preview"
->
+        <div class="info">
+            <small>KÍCH THƯỚC</small>
+            <strong id="fileSize">-</strong>
+        </div>
 
-<img
-    id="previewImage"
-    class="preview-image"
-    alt="Preview"
->
+        <div class="info">
+            <small>ĐỘ PHÂN GIẢI</small>
+            <strong id="dimensions">-</strong>
+        </div>
 
-<div class="info-grid">
-
-<div class="info-box">
-<span>KÍCH THƯỚC</span>
-<strong id="dimensions">-</strong>
-</div>
-
-<div class="info-box">
-<span>TỶ LỆ</span>
-<strong id="ratio">-</strong>
-</div>
-
-<div class="info-box">
-<span>DUNG LƯỢNG</span>
-<strong id="size">-</strong>
-</div>
-
-</div>
-
-<div
-    class="progress"
-    id="progress"
->
-
-<div class="progress-track">
-
-<div
-    class="progress-bar"
-    id="progressBar"
-></div>
-
-</div>
-
-<div
-    class="progress-text"
-    id="progressText"
->
-    ĐANG CHUẨN BỊ...
-</div>
-
-</div>
-
-<div
-    class="status"
-    id="status"
->
-    Đang chờ hình ảnh...
-</div>
+    </div>
 
 </section>
 
-<section
-    class="result"
-    id="result"
->
+<section id="resultSection" class="card result">
 
-<div class="result-title">
-    ✅ UPLOAD THÀNH CÔNG
-</div>
+    <div class="card-title">
+        LINK ẢNH CỦA BẠN
+    </div>
 
-<div class="url-row">
+    <div class="url-box">
 
-<input
-    id="urlInput"
-    class="url-input"
-    type="text"
-    readonly
->
+        <input
+            id="urlInput"
+            class="url-input"
+            type="text"
+            readonly
+        >
 
-<button
-    id="copyBtn"
-    class="btn btn-orange"
-    type="button"
->
-    📋 SAO CHÉP
-</button>
+        <button
+            id="copyBtn"
+            class="btn"
+            type="button"
+        >
+            SAO CHÉP
+        </button>
 
-</div>
+    </div>
 
-<div class="result-buttons">
+    <div class="actions">
 
-<button
-    id="openBtn"
-    class="btn btn-dark"
-    type="button"
->
-    🔗 MỞ ẢNH
-</button>
+        <button
+            id="openBtn"
+            class="btn secondary"
+            type="button"
+        >
+            MỞ ẢNH
+        </button>
 
-<button
-    id="newBtn"
-    class="btn btn-dark"
-    type="button"
->
-    ➕ ẢNH MỚI
-</button>
+        <button
+            id="newBtn"
+            class="btn secondary"
+            type="button"
+        >
+            ẢNH MỚI
+        </button>
 
-</div>
+        <button
+            id="copyHtmlBtn"
+            class="btn secondary"
+            type="button"
+        >
+            COPY HTML
+        </button>
+
+    </div>
+
+    <div id="errorBox" class="error"></div>
 
 </section>
 
-</main>
+<section class="card">
 
-<footer class="footer">
+    <div class="card-title">
+        THÔNG TIN
+    </div>
+
+    <div class="rules">
+        <b>•</b> Hỗ trợ PNG, JPG/JPEG, WEBP, GIF và AVIF.<br>
+        <b>•</b> Dung lượng tối đa 4MB mỗi hình ảnh.<br>
+        <b>•</b> Hệ thống tự tạo tên ảnh ngắn 8 ký tự.<br>
+        <b>•</b> URL công khai sử dụng domain FFVN.TGM.<br>
+        <b>•</b> Ảnh được lưu trên Vercel Blob.
+    </div>
+
+</section>
+
+<footer>
     © 2026 FFVN.TGM - ALL RIGHTS RESERVED.
 </footer>
 
@@ -691,283 +529,246 @@ body::before{
 <script>
 "use strict";
 
-const MAX_SIZE =
-    4 * 1024 * 1024;
+const MAX_SIZE = 4 * 1024 * 1024;
 
 const ALLOWED_TYPES = [
     "image/png",
     "image/jpeg",
-    "image/jpg",
     "image/webp",
     "image/gif",
     "image/avif"
 ];
 
-const fileInput =
-    document.getElementById("fileInput");
+const uploadArea = document.getElementById("uploadArea");
+const fileInput = document.getElementById("fileInput");
 
-const uploadZone =
-    document.getElementById("uploadZone");
+const previewSection = document.getElementById("previewSection");
+const previewImage = document.getElementById("previewImage");
 
-const preview =
-    document.getElementById("preview");
+const resultSection = document.getElementById("resultSection");
+const urlInput = document.getElementById("urlInput");
 
-const previewImage =
-    document.getElementById("previewImage");
+const fileName = document.getElementById("fileName");
+const fileSize = document.getElementById("fileSize");
+const dimensions = document.getElementById("dimensions");
 
-const dimensions =
-    document.getElementById("dimensions");
+const copyBtn = document.getElementById("copyBtn");
+const copyHtmlBtn = document.getElementById("copyHtmlBtn");
+const openBtn = document.getElementById("openBtn");
+const newBtn = document.getElementById("newBtn");
 
-const ratio =
-    document.getElementById("ratio");
-
-const size =
-    document.getElementById("size");
-
-const status =
-    document.getElementById("status");
-
-const progress =
-    document.getElementById("progress");
-
-const progressBar =
-    document.getElementById("progressBar");
-
-const progressText =
-    document.getElementById("progressText");
-
-const result =
-    document.getElementById("result");
-
-const urlInput =
-    document.getElementById("urlInput");
-
-const copyBtn =
-    document.getElementById("copyBtn");
-
-const openBtn =
-    document.getElementById("openBtn");
-
-const newBtn =
-    document.getElementById("newBtn");
+const errorBox = document.getElementById("errorBox");
 
 let currentUrl = "";
+let currentFile = null;
 
-function formatBytes(bytes){
+function showError(message){
+    errorBox.textContent = message;
+    errorBox.classList.add("show");
+}
 
-    if(bytes < 1024){
-        return bytes + " B";
-    }
+function hideError(){
+    errorBox.textContent = "";
+    errorBox.classList.remove("show");
+}
+
+function formatSize(bytes){
+    if(bytes < 1024) return bytes + " B";
 
     if(bytes < 1024 * 1024){
-        return (
-            bytes / 1024
-        ).toFixed(1) + " KB";
+        return (bytes / 1024).toFixed(1) + " KB";
     }
 
-    return (
-        bytes /
-        1024 /
-        1024
-    ).toFixed(2) + " MB";
+    return (bytes / (1024 * 1024)).toFixed(2) + " MB";
 }
 
-function gcd(a,b){
+function randomString(length = 8){
 
-    while(b){
+    const chars =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        const temp = b;
+    let result = "";
 
-        b = a % b;
+    if(window.crypto && crypto.getRandomValues){
 
-        a = temp;
+        const values = new Uint32Array(length);
+
+        crypto.getRandomValues(values);
+
+        for(let i = 0; i < length; i++){
+            result += chars[values[i] % chars.length];
+        }
+
+        return result;
     }
 
-    return a;
-}
+    for(let i = 0; i < length; i++){
+        result += chars[Math.floor(Math.random() * chars.length)];
+    }
 
-function getRatio(w,h){
-
-    const g = gcd(w,h);
-
-    return `${w/g}:${h/g}`;
+    return result;
 }
 
 function getExtension(file){
 
-    switch(
-        String(file.type || "")
-            .toLowerCase()
-    ){
+    const type = file.type.toLowerCase();
 
-        case "image/jpeg":
-        case "image/jpg":
-            return "jpg";
+    if(type === "image/png") return "png";
+    if(type === "image/jpeg") return "jpg";
+    if(type === "image/webp") return "webp";
+    if(type === "image/gif") return "gif";
+    if(type === "image/avif") return "avif";
 
-        case "image/webp":
-            return "webp";
-
-        case "image/gif":
-            return "gif";
-
-        case "image/avif":
-            return "avif";
-
-        default:
-            return "png";
-    }
+    return null;
 }
 
-/*
-    Tạo mã cực ngắn.
+function createCustomFilename(file){
 
-    Ví dụ:
-    a7K29xPq.png
-*/
+    const extension = getExtension(file);
 
-function createShortId(){
-
-    const chars =
-        "ABCDEFGHJKLMNPQRSTUVWXYZ" +
-        "abcdefghijkmnopqrstuvwxyz" +
-        "23456789";
-
-    let id = "";
-
-    for(let i=0;i<8;i++){
-
-        id += chars[
-            Math.floor(
-                Math.random() *
-                chars.length
-            )
-        ];
-    }
-
-    return id;
+    return randomString(8) + "." + extension;
 }
 
-function createFilename(file){
+function createPreview(file){
+
+    return new Promise((resolve,reject)=>{
+
+        const reader = new FileReader();
+
+        reader.onload = function(){
+
+            previewImage.onload = function(){
+
+                dimensions.textContent =
+                    previewImage.naturalWidth +
+                    " × " +
+                    previewImage.naturalHeight +
+                    " px";
+
+                resolve();
+            };
+
+            previewImage.onerror = function(){
+                reject(new Error("Không thể đọc hình ảnh."));
+            };
+
+            previewImage.src = reader.result;
+        };
+
+        reader.onerror = function(){
+            reject(new Error("Không thể đọc file."));
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+function createUrl(filename){
 
     return (
-        createShortId() +
-        "." +
-        getExtension(file)
+        window.location.origin +
+        "/images/" +
+        encodeURIComponent(filename)
     );
 }
 
-function setStatus(text,type){
+async function copyText(text){
 
-    status.textContent = text;
+    try{
 
-    status.className =
-        "status " +
-        (type || "");
+        await navigator.clipboard.writeText(text);
+
+        return true;
+
+    }catch{
+
+        const textarea = document.createElement("textarea");
+
+        textarea.value = text;
+
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+
+        document.body.appendChild(textarea);
+
+        textarea.select();
+
+        let success = false;
+
+        try{
+            success = document.execCommand("copy");
+        }catch{}
+
+        textarea.remove();
+
+        return success;
+    }
 }
 
-function setProgress(percent,text){
+function uploadInBackground(file, filename){
 
-    progress.style.display =
-        "block";
+    const xhr = new XMLHttpRequest();
 
-    progressBar.style.width =
-        percent + "%";
+    xhr.open(
+        "POST",
+        "/api/upload?filename=" + encodeURIComponent(filename),
+        true
+    );
 
-    progressText.textContent =
-        text;
-}
+    xhr.setRequestHeader(
+        "Content-Type",
+        file.type
+    );
 
-function uploadFile(file,filename){
+    xhr.onreadystatechange = function(){
 
-    return new Promise(
-        (resolve,reject)=>{
+        if(xhr.readyState !== 4) return;
 
-            const xhr =
-                new XMLHttpRequest();
+        if(xhr.status < 200 || xhr.status >= 300){
 
-            xhr.open(
-                "POST",
-                "/api/upload?filename=" +
-                encodeURIComponent(filename),
-                true
-            );
+            let message = "Không thể tải ảnh lên máy chủ.";
 
-            xhr.setRequestHeader(
-                "Content-Type",
-                file.type
-            );
+            try{
 
-            xhr.onload = function(){
+                const data = JSON.parse(xhr.responseText);
 
-                let data = null;
-
-                try{
-
-                    data =
-                        JSON.parse(
-                            xhr.responseText
-                        );
-
-                }catch(error){}
-
-                if(
-                    xhr.status >= 200 &&
-                    xhr.status < 300 &&
-                    data?.success
-                ){
-
-                    resolve(data);
-
-                    return;
+                if(data && data.error){
+                    message = data.error;
                 }
 
-                reject(
-                    new Error(
-                        data?.error ||
-                        "Upload thất bại."
-                    )
-                );
-            };
+            }catch{}
 
-            xhr.onerror = function(){
-
-                reject(
-                    new Error(
-                        "Không thể kết nối máy chủ."
-                    )
-                );
-            };
-
-            xhr.onabort = function(){
-
-                reject(
-                    new Error(
-                        "Upload đã bị hủy."
-                    )
-                );
-            };
-
-            xhr.send(file);
+            showError(message);
         }
-    );
+    };
+
+    xhr.onerror = function(){
+
+        showError(
+            "Không thể kết nối máy chủ để lưu hình ảnh."
+        );
+    };
+
+    /*
+       Không hiển thị loading/progress.
+       URL đã được tạo trước để giao diện phản hồi ngay.
+    */
+
+    xhr.send(file);
 }
 
 async function handleFile(file){
+
+    hideError();
 
     if(!file){
         return;
     }
 
-    result.style.display =
-        "none";
+    if(!ALLOWED_TYPES.includes(file.type.toLowerCase())){
 
-    currentUrl = "";
-
-    if(!ALLOWED_TYPES.includes(file.type)){
-
-        setStatus(
-            "❌ Định dạng ảnh không được hỗ trợ.",
-            "error"
+        showError(
+            "Định dạng ảnh không được hỗ trợ."
         );
 
         return;
@@ -975,308 +776,199 @@ async function handleFile(file){
 
     if(file.size > MAX_SIZE){
 
-        setStatus(
-            "❌ Ảnh vượt quá giới hạn 4MB.",
-            "error"
+        showError(
+            "Ảnh vượt quá giới hạn 4MB."
         );
 
         return;
     }
 
-    preview.style.display =
-        "block";
+    const extension = getExtension(file);
 
-    setStatus(
-        "Đang đọc hình ảnh..."
-    );
+    if(!extension){
 
-    size.textContent =
-        formatBytes(file.size);
+        showError(
+            "Không xác định được định dạng ảnh."
+        );
 
-    const objectUrl =
-        URL.createObjectURL(file);
+        return;
+    }
 
-    previewImage.onload =
-        function(){
+    currentFile = file;
 
-            dimensions.textContent =
-                previewImage.naturalWidth +
-                " × " +
-                previewImage.naturalHeight;
+    const filename = createCustomFilename(file);
 
-            ratio.textContent =
-                getRatio(
-                    previewImage.naturalWidth,
-                    previewImage.naturalHeight
-                );
+    currentUrl = createUrl(filename);
 
-            URL.revokeObjectURL(
-                objectUrl
-            );
-        };
+    fileName.textContent = filename;
 
-    previewImage.src =
-        objectUrl;
+    fileSize.textContent = formatSize(file.size);
 
-    /*
-      Mã ảnh ngắn.
-    */
+    previewSection.classList.add("show");
 
-    const filename =
-        createFilename(file);
+    resultSection.classList.add("show");
 
-    /*
-      URL ngắn được tạo.
-    */
-
-    currentUrl =
-        window.location.origin +
-        "/images/" +
-        encodeURIComponent(filename);
-
-    setStatus(
-        "Đang tải hình ảnh lên máy chủ..."
-    );
-
-    setProgress(
-        5,
-        "ĐANG CHUẨN BỊ..."
-    );
-
-    /*
-      Tiến trình giao diện chạy riêng,
-      tránh bị kẹt ở 97%.
-    */
-
-    let visualProgress = 5;
-
-    const timer =
-        setInterval(()=>{
-
-            if(visualProgress < 92){
-
-                visualProgress += 3;
-
-                setProgress(
-                    visualProgress,
-                    "ĐANG UPLOAD..."
-                );
-            }
-
-        },120);
+    urlInput.value = currentUrl;
 
     try{
 
-        const data =
-            await uploadFile(
-                file,
-                filename
-            );
-
-        clearInterval(timer);
-
-        setProgress(
-            100,
-            "UPLOAD 100% • HOÀN TẤT"
-        );
-
-        /*
-          Chỉ hiện URL sau khi Blob
-          xác nhận upload thành công.
-        */
-
-        currentUrl =
-            data.url ||
-            currentUrl;
-
-        urlInput.value =
-            currentUrl;
-
-        result.style.display =
-            "block";
-
-        setStatus(
-            "✅ Upload thành công. Link URL đã sẵn sàng.",
-            "success"
-        );
-
-        /*
-          Lưu link cuối cùng để giao diện
-          không phụ thuộc vào API khi reload.
-        */
-
-        try{
-
-            localStorage.setItem(
-                "ffvn_last_image_url",
-                currentUrl
-            );
-
-        }catch(error){}
+        await createPreview(file);
 
     }catch(error){
 
-        clearInterval(timer);
-
-        setProgress(
-            0,
-            "UPLOAD THẤT BẠI"
+        showError(
+            error.message || "Không thể xem trước hình ảnh."
         );
 
-        setStatus(
-            "❌ " +
-            (
-                error?.message ||
-                "Không thể kết nối máy chủ."
-            ),
-            "error"
-        );
+        return;
     }
+
+    /*
+       Upload chạy nền.
+       Không hiện loading.
+    */
+
+    uploadInBackground(
+        file,
+        filename
+    );
 }
 
-fileInput.addEventListener(
-    "change",
-    function(){
+uploadArea.addEventListener("click",()=>{
 
-        handleFile(
-            this.files?.[0]
-        );
-    }
-);
+    fileInput.value = "";
 
-uploadZone.addEventListener(
-    "dragover",
-    function(event){
+    fileInput.click();
 
-        event.preventDefault();
+});
 
-        uploadZone.classList.add(
-            "drag"
-        );
-    }
-);
+uploadArea.addEventListener("keydown",(event)=>{
 
-uploadZone.addEventListener(
-    "dragleave",
-    function(){
-
-        uploadZone.classList.remove(
-            "drag"
-        );
-    }
-);
-
-uploadZone.addEventListener(
-    "drop",
-    function(event){
+    if(
+        event.key === "Enter" ||
+        event.key === " "
+    ){
 
         event.preventDefault();
-
-        uploadZone.classList.remove(
-            "drag"
-        );
-
-        handleFile(
-            event.dataTransfer.files?.[0]
-        );
-    }
-);
-
-copyBtn.addEventListener(
-    "click",
-    async function(){
-
-        if(!currentUrl){
-            return;
-        }
-
-        try{
-
-            await navigator.clipboard.writeText(
-                currentUrl
-            );
-
-        }catch(error){
-
-            urlInput.select();
-
-            document.execCommand(
-                "copy"
-            );
-        }
-
-        copyBtn.textContent =
-            "✅ ĐÃ SAO CHÉP";
-
-        setTimeout(
-            ()=>{
-                copyBtn.textContent =
-                    "📋 SAO CHÉP";
-            },
-            1500
-        );
-    }
-);
-
-openBtn.addEventListener(
-    "click",
-    function(){
-
-        if(!currentUrl){
-            return;
-        }
-
-        window.open(
-            currentUrl,
-            "_blank",
-            "noopener"
-        );
-    }
-);
-
-newBtn.addEventListener(
-    "click",
-    function(){
 
         fileInput.value = "";
 
-        currentUrl = "";
-
-        preview.style.display =
-            "none";
-
-        result.style.display =
-            "none";
-
-        progress.style.display =
-            "none";
-
-        previewImage.removeAttribute(
-            "src"
-        );
-
-        dimensions.textContent = "-";
-        ratio.textContent = "-";
-        size.textContent = "-";
-
-        setStatus(
-            "Đang chờ hình ảnh..."
-        );
+        fileInput.click();
     }
-);
 
-/*
-  Không gọi API khi trang được mở lại.
-  Vì vậy reload / thoát vào lại trang
-  không gây lỗi kết nối API.
-*/
+});
 
-window.addEventListener(
-    "pageshow",
-    function(){
-        /* intentionally empty */
-    }
-);
+fileInput.addEventListener("change",()=>{
+
+    const file = fileInput.files?.[0];
+
+    handleFile(file);
+
+});
+
+uploadArea.addEventListener("dragover",(event)=>{
+
+    event.preventDefault();
+
+    uploadArea.classList.add("dragover");
+
+});
+
+uploadArea.addEventListener("dragleave",()=>{
+
+    uploadArea.classList.remove("dragover");
+
+});
+
+uploadArea.addEventListener("drop",(event)=>{
+
+    event.preventDefault();
+
+    uploadArea.classList.remove("dragover");
+
+    const file = event.dataTransfer.files?.[0];
+
+    handleFile(file);
+
+});
+
+copyBtn.addEventListener("click",async()=>{
+
+    if(!currentUrl) return;
+
+    const success = await copyText(currentUrl);
+
+    copyBtn.textContent =
+        success ? "ĐÃ COPY" : "COPY LỖI";
+
+    setTimeout(()=>{
+
+        copyBtn.textContent = "SAO CHÉP";
+
+    },1500);
+
+});
+
+copyHtmlBtn.addEventListener("click",async()=>{
+
+    if(!currentUrl) return;
+
+    const html =
+        '<img src="' +
+        currentUrl +
+        '" alt="FFVN.TGM">';
+
+    const success = await copyText(html);
+
+    copyHtmlBtn.textContent =
+        success ? "ĐÃ COPY" : "COPY LỖI";
+
+    setTimeout(()=>{
+
+        copyHtmlBtn.textContent = "COPY HTML";
+
+    },1500);
+
+});
+
+openBtn.addEventListener("click",()=>{
+
+    if(!currentUrl) return;
+
+    window.open(
+        currentUrl,
+        "_blank",
+        "noopener,noreferrer"
+    );
+
+});
+
+newBtn.addEventListener("click",()=>{
+
+    currentFile = null;
+    currentUrl = "";
+
+    fileInput.value = "";
+
+    previewImage.removeAttribute("src");
+
+    urlInput.value = "";
+
+    fileName.textContent = "-";
+    fileSize.textContent = "-";
+    dimensions.textContent = "-";
+
+    previewSection.classList.remove("show");
+    resultSection.classList.remove("show");
+
+    hideError();
+
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+
+});
 </script>
 
 </body>
