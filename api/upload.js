@@ -1,4 +1,4 @@
-import { put, head } from "@vercel/blob";
+import { put, get } from "@vercel/blob";
 
 const MAX_SIZE = 4 * 1024 * 1024;
 
@@ -12,56 +12,41 @@ const ALLOWED_TYPES = [
 ];
 
 function getToken(){
-
-    const token =
-        process.env.BLOB_READ_WRITE_TOKEN;
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
 
     if(!token){
-
         throw new Error(
-            "BLOB_READ_WRITE_TOKEN chưa được cấu hình trên Vercel."
+            "BLOB_READ_WRITE_TOKEN chưa được cấu hình."
         );
     }
 
     return token.trim();
 }
 
-function validFilename(filename){
+function isValidFilename(filename){
 
-    if(
-        typeof filename !== "string" ||
-        !filename
-    ){
+    if(typeof filename !== "string"){
         return false;
     }
 
-    /*
-      Cho phép:
-
-      a7K29xPq.png
-      X92kLm3A.webp
-      8KxP2mQ1.gif
-    */
-
-    return /^[A-Za-z0-9]{8,12}\.(png|jpg|jpeg|webp|gif|avif)$/i
+    return /^[A-Za-z0-9]{8}\.(png|jpg|webp|gif|avif)$/i
         .test(filename);
 }
 
-function getExpectedType(filename){
+function getContentType(filename){
 
-    const extension =
+    const ext =
         filename
             .split(".")
             .pop()
             .toLowerCase();
 
-    switch(extension){
+    switch(ext){
 
         case "png":
             return "image/png";
 
         case "jpg":
-        case "jpeg":
             return "image/jpeg";
 
         case "webp":
@@ -74,11 +59,11 @@ function getExpectedType(filename){
             return "image/avif";
 
         default:
-            return null;
+            return "application/octet-stream";
     }
 }
 
-async function readBody(req){
+async function readRequestBody(req){
 
     const chunks = [];
 
@@ -95,10 +80,9 @@ async function readBody(req){
 
         if(total > MAX_SIZE){
 
-            const error =
-                new Error(
-                    "Ảnh vượt quá giới hạn 4MB."
-                );
+            const error = new Error(
+                "Ảnh vượt quá giới hạn 4MB."
+            );
 
             error.statusCode = 413;
 
@@ -116,81 +100,114 @@ export default async function handler(req,res){
     try{
 
         const rawFilename =
-            String(
-                req.query?.filename || ""
-            );
+            String(req.query?.filename || "");
 
         const filename =
-            rawFilename
-                .split("/")
-                .pop();
+            rawFilename.split("/").pop();
 
         /*
-        ========================================
-        GET IMAGE
-        /images/a7K29xPq.png
-        ========================================
-        */
+         * GET
+         * /images/a7K29xPq.png
+         *
+         * Không redirect sang URL Blob.
+         * Lấy Blob bằng get() và stream trực tiếp.
+         */
 
         if(req.method === "GET"){
 
-            if(!validFilename(filename)){
+            if(!isValidFilename(filename)){
 
                 return res
                     .status(400)
-                    .send(
-                        "Tên hình ảnh không hợp lệ."
-                    );
+                    .send("Tên ảnh không hợp lệ.");
             }
 
-            const blob =
-                await head(
-                    filename,
-                    {
-                        token:getToken()
-                    }
-                );
+            const result = await get(
+                filename,
+                {
+                    access:"public",
+                    token:getToken()
+                }
+            );
 
-            if(!blob || !blob.url){
+            if(
+                !result ||
+                !result.stream
+            ){
 
                 return res
                     .status(404)
-                    .send(
-                        "Không tìm thấy hình ảnh."
-                    );
+                    .send("Không tìm thấy hình ảnh.");
             }
 
-            /*
-              Cache ảnh trong 1 năm.
-            */
+            const contentType =
+                result.blob?.contentType ||
+                getContentType(filename);
+
+            res.statusCode = 200;
+
+            res.setHeader(
+                "Content-Type",
+                contentType
+            );
+
+            res.setHeader(
+                "Content-Disposition",
+                "inline"
+            );
 
             res.setHeader(
                 "Cache-Control",
                 "public, max-age=31536000, immutable"
             );
 
-            res.setHeader(
-                "Content-Type",
-                blob.contentType ||
-                getExpectedType(filename) ||
-                "application/octet-stream"
-            );
+            /*
+             * Node/Vercel có thể xử lý stream.
+             */
+
+            if(
+                typeof result.stream.pipe === "function"
+            ){
+
+                result.stream.pipe(res);
+
+                return;
+            }
 
             /*
-              Chuyển tới Blob URL thật.
-            */
+             * Fallback nếu stream là Web ReadableStream.
+             */
 
-            return res.redirect(
-                302,
-                blob.url
+            const response =
+                new Response(
+                    result.stream,
+                    {
+                        status:200,
+                        headers:{
+                            "Content-Type":
+                                contentType,
+                            "Content-Disposition":
+                                "inline",
+                            "Cache-Control":
+                                "public, max-age=31536000, immutable"
+                        }
+                    }
+                );
+
+            const arrayBuffer =
+                await response.arrayBuffer();
+
+            res.end(
+                Buffer.from(arrayBuffer)
             );
+
+            return;
         }
 
         /*
-        ========================================
-        POST UPLOAD
-        ========================================
-        */
+         * POST
+         * Upload ảnh.
+         */
 
         if(req.method !== "POST"){
 
@@ -207,14 +224,13 @@ export default async function handler(req,res){
                 });
         }
 
-        if(!validFilename(filename)){
+        if(!isValidFilename(filename)){
 
             return res
                 .status(400)
                 .json({
                     success:false,
-                    error:
-                        "Tên file không hợp lệ."
+                    error:"Tên file không hợp lệ."
                 });
         }
 
@@ -226,44 +242,19 @@ export default async function handler(req,res){
             .trim()
             .toLowerCase();
 
-        if(
-            !ALLOWED_TYPES.includes(
-                contentType
-            )
-        ){
+        if(!ALLOWED_TYPES.includes(contentType)){
 
             return res
                 .status(415)
                 .json({
                     success:false,
                     error:
-                        "Định dạng hình ảnh không được hỗ trợ."
-                });
-        }
-
-        const expectedType =
-            getExpectedType(filename);
-
-        if(
-            expectedType &&
-            contentType !== expectedType &&
-            !(
-                expectedType === "image/jpeg" &&
-                contentType === "image/jpg"
-            )
-        ){
-
-            return res
-                .status(415)
-                .json({
-                    success:false,
-                    error:
-                        "Định dạng file không khớp."
+                        "Định dạng ảnh không được hỗ trợ."
                 });
         }
 
         const buffer =
-            await readBody(req);
+            await readRequestBody(req);
 
         if(!buffer.length){
 
@@ -272,72 +263,52 @@ export default async function handler(req,res){
                 .json({
                     success:false,
                     error:
-                        "Không nhận được dữ liệu hình ảnh."
+                        "Không nhận được dữ liệu ảnh."
                 });
         }
 
         /*
-          Upload Blob.
-        */
+         * Lưu vào Vercel Blob.
+         */
 
-        const blob =
-            await put(
-                filename,
-                buffer,
-                {
-                    token:getToken(),
-
-                    access:"public",
-
-                    /*
-                      Không tự thêm suffix.
-                      Filename đã ngắn và duy nhất
-                      do trình duyệt tạo.
-                    */
-
-                    addRandomSuffix:false,
-
-                    contentType,
-
-                    cacheControlMaxAge:
-                        31536000
-                }
-            );
-
-        const domain =
-            "https://img-ffvn-tgm-com.vercel.app";
+        await put(
+            filename,
+            buffer,
+            {
+                token:getToken(),
+                access:"public",
+                addRandomSuffix:false,
+                contentType:contentType,
+                cacheControlMaxAge:31536000
+            }
+        );
 
         const publicUrl =
-            domain +
-            "/images/" +
+            "https://img-ffvn-tgm-com.vercel.app/images/" +
             encodeURIComponent(filename);
+
+        /*
+         * CỐ Ý KHÔNG TRẢ:
+         * blobUrl
+         * pathname
+         *
+         * Chỉ trả URL website của bạn.
+         */
 
         return res
             .status(200)
             .json({
-
                 success:true,
-
-                message:
-                    "Upload hình ảnh thành công.",
-
-                filename,
-
+                filename:filename,
                 url:publicUrl,
-
-                blobUrl:blob.url,
-
-                pathname:blob.pathname,
-
-                contentType,
-
+                contentType:contentType,
                 size:buffer.length
             });
 
     }catch(error){
 
         console.error(
-            "FFVN.TGM API ERROR:",
+            "FFVN.TGM UPLOAD ERROR:",
             error
         );
 
@@ -346,12 +317,10 @@ export default async function handler(req,res){
                 error?.statusCode || 500
             )
             .json({
-
                 success:false,
-
                 error:
                     error?.message ||
-                    "Máy chủ xử lý thất bại."
+                    "Lỗi máy chủ."
             });
     }
-}
+            }
