@@ -1,8 +1,8 @@
 {
   "name": "img-ffvn-tgm-com",
-  "version": "2.0.0",
+  "version": "4.0.0",
   "private": true,
-  "description": "FFVN.TGM Image Hosting",
+  "description": "FFVN.TGM - Công cụ chèn ảnh tạo link URL",
   "dependencies": {
     "@vercel/blob": "^2.8.0"
   }
