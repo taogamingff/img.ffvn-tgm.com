@@ -26,7 +26,6 @@
 :root{
     --orange:#ff6500;
     --orange2:#ff9d2f;
-    --bg:#050505;
 }
 
 body{
@@ -168,15 +167,10 @@ h1{
 .preview{
     width:100%;
     max-height:430px;
-
     display:block;
-
     object-fit:contain;
-
     background:#000;
-
     border-radius:20px;
-
     border:1px solid rgba(255,255,255,.1);
 }
 
@@ -191,7 +185,6 @@ h1{
     min-width:0;
     padding:13px;
     border-radius:15px;
-
     background:rgba(255,255,255,.035);
     border:1px solid rgba(255,255,255,.06);
 }
@@ -218,13 +211,10 @@ h1{
 #createURLBtn{
     width:100%;
     min-height:54px;
-
     border:0;
     border-radius:15px;
-
     cursor:pointer;
-
-    color:white;
+    color:#fff;
 
     font-family:"GFF-Latin-Bold",Arial,sans-serif;
     font-size:16px;
@@ -237,7 +227,6 @@ h1{
         );
 
     box-shadow:0 10px 25px rgba(255,90,0,.18);
-
     transition:.2s;
 }
 
@@ -265,50 +254,31 @@ h1{
 .url-box{
     display:flex;
     gap:8px;
-
     padding:8px;
-
     border-radius:16px;
-
     background:#070707;
-
     border:1px solid rgba(255,106,0,.38);
 }
 
 .url-input{
     flex:1;
     min-width:0;
-
     padding:10px;
-
     border:0;
     outline:0;
-
     background:transparent;
-
     color:#fff;
-
     font-family:Arial,sans-serif;
     font-size:13px;
 }
 
 .copy-btn{
     min-width:110px;
-
     border:0;
     border-radius:12px;
-
     color:#fff;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff7600,
-            #ff3b00
-        );
-
+    background:linear-gradient(135deg,#ff7600,#ff3b00);
     cursor:pointer;
-
     font-family:"GFF-Latin-Bold",Arial,sans-serif;
 }
 
@@ -321,17 +291,11 @@ h1{
 
 .action-btn{
     min-height:46px;
-
     border-radius:13px;
-
     border:1px solid rgba(255,255,255,.08);
-
     cursor:pointer;
-
-    color:white;
-
+    color:#fff;
     font-family:"GFF-Latin-Bold",Arial,sans-serif;
-
     background:rgba(255,255,255,.07);
 }
 
@@ -344,7 +308,6 @@ h1{
     margin-top:15px;
     padding:13px 15px;
     border-radius:14px;
-
     font-family:Arial,sans-serif;
     font-size:13px;
     line-height:1.5;
@@ -443,7 +406,7 @@ footer{
     <div class="upload-desc">
         Nhấn để chọn ảnh từ Album hoặc thiết bị<br>
         PNG • JPG • JPEG • WEBP • GIF • AVIF<br>
-        Dung lượng tối đa 4 MB
+        Dung lượng tối đa <b>1 GB</b>
     </div>
 
 </label>
@@ -587,6 +550,12 @@ const API_URL = "/api/upload";
 const SITE_URL =
     "https://img-ffvn-tgm-com.vercel.app";
 
+/*
+   GIAO DIỆN CHO PHÉP TỐI ĐA 1 GB
+*/
+const MAX_SIZE =
+    1024 * 1024 * 1024;
+
 
 const input =
     document.getElementById("fileInput");
@@ -641,9 +610,7 @@ let uploadedFilename = "";
 let currentURL = "";
 
 
-/* =========================
-   SIZE
-========================= */
+/* SIZE */
 
 function formatSize(bytes){
 
@@ -653,13 +620,16 @@ function formatSize(bytes){
     if(bytes < 1024 * 1024)
         return (bytes / 1024).toFixed(1) + " KB";
 
-    return (bytes / 1024 / 1024).toFixed(2) + " MB";
+    if(bytes < 1024 * 1024 * 1024)
+        return (bytes / 1024 / 1024).toFixed(2) + " MB";
+
+    return (
+        bytes / 1024 / 1024 / 1024
+    ).toFixed(2) + " GB";
 }
 
 
-/* =========================
-   RANDOM NAME
-========================= */
+/* RANDOM NAME */
 
 function randomName(ext){
 
@@ -682,9 +652,7 @@ function randomName(ext){
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* MESSAGE */
 
 function showMessage(text,type){
 
@@ -695,9 +663,7 @@ function showMessage(text,type){
 }
 
 
-/* =========================
-   GET EXT
-========================= */
+/* EXTENSION */
 
 function getExtension(file){
 
@@ -714,9 +680,7 @@ function getExtension(file){
 }
 
 
-/* =========================
-   UPLOAD
-========================= */
+/* UPLOAD */
 
 async function uploadImage(file){
 
@@ -746,7 +710,7 @@ async function uploadImage(file){
         );
 
 
-    let data = null;
+    let data;
 
     try{
 
@@ -785,9 +749,7 @@ async function uploadImage(file){
 }
 
 
-/* =========================
-   CHỌN ẢNH
-========================= */
+/* CHỌN ẢNH */
 
 input.addEventListener(
     "change",
@@ -800,8 +762,6 @@ input.addEventListener(
             return;
 
 
-        /* RESET TRẠNG THÁI URL */
-
         selectedFile = file;
 
         uploadedFilename = "";
@@ -812,15 +772,15 @@ input.addEventListener(
             "none";
 
 
-        /* CHECK SIZE */
+        /* 1 GB */
 
         if(
             file.size >
-            4 * 1024 * 1024
+            MAX_SIZE
         ){
 
             showMessage(
-                "❌ Hình ảnh vượt quá 4 MB.",
+                "❌ Hình ảnh vượt quá dung lượng tối đa 1 GB.",
                 "error"
             );
 
@@ -829,8 +789,6 @@ input.addEventListener(
             return;
         }
 
-
-        /* CHECK TYPE */
 
         const allowed = [
 
@@ -860,8 +818,6 @@ input.addEventListener(
         }
 
 
-        /* PREVIEW */
-
         preview.src =
             URL.createObjectURL(file);
 
@@ -879,8 +835,6 @@ input.addEventListener(
             file.type;
 
 
-        /* HIỆN NÚT */
-
         createURLBox.style.display =
             "block";
 
@@ -892,7 +846,7 @@ input.addEventListener(
 
 
         showMessage(
-            "Ảnh đã được chọn. Nhấn TẠO URL ẢNH.",
+            "Ảnh đã được chọn. Nhấn TẠO URL ẢNH để upload và tạo link.",
             "success"
         );
 
@@ -900,9 +854,7 @@ input.addEventListener(
 );
 
 
-/* =========================
-   TẠO URL
-========================= */
+/* TẠO URL */
 
 createURLBtn.addEventListener(
     "click",
@@ -919,64 +871,82 @@ createURLBtn.addEventListener(
         }
 
 
-        /*
-           Nếu chưa upload:
-           upload ngay lúc bấm nút.
-        */
+        try{
 
-        if(!uploadedFilename){
+            createURLBtn.disabled =
+                true;
 
-            try{
-
-                createURLBtn.disabled =
-                    true;
-
-                createURLBtn.textContent =
-                    "🔗 ĐANG TẠO URL...";
+            createURLBtn.textContent =
+                "🔗 ĐANG TẠO URL...";
 
 
-                /*
-                   QUAN TRỌNG:
-                   Upload ngay tại đây.
-                */
+            /*
+               Nếu chưa upload thì upload.
+            */
+
+            if(!uploadedFilename){
 
                 await uploadImage(
                     selectedFile
                 );
 
-
-            }catch(error){
-
-                console.error(error);
-
-                createURLBtn.disabled =
-                    false;
-
-                createURLBtn.textContent =
-                    "🔗 TẠO URL ẢNH";
-
-
-                showMessage(
-                    "❌ " +
-                    (
-                        error.message ||
-                        "Không thể upload hình ảnh."
-                    ),
-                    "error"
-                );
-
-                return;
             }
 
-        }
+
+            if(!uploadedFilename){
+
+                throw new Error(
+                    "Không lấy được tên hình ảnh."
+                );
+
+            }
 
 
-        /*
-           ĐẾN ĐÂY CHẮC CHẮN
-           ĐÃ CÓ uploadedFilename
-        */
+            /*
+               TẠO LINK CUSTOM
+            */
 
-        if(!uploadedFilename){
+            currentURL =
+                SITE_URL +
+                "/images/" +
+                encodeURIComponent(
+                    uploadedFilename
+                );
+
+
+            /*
+               HIỆN LINK
+            */
+
+            urlInput.value =
+                currentURL;
+
+            result.style.display =
+                "block";
+
+
+            createURLBtn.disabled =
+                false;
+
+            createURLBtn.textContent =
+                "✅ URL ĐÃ ĐƯỢC TẠO";
+
+
+            showMessage(
+                "✅ Link URL ảnh đã được tạo thành công.",
+                "success"
+            );
+
+
+            result.scrollIntoView({
+                behavior:"smooth",
+                block:"center"
+            });
+
+
+        }catch(error){
+
+            console.error(error);
 
             createURLBtn.disabled =
                 false;
@@ -984,63 +954,23 @@ createURLBtn.addEventListener(
             createURLBtn.textContent =
                 "🔗 TẠO URL ẢNH";
 
+
             showMessage(
-                "❌ Không lấy được tên hình ảnh.",
+                "❌ " +
+                (
+                    error.message ||
+                    "Không thể tạo URL."
+                ),
                 "error"
             );
 
-            return;
         }
-
-
-        /*
-           TẠO URL CUSTOM
-        */
-
-        currentURL =
-            SITE_URL +
-            "/images/" +
-            encodeURIComponent(
-                uploadedFilename
-            );
-
-
-        /*
-           HIỆN LINK NGAY
-        */
-
-        urlInput.value =
-            currentURL;
-
-        result.style.display =
-            "block";
-
-
-        createURLBtn.disabled =
-            false;
-
-        createURLBtn.textContent =
-            "✅ URL ĐÃ ĐƯỢC TẠO";
-
-
-        showMessage(
-            "✅ Link URL ảnh đã được tạo thành công.",
-            "success"
-        );
-
-
-        result.scrollIntoView({
-            behavior:"smooth",
-            block:"center"
-        });
 
     }
 );
 
 
-/* =========================
-   COPY URL
-========================= */
+/* COPY */
 
 copyBtn.addEventListener(
     "click",
@@ -1048,7 +978,6 @@ copyBtn.addEventListener(
 
         if(!currentURL)
             return;
-
 
         try{
 
@@ -1061,17 +990,13 @@ copyBtn.addEventListener(
 
             setTimeout(
                 () => {
-
                     copyBtn.textContent =
                         "SAO CHÉP";
-
                 },
                 1500
             );
 
         }catch{
-
-            urlInput.focus();
 
             urlInput.select();
 
@@ -1085,9 +1010,7 @@ copyBtn.addEventListener(
 );
 
 
-/* =========================
-   OPEN
-========================= */
+/* OPEN */
 
 openBtn.addEventListener(
     "click",
@@ -1105,9 +1028,7 @@ openBtn.addEventListener(
 );
 
 
-/* =========================
-   COPY HTML
-========================= */
+/* COPY HTML */
 
 htmlBtn.addEventListener(
     "click",
@@ -1116,10 +1037,8 @@ htmlBtn.addEventListener(
         if(!currentURL)
             return;
 
-
         const html =
             `<img src="${currentURL}" alt="FFVN.TGM">`;
-
 
         try{
 
@@ -1132,10 +1051,8 @@ htmlBtn.addEventListener(
 
             setTimeout(
                 () => {
-
                     htmlBtn.textContent =
                         "COPY HTML";
-
                 },
                 1500
             );
@@ -1150,9 +1067,7 @@ htmlBtn.addEventListener(
 );
 
 
-/* =========================
-   ẢNH MỚI
-========================= */
+/* NEW */
 
 newBtn.addEventListener(
     "click",
@@ -1166,9 +1081,7 @@ newBtn.addEventListener(
 
         input.value = "";
 
-        preview.removeAttribute(
-            "src"
-        );
+        preview.removeAttribute("src");
 
         previewSection.style.display =
             "none";
@@ -1192,7 +1105,6 @@ newBtn.addEventListener(
         message.className =
             "message";
 
-
         window.scrollTo({
             top:0,
             behavior:"smooth"
@@ -1204,4 +1116,4 @@ newBtn.addEventListener(
 </script>
 
 </body>
-            </html>
+</html>
