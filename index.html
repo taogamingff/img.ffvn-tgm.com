@@ -7,17 +7,17 @@
 
 <meta
     name="viewport"
-    content="width=device-width,initial-scale=1.0"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
 >
 
 <meta
     name="theme-color"
-    content="#080808"
+    content="#050505"
 >
 
 <meta
     name="description"
-    content="FFVN.TGM Image Hosting - Upload ảnh và nhận URL trực tiếp."
+    content="FFVN.TGM IMAGE HOSTING - Upload ảnh nhanh, tự nhận diện khung hình và tạo URL trực tiếp."
 >
 
 <title>
@@ -26,6 +26,10 @@
 
 
 <style>
+
+/* =========================================================
+   GARENA FREE FIRE FONT
+========================================================= */
 
 @font-face{
 
@@ -40,8 +44,17 @@
         format("woff");
 
     font-weight:700;
+
+    font-style:normal;
+
+    font-display:swap;
+
 }
 
+
+/* =========================================================
+   RESET
+========================================================= */
 
 *{
 
@@ -51,6 +64,17 @@
 
     padding:0;
 
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+
+html{
+
+    scroll-behavior:
+        smooth;
+
 }
 
 
@@ -58,29 +82,7 @@ body{
 
     min-height:100vh;
 
-    padding:18px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:
-
-        radial-gradient(
-            circle at 15% 10%,
-            rgba(255,90,0,.22),
-            transparent 30%
-        ),
-
-        radial-gradient(
-            circle at 90% 90%,
-            rgba(255,130,0,.13),
-            transparent 35%
-        ),
-
-        #060606;
+    overflow-x:hidden;
 
     color:#fff;
 
@@ -89,6 +91,124 @@ body{
         Arial,
         sans-serif;
 
+    background:
+
+        radial-gradient(
+            circle at 10% 5%,
+            rgba(255,100,0,.28),
+            transparent 25%
+        ),
+
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(255,55,0,.16),
+            transparent 28%
+        ),
+
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(255,120,0,.12),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            135deg,
+            #030303,
+            #0b0805 45%,
+            #030303
+        );
+
+}
+
+
+/* =========================================================
+   BACKGROUND EFFECT
+========================================================= */
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    opacity:.5;
+
+    background-image:
+
+        linear-gradient(
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        ),
+
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.018) 1px,
+            transparent 1px
+        );
+
+    background-size:
+        45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            #000,
+            transparent
+        );
+
+}
+
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    width:380px;
+
+    height:380px;
+
+    right:-180px;
+
+    bottom:-180px;
+
+    border-radius:50%;
+
+    background:
+        rgba(255,80,0,.12);
+
+    filter:
+        blur(100px);
+
+    pointer-events:none;
+
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.page{
+
+    width:100%;
+
+    min-height:100vh;
+
+    padding:
+        25px 15px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
 }
 
 
@@ -96,101 +216,180 @@ body{
 
     width:100%;
 
-    max-width:620px;
+    max-width:700px;
 
 }
 
+
+/* =========================================================
+   CARD
+========================================================= */
 
 .card{
 
-    padding:25px;
+    position:relative;
 
-    background:
-        rgba(17,17,17,.82);
+    overflow:hidden;
+
+    padding:28px;
 
     border:
         1px solid
-        rgba(255,115,0,.35);
+        rgba(255,115,0,.28);
 
-    border-radius:28px;
+    border-radius:30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(25,22,20,.90),
+            rgba(8,8,8,.84)
+        );
 
     box-shadow:
 
-        0 25px 80px
-        rgba(0,0,0,.6),
+        0 35px 100px
+        rgba(0,0,0,.75),
 
-        0 0 40px
-        rgba(255,90,0,.08);
+        inset 0 1px
+        rgba(255,255,255,.04),
+
+        0 0 80px
+        rgba(255,80,0,.06);
 
     backdrop-filter:
-        blur(18px);
+        blur(22px);
 
 }
 
 
+.card::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:-20%;
+
+    top:-80px;
+
+    width:140%;
+
+    height:150px;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,100,0,.12),
+            transparent
+        );
+
+    transform:
+        rotate(-5deg);
+
+    pointer-events:none;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
 .logo{
 
-    width:86px;
+    position:relative;
 
-    height:86px;
+    width:92px;
+
+    height:92px;
 
     display:block;
 
     margin:
-        0 auto 15px;
+        0 auto 18px;
 
     object-fit:cover;
 
-    border-radius:22px;
+    border-radius:25px;
 
     border:
         2px solid
-        rgba(255,115,0,.7);
+        rgba(255,125,0,.7);
 
     box-shadow:
-        0 0 25px
-        rgba(255,90,0,.3);
+
+        0 0 35px
+        rgba(255,85,0,.28),
+
+        0 10px 35px
+        rgba(0,0,0,.5);
 
 }
 
 
 h1{
 
+    position:relative;
+
     text-align:center;
 
-    color:#ff7800;
+    color:#ff7b00;
 
-    font-size:26px;
+    font-size:
+        clamp(
+            22px,
+            5vw,
+            31px
+        );
 
-    margin-bottom:8px;
+    letter-spacing:
+        .4px;
+
+    text-shadow:
+        0 0 22px
+        rgba(255,90,0,.25);
 
 }
 
 
 .subtitle{
 
+    position:relative;
+
+    margin-top:9px;
+
+    margin-bottom:25px;
+
     text-align:center;
 
     color:#999;
 
     font-family:
+        "GFF-Latin-Bold",
         Arial,
         sans-serif;
 
-    font-size:14px;
+    font-size:13px;
 
-    line-height:1.5;
-
-    margin-bottom:24px;
+    line-height:1.6;
 
 }
 
 
+/* =========================================================
+   DROP ZONE
+========================================================= */
+
 .upload-box{
+
+    position:relative;
 
     display:block;
 
-    padding:30px 18px;
+    padding:
+        34px 20px;
 
     text-align:center;
 
@@ -198,14 +397,15 @@ h1{
 
     border:
         2px dashed
-        rgba(255,110,0,.5);
+        rgba(255,115,0,.38);
 
-    border-radius:22px;
+    border-radius:24px;
 
     background:
         rgba(255,255,255,.025);
 
-    transition:.2s;
+    transition:
+        .25s ease;
 
 }
 
@@ -213,22 +413,29 @@ h1{
 .upload-box:hover,
 .upload-box.drag{
 
-    border-color:#ff7900;
+    border-color:
+        #ff7800;
 
     background:
-        rgba(255,100,0,.08);
+        rgba(255,90,0,.08);
 
     transform:
         translateY(-2px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(255,80,0,.08);
 
 }
 
 
 .upload-icon{
 
-    font-size:48px;
+    font-size:50px;
 
-    margin-bottom:10px;
+    line-height:1;
+
+    margin-bottom:13px;
 
 }
 
@@ -237,20 +444,16 @@ h1{
 
     font-size:19px;
 
-    margin-bottom:7px;
+    margin-bottom:8px;
 
 }
 
 
 .upload-desc{
 
-    color:#888;
+    color:#777;
 
-    font-family:
-        Arial,
-        sans-serif;
-
-    font-size:13px;
+    font-size:12px;
 
 }
 
@@ -262,21 +465,48 @@ h1{
 }
 
 
+/* =========================================================
+   PREVIEW
+========================================================= */
+
 .preview{
 
     display:none;
 
+    margin-top:20px;
+
     overflow:hidden;
-
-    margin-top:18px;
-
-    background:#0b0b0b;
 
     border:
         1px solid
-        #292929;
+        rgba(255,255,255,.08);
 
-    border-radius:20px;
+    border-radius:22px;
+
+    background:#050505;
+
+}
+
+
+.preview-image-wrap{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:160px;
+
+    background:
+
+        repeating-conic-gradient(
+            #101010 0 25%,
+            #0b0b0b 0 50%
+        )
+        50% / 24px 24px;
 
 }
 
@@ -287,107 +517,207 @@ h1{
 
     width:100%;
 
-    max-height:380px;
+    max-height:400px;
 
     object-fit:contain;
 
-    background:#050505;
+}
+
+
+.image-badge{
+
+    position:absolute;
+
+    left:12px;
+
+    top:12px;
+
+    padding:
+        7px 11px;
+
+    border:
+        1px solid
+        rgba(255,125,0,.4);
+
+    border-radius:10px;
+
+    background:
+        rgba(0,0,0,.7);
+
+    color:#ff9a43;
+
+    font-size:11px;
+
+    backdrop-filter:
+        blur(10px);
 
 }
 
 
-.file-info{
+/* =========================================================
+   IMAGE INFO
+========================================================= */
 
-    padding:13px;
+.image-info{
 
-    color:#aaa;
+    display:grid;
 
-    font-family:
-        Arial,
-        sans-serif;
+    grid-template-columns:
+        repeat(3,1fr);
 
-    font-size:13px;
+    gap:8px;
+
+    padding:12px;
 
 }
 
+
+.info-item{
+
+    min-width:0;
+
+    padding:11px 8px;
+
+    text-align:center;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-radius:13px;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+
+.info-label{
+
+    color:#666;
+
+    font-size:9px;
+
+    margin-bottom:5px;
+
+}
+
+
+.info-value{
+
+    overflow:hidden;
+
+    color:#eee;
+
+    font-size:11px;
+
+    white-space:nowrap;
+
+    text-overflow:ellipsis;
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 button{
 
     width:100%;
 
-    padding:15px;
-
-    margin-top:15px;
-
     border:0;
 
-    border-radius:15px;
-
-    color:#fff;
+    border-radius:16px;
 
     font-family:
         "GFF-Latin-Bold",
         Arial,
         sans-serif;
 
-    font-size:16px;
-
     cursor:pointer;
 
-    transition:.2s;
+    transition:
+        .2s ease;
 
 }
 
 
 .upload-btn{
 
+    margin-top:15px;
+
+    padding:16px;
+
+    color:#fff;
+
+    font-size:16px;
+
     background:
 
         linear-gradient(
             135deg,
-            #ff8b00,
+            #ff9a00,
             #ff4b00
         );
 
     box-shadow:
-        0 8px 25px
-        rgba(255,90,0,.22);
+
+        0 12px 30px
+        rgba(255,75,0,.18);
 
 }
 
 
-.upload-btn:hover{
-
-    filter:
-        brightness(1.08);
+.upload-btn:hover:not(:disabled){
 
     transform:
         translateY(-2px);
+
+    filter:
+        brightness(1.08);
 
 }
 
 
 .upload-btn:disabled{
 
-    opacity:.45;
+    opacity:.4;
 
     cursor:not-allowed;
-
-    transform:none;
 
 }
 
 
 .secondary{
 
-    background:#1a1a1a;
+    margin-top:10px;
+
+    padding:14px;
+
+    color:#ddd;
+
+    background:
+        rgba(255,255,255,.045);
 
     border:
         1px solid
-        #333;
+        rgba(255,255,255,.08);
 
 }
 
+
+.secondary:hover{
+
+    background:
+        rgba(255,255,255,.08);
+
+}
+
+
+/* =========================================================
+   PROGRESS
+========================================================= */
 
 .progress-wrap{
 
@@ -402,13 +732,13 @@ button{
 
     width:100%;
 
-    height:10px;
+    height:9px;
 
     overflow:hidden;
 
-    background:#222;
-
     border-radius:20px;
+
+    background:#1c1c1c;
 
 }
 
@@ -419,17 +749,22 @@ button{
 
     height:100%;
 
+    border-radius:20px;
+
     background:
 
         linear-gradient(
             90deg,
             #ff4b00,
-            #ff9e00
+            #ffae00
         );
 
-    border-radius:20px;
+    box-shadow:
+        0 0 15px
+        rgba(255,100,0,.5);
 
-    transition:.15s;
+    transition:
+        width .15s linear;
 
 }
 
@@ -440,39 +775,35 @@ button{
 
     text-align:center;
 
-    color:#aaa;
+    color:#888;
 
-    font-family:
-        Arial,
-        sans-serif;
-
-    font-size:13px;
+    font-size:11px;
 
 }
 
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status{
 
     min-height:20px;
 
-    margin-top:15px;
+    margin-top:14px;
 
     text-align:center;
 
-    color:#999;
+    color:#888;
 
-    font-family:
-        Arial,
-        sans-serif;
-
-    font-size:13px;
+    font-size:12px;
 
 }
 
 
 .status.error{
 
-    color:#ff6565;
+    color:#ff6868;
 
 }
 
@@ -484,31 +815,37 @@ button{
 }
 
 
+/* =========================================================
+   RESULT
+========================================================= */
+
 .result{
 
     display:none;
 
-    padding:17px;
-
     margin-top:20px;
+
+    padding:17px;
 
     border:
         1px solid
-        rgba(0,220,100,.3);
+        rgba(0,230,100,.25);
 
-    border-radius:18px;
+    border-radius:20px;
 
     background:
-        rgba(0,180,80,.08);
+        rgba(0,160,70,.07);
 
 }
 
 
 .result-title{
 
+    margin-bottom:11px;
+
     color:#4cff91;
 
-    margin-bottom:10px;
+    font-size:15px;
 
 }
 
@@ -517,7 +854,7 @@ button{
 
     display:flex;
 
-    gap:8px;
+    gap:7px;
 
 }
 
@@ -532,21 +869,21 @@ button{
 
     outline:none;
 
-    color:#fff;
-
-    background:#0c0c0c;
-
     border:
         1px solid
         #333;
 
     border-radius:12px;
 
+    color:#eee;
+
+    background:#090909;
+
     font-family:
         Arial,
         sans-serif;
 
-    font-size:12px;
+    font-size:11px;
 
 }
 
@@ -560,69 +897,76 @@ button{
     padding:
         12px 15px;
 
-    background:#242424;
+    color:#fff;
+
+    background:#222;
 
     border:
         1px solid
-        #3b3b3b;
+        #383838;
 
-    font-size:13px;
+    font-size:12px;
 
 }
 
 
+/* =========================================================
+   FOOTER
+========================================================= */
+
 .footer{
 
-    margin-top:20px;
+    margin-top:22px;
 
     text-align:center;
 
     color:#555;
 
-    font-family:
-        Arial,
-        sans-serif;
-
-    font-size:11px;
+    font-size:10px;
 
 }
 
 
-@media(max-width:500px){
+/* =========================================================
+   MOBILE
+========================================================= */
 
-    body{
+@media(max-width:520px){
 
-        padding:10px;
+    .page{
+
+        padding:
+            10px;
+
+        align-items:
+            flex-start;
 
     }
 
 
     .card{
 
+        margin-top:10px;
+
         padding:18px;
 
-        border-radius:23px;
+        border-radius:24px;
 
     }
 
 
-    h1{
+    .image-info{
 
-        font-size:22px;
-
-    }
-
-
-    .upload-box{
-
-        padding:25px 12px;
+        grid-template-columns:
+            1fr 1fr 1fr;
 
     }
 
 
     .url-box{
 
-        flex-direction:column;
+        flex-direction:
+            column;
 
     }
 
@@ -643,7 +987,11 @@ button{
 <body>
 
 
+<div class="page">
+
+
 <div class="container">
+
 
 <div class="card">
 
@@ -662,7 +1010,7 @@ button{
 
 <div class="subtitle">
 
-    Upload ảnh → Vercel Blob → URL trực tiếp
+    UPLOAD NHANH • TỰ NHẬN DIỆN KHUNG HÌNH • URL TRỰC TIẾP
 
 </div>
 
@@ -673,17 +1021,25 @@ button{
     for="fileInput"
 >
 
+
     <div class="upload-icon">
         🖼️
     </div>
 
+
     <div class="upload-title">
+
         CHỌN ẢNH TỪ ALBUM
+
     </div>
 
+
     <div class="upload-desc">
-        PNG • JPG • JPEG • WEBP • tối đa 4MB
+
+        PNG • JPG • JPEG • WEBP • TỐI ĐA 4MB
+
     </div>
+
 
 </label>
 
@@ -700,15 +1056,83 @@ button{
     id="previewBox"
 >
 
-    <img
-        id="previewImage"
-        alt="Preview"
-    >
+
+    <div class="preview-image-wrap">
+
+
+        <img
+            id="previewImage"
+            alt="Preview"
+        >
+
+
+        <div
+            class="image-badge"
+            id="imageBadge"
+        >
+
+            NHẬN DIỆN...
+
+        </div>
+
+
+    </div>
+
 
     <div
-        class="file-info"
-        id="fileInfo"
-    ></div>
+        class="image-info"
+    >
+
+
+        <div class="info-item">
+
+            <div class="info-label">
+                KÍCH THƯỚC
+            </div>
+
+            <div
+                class="info-value"
+                id="dimensions"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+            <div class="info-label">
+                KHUNG HÌNH
+            </div>
+
+            <div
+                class="info-value"
+                id="ratio"
+            >
+                —
+            </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+            <div class="info-label">
+                DUNG LƯỢNG
+            </div>
+
+            <div
+                class="info-value"
+                id="sizeInfo"
+            >
+                —
+            </div>
+
+        </div>
+
+
+    </div>
 
 </div>
 
@@ -740,6 +1164,7 @@ button{
     id="progressWrap"
 >
 
+
     <div class="progress-bg">
 
         <div
@@ -754,9 +1179,7 @@ button{
         class="progress-text"
         id="progressText"
     >
-
         0%
-
     </div>
 
 </div>
@@ -773,6 +1196,7 @@ button{
     id="result"
 >
 
+
     <div class="result-title">
 
         ✅ UPLOAD THÀNH CÔNG
@@ -781,6 +1205,7 @@ button{
 
 
     <div class="url-box">
+
 
         <input
             id="resultUrl"
@@ -797,6 +1222,7 @@ button{
 
         </button>
 
+
     </div>
 
 
@@ -808,6 +1234,7 @@ button{
         🌐 MỞ ẢNH
 
     </button>
+
 
 </div>
 
@@ -823,93 +1250,99 @@ button{
 
 </div>
 
+</div>
+
 
 <script>
 
+/* =========================================================
+   ELEMENTS
+========================================================= */
 
 const fileInput =
     document.getElementById(
         "fileInput"
     );
 
-
 const dropZone =
     document.getElementById(
         "dropZone"
     );
-
 
 const uploadBtn =
     document.getElementById(
         "uploadBtn"
     );
 
-
 const resetBtn =
     document.getElementById(
         "resetBtn"
     );
-
 
 const previewBox =
     document.getElementById(
         "previewBox"
     );
 
-
 const previewImage =
     document.getElementById(
         "previewImage"
     );
 
-
-const fileInfo =
+const imageBadge =
     document.getElementById(
-        "fileInfo"
+        "imageBadge"
     );
 
+const dimensions =
+    document.getElementById(
+        "dimensions"
+    );
+
+const ratio =
+    document.getElementById(
+        "ratio"
+    );
+
+const sizeInfo =
+    document.getElementById(
+        "sizeInfo"
+    );
 
 const progressWrap =
     document.getElementById(
         "progressWrap"
     );
 
-
 const progress =
     document.getElementById(
         "progress"
     );
-
 
 const progressText =
     document.getElementById(
         "progressText"
     );
 
-
 const status =
     document.getElementById(
         "status"
     );
-
 
 const result =
     document.getElementById(
         "result"
     );
 
-
 const resultUrl =
     document.getElementById(
         "resultUrl"
     );
 
-
 const copyBtn =
     document.getElementById(
         "copyBtn"
     );
-
 
 const openBtn =
     document.getElementById(
@@ -917,18 +1350,25 @@ const openBtn =
     );
 
 
-let selectedFile = null;
+let selectedFile =
+    null;
+
+
+let imageWidth =
+    0;
+
+
+let imageHeight =
+    0;
 
 
 const MAX_SIZE =
     4 * 1024 * 1024;
 
 
-/*
-|--------------------------------------------------------------------------
-| Status
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   STATUS
+========================================================= */
 
 function setStatus(
     text,
@@ -944,17 +1384,18 @@ function setStatus(
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Format size
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   FORMAT BYTES
+========================================================= */
 
 function formatBytes(
     bytes
 ){
 
-    if(bytes < 1024){
+    if(
+        bytes <
+        1024
+    ){
 
         return (
             bytes + " B"
@@ -986,11 +1427,207 @@ function formatBytes(
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Select file
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   GCD
+========================================================= */
+
+function gcd(
+    a,
+    b
+){
+
+    while(b){
+
+        const temp =
+            b;
+
+        b =
+            a % b;
+
+        a =
+            temp;
+
+    }
+
+    return a;
+
+}
+
+
+/* =========================================================
+   DETECT RATIO
+========================================================= */
+
+function detectRatio(
+    width,
+    height
+){
+
+    const value =
+        width / height;
+
+
+    const known = [
+
+        {
+            name:"1:1",
+            value:1
+        },
+
+        {
+            name:"4:5",
+            value:.8
+        },
+
+        {
+            name:"3:4",
+            value:.75
+        },
+
+        {
+            name:"2:3",
+            value:.6667
+        },
+
+        {
+            name:"9:16",
+            value:.5625
+        },
+
+        {
+            name:"16:9",
+            value:1.7778
+        },
+
+        {
+            name:"4:3",
+            value:1.3333
+        },
+
+        {
+            name:"3:2",
+            value:1.5
+        },
+
+        {
+            name:"21:9",
+            value:2.3333
+        }
+
+    ];
+
+
+    let closest =
+        known[0];
+
+
+    let difference =
+        Math.abs(
+            value -
+            closest.value
+        );
+
+
+    for(
+        const item of known
+    ){
+
+        const current =
+            Math.abs(
+                value -
+                item.value
+            );
+
+
+        if(
+            current <
+            difference
+        ){
+
+            closest =
+                item;
+
+            difference =
+                current;
+
+        }
+
+    }
+
+
+    /*
+    | Nếu gần tỷ lệ chuẩn
+    */
+
+    if(
+        difference <
+        .04
+    ){
+
+        return closest.name;
+
+    }
+
+
+    /*
+    | Tỷ lệ thực tế
+    */
+
+    const divisor =
+        gcd(
+            width,
+            height
+        );
+
+
+    return (
+        Math.round(
+            width / divisor
+        ) +
+        ":" +
+        Math.round(
+            height / divisor
+        )
+    );
+
+}
+
+
+/* =========================================================
+   DETECT ORIENTATION
+========================================================= */
+
+function detectOrientation(
+    width,
+    height
+){
+
+    if(
+        width === height
+    ){
+
+        return "VUÔNG";
+
+    }
+
+
+    if(
+        width > height
+    ){
+
+        return "NGANG";
+
+    }
+
+
+    return "DỌC";
+
+}
+
+
+/* =========================================================
+   SELECT FILE
+========================================================= */
 
 function selectFile(
     file
@@ -1010,7 +1647,7 @@ function selectFile(
     ){
 
         setStatus(
-            "❌ File không phải ảnh.",
+            "❌ FILE KHÔNG PHẢI ẢNH.",
             "error"
         );
 
@@ -1025,7 +1662,7 @@ function selectFile(
     ){
 
         setStatus(
-            "❌ Ảnh vượt quá 4MB.",
+            "❌ ẢNH VƯỢT QUÁ 4MB.",
             "error"
         );
 
@@ -1038,61 +1675,111 @@ function selectFile(
         file;
 
 
-    const reader =
-        new FileReader();
+    const objectUrl =
+        URL.createObjectURL(
+            file
+        );
 
 
-    reader.onload =
-        function(e){
+    const img =
+        new Image();
+
+
+    img.onload =
+        function(){
+
+            imageWidth =
+                img.naturalWidth;
+
+            imageHeight =
+                img.naturalHeight;
+
+
+            const detectedRatio =
+                detectRatio(
+                    imageWidth,
+                    imageHeight
+                );
+
+
+            const orientation =
+                detectOrientation(
+                    imageWidth,
+                    imageHeight
+                );
+
 
             previewImage.src =
-                e.target.result;
+                objectUrl;
+
+
+            dimensions.textContent =
+                `${imageWidth} × ${imageHeight}`;
+
+
+            ratio.textContent =
+                detectedRatio;
+
+
+            sizeInfo.textContent =
+                formatBytes(
+                    file.size
+                );
+
+
+            imageBadge.textContent =
+                `${detectedRatio} • ${orientation}`;
 
 
             previewBox.style.display =
                 "block";
 
 
-            fileInfo.textContent =
-                file.name +
-                " • " +
-                formatBytes(
-                    file.size
-                );
+            uploadBtn.disabled =
+                false;
+
+
+            resetBtn.style.display =
+                "block";
+
+
+            result.style.display =
+                "none";
+
+
+            setStatus(
+                `✅ ĐÃ NHẬN DIỆN: ${detectedRatio} • ${orientation}`,
+                "success"
+            );
 
         };
 
 
-    reader.readAsDataURL(
-        file
-    );
+    img.onerror =
+        function(){
+
+            URL.revokeObjectURL(
+                objectUrl
+            );
 
 
-    uploadBtn.disabled =
-        false;
+            setStatus(
+                "❌ KHÔNG ĐỌC ĐƯỢC ẢNH.",
+                "error"
+            );
+
+        };
 
 
-    resetBtn.style.display =
-        "block";
-
-
-    result.style.display =
-        "none";
-
-
-    setStatus(
-        "✅ Đã chọn ảnh.",
-        "success"
-    );
+    img.src =
+        objectUrl;
 
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| File picker
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   FILE INPUT
+========================================================= */
 
 fileInput.addEventListener(
     "change",
@@ -1106,11 +1793,9 @@ fileInput.addEventListener(
 );
 
 
-/*
-|--------------------------------------------------------------------------
-| Drag
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   DRAG & DROP
+========================================================= */
 
 dropZone.addEventListener(
     "dragover",
@@ -1157,11 +1842,9 @@ dropZone.addEventListener(
 );
 
 
-/*
-|--------------------------------------------------------------------------
-| Reset
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   RESET
+========================================================= */
 
 resetBtn.addEventListener(
     "click",
@@ -1208,18 +1891,36 @@ resetBtn.addEventListener(
 );
 
 
-/*
-|--------------------------------------------------------------------------
-| Convert image → PNG
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   CONVERT TO PNG
+========================================================= */
 
 function convertToPng(
     file
 ){
 
+    /*
+    | PNG giữ chất lượng.
+    | Nếu file đã là PNG thì gửi trực tiếp.
+    */
+
+    if(
+        file.type ===
+        "image/png"
+    ){
+
+        return Promise.resolve(
+            file
+        );
+
+    }
+
+
     return new Promise(
-        (resolve,reject)=>{
+        (
+            resolve,
+            reject
+        ) => {
 
             const reader =
                 new FileReader();
@@ -1269,7 +1970,7 @@ function convertToPng(
 
                                         reject(
                                             new Error(
-                                                "Không thể chuyển ảnh sang PNG."
+                                                "KHÔNG THỂ TẠO PNG."
                                             )
                                         );
 
@@ -1294,7 +1995,7 @@ function convertToPng(
 
                             reject(
                                 new Error(
-                                    "Không đọc được ảnh."
+                                    "KHÔNG ĐỌC ĐƯỢC ẢNH."
                                 )
                             );
 
@@ -1312,7 +2013,7 @@ function convertToPng(
 
                     reject(
                         new Error(
-                            "Không đọc được file."
+                            "KHÔNG ĐỌC ĐƯỢC FILE."
                         )
                     );
 
@@ -1329,11 +2030,9 @@ function convertToPng(
 }
 
 
-/*
-|--------------------------------------------------------------------------
-| Upload
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   UPLOAD
+========================================================= */
 
 uploadBtn.addEventListener(
     "click",
@@ -1348,6 +2047,10 @@ uploadBtn.addEventListener(
 
         uploadBtn.disabled =
             true;
+
+
+        resetBtn.style.display =
+            "none";
 
 
         progressWrap.style.display =
@@ -1367,15 +2070,14 @@ uploadBtn.addEventListener(
 
 
         setStatus(
-            "⏳ Đang chuẩn bị ảnh..."
+            "⏳ ĐANG CHUẨN BỊ..."
         );
 
 
         try{
 
-
             /*
-            | Chuyển thành PNG
+            | PNG
             */
 
             const pngBlob =
@@ -1384,34 +2086,36 @@ uploadBtn.addEventListener(
                 );
 
 
-            /*
-            | Kiểm tra lại kích thước PNG
-            */
-
             if(
                 pngBlob.size >
                 MAX_SIZE
             ){
 
                 throw new Error(
-                    "Ảnh sau khi chuyển sang PNG vượt quá 4MB."
+                    "ẢNH SAU KHI XỬ LÝ VƯỢT QUÁ 4MB."
                 );
 
             }
 
 
             progress.style.width =
-                "20%";
+                "15%";
 
 
             progressText.textContent =
-                "20%";
+                "15%";
 
 
             setStatus(
-                "⏳ Đang upload..."
+                "⚡ ĐANG UPLOAD..."
             );
 
+
+            /*
+            |--------------------------------------------------------------------------
+            | XHR
+            |--------------------------------------------------------------------------
+            */
 
             const xhr =
                 new XMLHttpRequest();
@@ -1430,8 +2134,14 @@ uploadBtn.addEventListener(
             );
 
 
+            xhr.timeout =
+                15000;
+
+
             /*
-            | Progress
+            |--------------------------------------------------------------------------
+            | Upload progress
+            |--------------------------------------------------------------------------
             */
 
             xhr.upload.onprogress =
@@ -1442,12 +2152,12 @@ uploadBtn.addEventListener(
                     ){
 
                         const percent =
-                            20 +
+                            15 +
                             Math.round(
                                 (
                                     e.loaded /
                                     e.total
-                                ) * 70
+                                ) * 80
                             );
 
 
@@ -1464,7 +2174,9 @@ uploadBtn.addEventListener(
 
 
             /*
-            | Response
+            |--------------------------------------------------------------------------
+            | Success
+            |--------------------------------------------------------------------------
             */
 
             xhr.onload =
@@ -1481,11 +2193,10 @@ uploadBtn.addEventListener(
                                 xhr.responseText
                             );
 
-                    }catch(error){
+                    }catch{
 
-                        console.error(
-                            error
-                        );
+                        data =
+                            null;
 
                     }
 
@@ -1493,8 +2204,7 @@ uploadBtn.addEventListener(
                     if(
                         xhr.status >= 200 &&
                         xhr.status < 300 &&
-                        data &&
-                        data.success
+                        data?.success
                     ){
 
                         progress.style.width =
@@ -1514,7 +2224,7 @@ uploadBtn.addEventListener(
 
 
                         setStatus(
-                            "✅ Upload thành công!",
+                            "✅ UPLOAD THÀNH CÔNG!",
                             "success"
                         );
 
@@ -1522,14 +2232,13 @@ uploadBtn.addEventListener(
                     }else{
 
                         const message =
-                            data &&
-                            data.error
-                                ? data.error
-                                : "Upload thất bại.";
+                            data?.error ||
+                            "UPLOAD THẤT BẠI.";
 
 
                         setStatus(
-                            "❌ " + message,
+                            "❌ " +
+                            message,
                             "error"
                         );
 
@@ -1543,18 +2252,24 @@ uploadBtn.addEventListener(
                     uploadBtn.disabled =
                         false;
 
+
+                    resetBtn.style.display =
+                        "block";
+
                 };
 
 
             /*
-            | Network error
+            |--------------------------------------------------------------------------
+            | Error
+            |--------------------------------------------------------------------------
             */
 
             xhr.onerror =
                 function(){
 
                     setStatus(
-                        "❌ Không kết nối được API.",
+                        "❌ KHÔNG KẾT NỐI ĐƯỢC API.",
                         "error"
                     );
 
@@ -1566,17 +2281,45 @@ uploadBtn.addEventListener(
                     uploadBtn.disabled =
                         false;
 
+
+                    resetBtn.style.display =
+                        "block";
+
                 };
 
 
             /*
-            | Send
+            |--------------------------------------------------------------------------
+            | Timeout
+            |--------------------------------------------------------------------------
             */
+
+            xhr.ontimeout =
+                function(){
+
+                    setStatus(
+                        "❌ UPLOAD QUÁ THỜI GIAN CHỜ.",
+                        "error"
+                    );
+
+
+                    progressWrap.style.display =
+                        "none";
+
+
+                    uploadBtn.disabled =
+                        false;
+
+
+                    resetBtn.style.display =
+                        "block";
+
+                };
+
 
             xhr.send(
                 pngBlob
             );
-
 
         }catch(error){
 
@@ -1589,7 +2332,7 @@ uploadBtn.addEventListener(
                 "❌ " +
                 (
                     error.message ||
-                    "Upload thất bại."
+                    "UPLOAD THẤT BẠI."
                 ),
                 "error"
             );
@@ -1602,17 +2345,19 @@ uploadBtn.addEventListener(
             uploadBtn.disabled =
                 false;
 
+
+            resetBtn.style.display =
+                "block";
+
         }
 
     }
 );
 
 
-/*
-|--------------------------------------------------------------------------
-| Copy
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   COPY
+========================================================= */
 
 copyBtn.addEventListener(
     "click",
@@ -1622,12 +2367,18 @@ copyBtn.addEventListener(
             resultUrl.value;
 
 
+        if(!url){
+
+            return;
+
+        }
+
+
         try{
 
             await navigator.clipboard.writeText(
                 url
             );
-
 
         }catch{
 
@@ -1658,11 +2409,9 @@ copyBtn.addEventListener(
 );
 
 
-/*
-|--------------------------------------------------------------------------
-| Open image
-|--------------------------------------------------------------------------
-*/
+/* =========================================================
+   OPEN
+========================================================= */
 
 openBtn.addEventListener(
     "click",
@@ -1676,8 +2425,7 @@ openBtn.addEventListener(
 
             window.open(
                 url,
-                "_blank",
-                "noopener,noreferrer"
+                "_blank"
             );
 
         }
@@ -1689,4 +2437,4 @@ openBtn.addEventListener(
 
 </body>
 
-  </html>
+    </html>
