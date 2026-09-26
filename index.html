@@ -2,11 +2,18 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
 
 <title>FFVN.TGM - CÔNG CỤ CHÈN ẢNH TẠO LINK URL</title>
 
-<meta name="description" content="Công cụ chèn ảnh và tạo link URL trực tiếp nhanh chóng từ FFVN.TGM.">
+<meta
+    name="description"
+    content="Công cụ chèn ảnh và tạo link URL trực tiếp nhanh chóng từ FFVN.TGM."
+>
 
 <style>
 @font-face{
@@ -23,17 +30,51 @@
     padding:0;
 }
 
-html,body{
+html{
     min-height:100%;
+    background:#050505;
 }
 
 body{
-    background:
-        radial-gradient(circle at 10% 10%,rgba(255,90,0,.20),transparent 30%),
-        radial-gradient(circle at 90% 90%,rgba(255,40,0,.14),transparent 30%),
-        linear-gradient(135deg,#030303,#111,#050505);
+    min-height:100vh;
     color:#fff;
     font-family:"GFF-Latin-Bold",Arial,sans-serif;
+
+    background:
+        radial-gradient(
+            circle at 15% 10%,
+            rgba(255,100,0,.20),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 85% 85%,
+            rgba(255,40,0,.16),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #030303,
+            #111,
+            #050505
+        );
+
+    overflow-x:hidden;
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+
+    background:
+        repeating-linear-gradient(
+            135deg,
+            rgba(255,255,255,.012) 0,
+            rgba(255,255,255,.012) 1px,
+            transparent 1px,
+            transparent 7px
+        );
 }
 
 .container{
@@ -48,66 +89,124 @@ body{
 }
 
 .badge{
-    display:inline-block;
+    display:inline-flex;
     padding:8px 14px;
     border-radius:999px;
+
     border:1px solid rgba(255,100,0,.35);
+
     background:rgba(255,80,0,.08);
-    color:#ff9a45;
+
+    color:#ff9b4a;
+
     font-size:12px;
 }
 
-h1{
+.header h1{
     margin-top:15px;
-    font-size:clamp(24px,6vw,42px);
+
+    font-size:
+        clamp(24px,6vw,42px);
+
     line-height:1.1;
+
+    text-shadow:
+        0 0 30px rgba(255,80,0,.25);
 }
 
 .header p{
     margin-top:10px;
+
     color:#999;
+
     font-family:Arial,sans-serif;
+
     font-size:14px;
+
     line-height:1.6;
 }
 
 .card{
+    position:relative;
+
     padding:18px;
+
     border-radius:25px;
+
     border:1px solid rgba(255,255,255,.08);
-    background:rgba(255,255,255,.045);
-    backdrop-filter:blur(20px);
-    box-shadow:0 25px 80px rgba(0,0,0,.45);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter:blur(22px);
+    -webkit-backdrop-filter:blur(22px);
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,.45),
+        inset 0 1px rgba(255,255,255,.08);
 }
 
 .upload-zone{
-    min-height:240px;
+    min-height:245px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     text-align:center;
-    border:2px dashed rgba(255,100,0,.4);
+
+    border:2px dashed rgba(255,100,0,.40);
+
     border-radius:20px;
+
     cursor:pointer;
+
     transition:.25s;
+
+    background:rgba(255,80,0,.025);
 }
 
 .upload-zone:hover,
 .upload-zone.drag{
-    border-color:#ff6500;
-    background:rgba(255,70,0,.07);
+    border-color:#ff6900;
+
+    background:rgba(255,80,0,.07);
+
+    box-shadow:
+        0 0 35px rgba(255,80,0,.10);
+}
+
+.upload-content{
+    padding:25px;
 }
 
 .upload-icon{
-    width:72px;
-    height:72px;
-    margin:auto auto 15px;
+    width:75px;
+    height:75px;
+
+    margin:0 auto 15px;
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     border-radius:22px;
-    font-size:32px;
-    background:linear-gradient(135deg,#ff9800,#ff3d00);
+
+    font-size:34px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff3d00
+        );
+
+    box-shadow:
+        0 12px 35px rgba(255,70,0,.25);
 }
 
 .upload-content h2{
@@ -116,8 +215,11 @@ h1{
 
 .upload-content p{
     margin-top:9px;
+
     color:#999;
+
     font-family:Arial,sans-serif;
+
     font-size:13px;
 }
 
@@ -130,125 +232,256 @@ h1{
     margin-top:18px;
 }
 
-.preview img{
+.preview-image{
     display:block;
+
     width:100%;
+
     max-height:400px;
+
     object-fit:contain;
+
     border-radius:18px;
+
     background:#050505;
+
+    border:1px solid rgba(255,255,255,.08);
 }
 
-.info{
+.info-grid{
     display:grid;
-    grid-template-columns:repeat(3,1fr);
+
+    grid-template-columns:
+        repeat(3,1fr);
+
     gap:10px;
+
     margin-top:12px;
 }
 
 .info-box{
     padding:13px;
-    border-radius:14px;
+
     text-align:center;
-    background:rgba(255,255,255,.04);
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:1px solid
+        rgba(255,255,255,.06);
 }
 
 .info-box span{
     display:block;
-    color:#777;
-    font-family:Arial,sans-serif;
-    font-size:11px;
+
     margin-bottom:5px;
+
+    color:#777;
+
+    font-family:Arial,sans-serif;
+
+    font-size:11px;
 }
 
 .info-box strong{
     font-size:13px;
 }
 
-.url-result{
-    display:none;
-    margin-top:18px;
-    padding:16px;
-    border-radius:18px;
-    background:rgba(0,255,120,.035);
-    border:1px solid rgba(0,255,120,.20);
+.status{
+    min-height:20px;
+
+    margin-top:12px;
+
+    color:#999;
+
+    font-family:Arial,sans-serif;
+
+    font-size:12px;
+
+    line-height:1.5;
 }
 
-.url-title{
-    color:#61ffab;
+.status.success{
+    color:#5dffab;
+}
+
+.status.error{
+    color:#ff7373;
+}
+
+.progress{
+    display:none;
+
+    margin-top:12px;
+}
+
+.progress-track{
+    width:100%;
+    height:9px;
+
+    padding:2px;
+
+    border-radius:99px;
+
+    background:#191919;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+
+    border-radius:99px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff3d00,
+            #ffab42
+        );
+
+    transition:
+        width .15s linear;
+
+    box-shadow:
+        0 0 15px
+        rgba(255,90,0,.5);
+}
+
+.progress-text{
+    margin-top:6px;
+
+    color:#888;
+
+    font-family:Arial,sans-serif;
+
+    font-size:11px;
+}
+
+.result{
+    display:none;
+
+    margin-top:18px;
+
+    padding:17px;
+
+    border-radius:18px;
+
+    background:
+        rgba(0,255,120,.035);
+
+    border:1px solid
+        rgba(0,255,120,.20);
+}
+
+.result-title{
     margin-bottom:10px;
+
+    color:#61ffab;
+
     font-size:16px;
 }
 
 .url-row{
     display:flex;
+
     gap:8px;
 }
 
 .url-input{
     flex:1;
+
     min-width:0;
+
     height:48px;
+
     padding:0 12px;
+
     border-radius:12px;
-    border:1px solid rgba(255,255,255,.10);
+
+    border:1px solid
+        rgba(255,255,255,.10);
+
     background:#080808;
+
     color:#fff;
+
     outline:none;
+
     font-family:Arial,sans-serif;
+
     font-size:12px;
 }
 
 .btn{
     min-height:48px;
+
     padding:0 16px;
+
     border:0;
+
     border-radius:13px;
+
     color:#fff;
+
     font-family:inherit;
+
     cursor:pointer;
+
+    transition:.2s;
+}
+
+.btn:hover{
+    transform:translateY(-1px);
 }
 
 .btn-orange{
-    background:linear-gradient(135deg,#ff9800,#ff3d00);
+    background:
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff3d00
+        );
+
+    box-shadow:
+        0 8px 25px
+        rgba(255,70,0,.18);
 }
 
 .btn-dark{
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.08);
+    background:
+        rgba(255,255,255,.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
 }
 
-.buttons{
+.result-buttons{
     display:flex;
-    gap:9px;
+
+    gap:8px;
+
     margin-top:10px;
 }
 
-.buttons .btn{
+.result-buttons .btn{
     flex:1;
 }
 
-.status{
-    margin-top:12px;
-    color:#aaa;
-    font-family:Arial,sans-serif;
-    font-size:12px;
-}
-
-.status.success{
-    color:#61ffab;
-}
-
-.status.error{
-    color:#ff7777;
-}
-
 .footer{
+    padding-top:22px;
+
     text-align:center;
+
     color:#666;
+
     font-family:Arial,sans-serif;
+
     font-size:11px;
-    padding-top:20px;
 }
 
 @media(max-width:600px){
@@ -263,7 +496,7 @@ h1{
         border-radius:20px;
     }
 
-    .info{
+    .info-grid{
         grid-template-columns:1fr;
     }
 
@@ -271,7 +504,7 @@ h1{
         flex-direction:column;
     }
 
-    .buttons{
+    .result-buttons{
         flex-direction:column;
     }
 }
@@ -293,7 +526,7 @@ h1{
     </h1>
 
     <p>
-        Chọn ảnh và nhận URL ngay lập tức.
+        Upload hình ảnh và tạo link URL trực tiếp.
         Hỗ trợ Android, iPhone và máy tính.
     </p>
 
@@ -342,10 +575,11 @@ h1{
 
 <img
     id="previewImage"
+    class="preview-image"
     alt="Preview"
 >
 
-<div class="info">
+<div class="info-grid">
 
 <div class="info-box">
 <span>KÍCH THƯỚC</span>
@@ -365,52 +599,79 @@ h1{
 </div>
 
 <div
+    class="progress"
+    id="progress"
+>
+
+<div class="progress-track">
+
+<div
+    class="progress-bar"
+    id="progressBar"
+></div>
+
+</div>
+
+<div
+    class="progress-text"
+    id="progressText"
+>
+    ĐANG CHUẨN BỊ...
+</div>
+
+</div>
+
+<div
     class="status"
     id="status"
 >
-    URL sẽ xuất hiện ngay khi chọn ảnh.
+    Đang chờ hình ảnh...
 </div>
 
 </section>
 
 <section
-    class="url-result"
-    id="urlResult"
+    class="result"
+    id="result"
 >
 
-<div class="url-title">
-    🔗 LINK URL HÌNH ẢNH
+<div class="result-title">
+    ✅ UPLOAD THÀNH CÔNG
 </div>
 
 <div class="url-row">
 
 <input
-    class="url-input"
     id="urlInput"
+    class="url-input"
+    type="text"
     readonly
 >
 
 <button
-    class="btn btn-orange"
     id="copyBtn"
+    class="btn btn-orange"
+    type="button"
 >
     📋 SAO CHÉP
 </button>
 
 </div>
 
-<div class="buttons">
+<div class="result-buttons">
 
 <button
-    class="btn btn-dark"
     id="openBtn"
+    class="btn btn-dark"
+    type="button"
 >
     🔗 MỞ ẢNH
 </button>
 
 <button
-    class="btn btn-dark"
     id="newBtn"
+    class="btn btn-dark"
+    type="button"
 >
     ➕ ẢNH MỚI
 </button>
@@ -430,9 +691,10 @@ h1{
 <script>
 "use strict";
 
-const MAX_SIZE = 4 * 1024 * 1024;
+const MAX_SIZE =
+    4 * 1024 * 1024;
 
-const TYPES = [
+const ALLOWED_TYPES = [
     "image/png",
     "image/jpeg",
     "image/jpg",
@@ -465,8 +727,17 @@ const size =
 const status =
     document.getElementById("status");
 
-const urlResult =
-    document.getElementById("urlResult");
+const progress =
+    document.getElementById("progress");
+
+const progressBar =
+    document.getElementById("progressBar");
+
+const progressText =
+    document.getElementById("progressText");
+
+const result =
+    document.getElementById("result");
 
 const urlInput =
     document.getElementById("urlInput");
@@ -481,29 +752,35 @@ const newBtn =
     document.getElementById("newBtn");
 
 let currentUrl = "";
-let currentFile = null;
-let uploading = false;
 
-function bytes(value){
+function formatBytes(bytes){
 
-    if(value < 1024)
-        return value + " B";
+    if(bytes < 1024){
+        return bytes + " B";
+    }
 
-    if(value < 1024 * 1024)
-        return (value / 1024).toFixed(1) + " KB";
+    if(bytes < 1024 * 1024){
+        return (
+            bytes / 1024
+        ).toFixed(1) + " KB";
+    }
 
-    return (value / 1024 / 1024).toFixed(2) + " MB";
+    return (
+        bytes /
+        1024 /
+        1024
+    ).toFixed(2) + " MB";
 }
 
 function gcd(a,b){
 
     while(b){
 
-        const x = b;
+        const temp = b;
 
         b = a % b;
 
-        a = x;
+        a = temp;
     }
 
     return a;
@@ -516,93 +793,133 @@ function getRatio(w,h){
     return `${w/g}:${h/g}`;
 }
 
-function extension(file){
+function getExtension(file){
 
-    const type =
-        String(file.type || "").toLowerCase();
+    switch(
+        String(file.type || "")
+            .toLowerCase()
+    ){
 
-    if(type === "image/jpeg" ||
-       type === "image/jpg")
-        return "jpg";
+        case "image/jpeg":
+        case "image/jpg":
+            return "jpg";
 
-    if(type === "image/webp")
-        return "webp";
+        case "image/webp":
+            return "webp";
 
-    if(type === "image/gif")
-        return "gif";
+        case "image/gif":
+            return "gif";
 
-    if(type === "image/avif")
-        return "avif";
+        case "image/avif":
+            return "avif";
 
-    return "png";
+        default:
+            return "png";
+    }
+}
+
+/*
+    Tạo mã cực ngắn.
+
+    Ví dụ:
+    a7K29xPq.png
+*/
+
+function createShortId(){
+
+    const chars =
+        "ABCDEFGHJKLMNPQRSTUVWXYZ" +
+        "abcdefghijkmnopqrstuvwxyz" +
+        "23456789";
+
+    let id = "";
+
+    for(let i=0;i<8;i++){
+
+        id += chars[
+            Math.floor(
+                Math.random() *
+                chars.length
+            )
+        ];
+    }
+
+    return id;
 }
 
 function createFilename(file){
 
-    const d = new Date();
-
-    const date =
-        d.getFullYear() +
-        String(d.getMonth()+1).padStart(2,"0") +
-        String(d.getDate()).padStart(2,"0");
-
-    const time =
-        String(d.getHours()).padStart(2,"0") +
-        String(d.getMinutes()).padStart(2,"0") +
-        String(d.getSeconds()).padStart(2,"0");
-
-    const random =
-        Math.random()
-        .toString(36)
-        .slice(2,12);
-
-    return `images-${date}-${time}-${random}.${extension(file)}`;
+    return (
+        createShortId() +
+        "." +
+        getExtension(file)
+    );
 }
 
-function showStatus(text,type){
+function setStatus(text,type){
 
     status.textContent = text;
 
     status.className =
-        "status " + (type || "");
+        "status " +
+        (type || "");
 }
 
-function upload(file,filename){
+function setProgress(percent,text){
 
-    return new Promise((resolve,reject)=>{
+    progress.style.display =
+        "block";
 
-        const xhr =
-            new XMLHttpRequest();
+    progressBar.style.width =
+        percent + "%";
 
-        xhr.open(
-            "POST",
-            "/api/upload?filename=" +
-            encodeURIComponent(filename),
-            true
-        );
+    progressText.textContent =
+        text;
+}
 
-        xhr.setRequestHeader(
-            "Content-Type",
-            file.type
-        );
+function uploadFile(file,filename){
 
-        xhr.onload = ()=>{
+    return new Promise(
+        (resolve,reject)=>{
 
-            let data = null;
+            const xhr =
+                new XMLHttpRequest();
 
-            try{
-                data = JSON.parse(xhr.responseText);
-            }catch(e){}
+            xhr.open(
+                "POST",
+                "/api/upload?filename=" +
+                encodeURIComponent(filename),
+                true
+            );
 
-            if(
-                xhr.status >= 200 &&
-                xhr.status < 300 &&
-                data?.success
-            ){
+            xhr.setRequestHeader(
+                "Content-Type",
+                file.type
+            );
 
-                resolve(data);
+            xhr.onload = function(){
 
-            }else{
+                let data = null;
+
+                try{
+
+                    data =
+                        JSON.parse(
+                            xhr.responseText
+                        );
+
+                }catch(error){}
+
+                if(
+                    xhr.status >= 200 &&
+                    xhr.status < 300 &&
+                    data?.success
+                ){
+
+                    resolve(data);
+
+                    return;
+                }
 
                 reject(
                     new Error(
@@ -610,31 +927,46 @@ function upload(file,filename){
                         "Upload thất bại."
                     )
                 );
-            }
-        };
+            };
 
-        xhr.onerror = ()=>{
+            xhr.onerror = function(){
 
-            reject(
-                new Error(
-                    "Không thể kết nối máy chủ."
-                )
-            );
-        };
+                reject(
+                    new Error(
+                        "Không thể kết nối máy chủ."
+                    )
+                );
+            };
 
-        xhr.send(file);
-    });
+            xhr.onabort = function(){
+
+                reject(
+                    new Error(
+                        "Upload đã bị hủy."
+                    )
+                );
+            };
+
+            xhr.send(file);
+        }
+    );
 }
 
-async function selectFile(file){
+async function handleFile(file){
 
-    if(!file)
+    if(!file){
         return;
+    }
 
-    if(!TYPES.includes(file.type)){
+    result.style.display =
+        "none";
 
-        showStatus(
-            "Định dạng ảnh không được hỗ trợ.",
+    currentUrl = "";
+
+    if(!ALLOWED_TYPES.includes(file.type)){
+
+        setStatus(
+            "❌ Định dạng ảnh không được hỗ trợ.",
             "error"
         );
 
@@ -643,162 +975,220 @@ async function selectFile(file){
 
     if(file.size > MAX_SIZE){
 
-        showStatus(
-            "Ảnh vượt quá giới hạn 4MB.",
+        setStatus(
+            "❌ Ảnh vượt quá giới hạn 4MB.",
             "error"
         );
 
         return;
     }
 
-    currentFile = file;
+    preview.style.display =
+        "block";
+
+    setStatus(
+        "Đang đọc hình ảnh..."
+    );
+
+    size.textContent =
+        formatBytes(file.size);
+
+    const objectUrl =
+        URL.createObjectURL(file);
+
+    previewImage.onload =
+        function(){
+
+            dimensions.textContent =
+                previewImage.naturalWidth +
+                " × " +
+                previewImage.naturalHeight;
+
+            ratio.textContent =
+                getRatio(
+                    previewImage.naturalWidth,
+                    previewImage.naturalHeight
+                );
+
+            URL.revokeObjectURL(
+                objectUrl
+            );
+        };
+
+    previewImage.src =
+        objectUrl;
 
     /*
-      URL được tạo NGAY TẠI ĐÂY.
-      Không chờ API.
+      Mã ảnh ngắn.
     */
 
     const filename =
         createFilename(file);
+
+    /*
+      URL ngắn được tạo.
+    */
 
     currentUrl =
         window.location.origin +
         "/images/" +
         encodeURIComponent(filename);
 
-    urlInput.value =
-        currentUrl;
+    setStatus(
+        "Đang tải hình ảnh lên máy chủ..."
+    );
 
-    urlResult.style.display =
-        "block";
-
-    preview.style.display =
-        "block";
-
-    const objectUrl =
-        URL.createObjectURL(file);
-
-    previewImage.onload = ()=>{
-
-        dimensions.textContent =
-            previewImage.naturalWidth +
-            " × " +
-            previewImage.naturalHeight;
-
-        ratio.textContent =
-            getRatio(
-                previewImage.naturalWidth,
-                previewImage.naturalHeight
-            );
-
-        URL.revokeObjectURL(objectUrl);
-    };
-
-    previewImage.src =
-        objectUrl;
-
-    size.textContent =
-        bytes(file.size);
-
-    showStatus(
-        "✅ LINK URL ĐÃ TẠO — ĐANG UPLOAD ẢNH...",
-        ""
+    setProgress(
+        5,
+        "ĐANG CHUẨN BỊ..."
     );
 
     /*
-      Upload chạy nền.
-      Người dùng không phải chờ để thấy URL.
+      Tiến trình giao diện chạy riêng,
+      tránh bị kẹt ở 97%.
     */
 
-    uploading = true;
+    let visualProgress = 5;
 
-    upload(file,filename)
-        .then(data=>{
+    const timer =
+        setInterval(()=>{
 
-            uploading = false;
+            if(visualProgress < 92){
 
-            /*
-              Giữ URL đã tạo ở client.
-              Server cũng trả URL để xác nhận.
-            */
+                visualProgress += 3;
 
-            if(data?.url){
-
-                currentUrl =
-                    data.url;
-
-                urlInput.value =
-                    currentUrl;
+                setProgress(
+                    visualProgress,
+                    "ĐANG UPLOAD..."
+                );
             }
 
-            showStatus(
-                "✅ UPLOAD THÀNH CÔNG — LINK ĐÃ SẴN SÀNG.",
-                "success"
+        },120);
+
+    try{
+
+        const data =
+            await uploadFile(
+                file,
+                filename
             );
 
-        })
-        .catch(error=>{
+        clearInterval(timer);
 
-            uploading = false;
+        setProgress(
+            100,
+            "UPLOAD 100% • HOÀN TẤT"
+        );
 
-            /*
-              URL vẫn được giữ lại.
-              Người dùng có thể thử lại bằng
-              cách chọn ảnh lại.
-            */
+        /*
+          Chỉ hiện URL sau khi Blob
+          xác nhận upload thành công.
+        */
 
-            showStatus(
-                "⚠️ URL ĐÃ TẠO NHƯNG UPLOAD CHƯA THÀNH CÔNG: " +
-                error.message,
-                "error"
+        currentUrl =
+            data.url ||
+            currentUrl;
+
+        urlInput.value =
+            currentUrl;
+
+        result.style.display =
+            "block";
+
+        setStatus(
+            "✅ Upload thành công. Link URL đã sẵn sàng.",
+            "success"
+        );
+
+        /*
+          Lưu link cuối cùng để giao diện
+          không phụ thuộc vào API khi reload.
+        */
+
+        try{
+
+            localStorage.setItem(
+                "ffvn_last_image_url",
+                currentUrl
             );
-        });
+
+        }catch(error){}
+
+    }catch(error){
+
+        clearInterval(timer);
+
+        setProgress(
+            0,
+            "UPLOAD THẤT BẠI"
+        );
+
+        setStatus(
+            "❌ " +
+            (
+                error?.message ||
+                "Không thể kết nối máy chủ."
+            ),
+            "error"
+        );
+    }
 }
 
 fileInput.addEventListener(
     "change",
-    ()=>{
-        selectFile(
-            fileInput.files?.[0]
+    function(){
+
+        handleFile(
+            this.files?.[0]
         );
     }
 );
 
 uploadZone.addEventListener(
     "dragover",
-    e=>{
-        e.preventDefault();
-        uploadZone.classList.add("drag");
+    function(event){
+
+        event.preventDefault();
+
+        uploadZone.classList.add(
+            "drag"
+        );
     }
 );
 
 uploadZone.addEventListener(
     "dragleave",
-    ()=>{
-        uploadZone.classList.remove("drag");
+    function(){
+
+        uploadZone.classList.remove(
+            "drag"
+        );
     }
 );
 
 uploadZone.addEventListener(
     "drop",
-    e=>{
+    function(event){
 
-        e.preventDefault();
+        event.preventDefault();
 
-        uploadZone.classList.remove("drag");
+        uploadZone.classList.remove(
+            "drag"
+        );
 
-        selectFile(
-            e.dataTransfer.files?.[0]
+        handleFile(
+            event.dataTransfer.files?.[0]
         );
     }
 );
 
 copyBtn.addEventListener(
     "click",
-    async ()=>{
+    async function(){
 
-        if(!currentUrl)
+        if(!currentUrl){
             return;
+        }
 
         try{
 
@@ -806,74 +1196,85 @@ copyBtn.addEventListener(
                 currentUrl
             );
 
-        }catch(e){
+        }catch(error){
 
             urlInput.select();
 
-            document.execCommand("copy");
+            document.execCommand(
+                "copy"
+            );
         }
 
         copyBtn.textContent =
             "✅ ĐÃ SAO CHÉP";
 
-        setTimeout(()=>{
-            copyBtn.textContent =
-                "📋 SAO CHÉP";
-        },1500);
+        setTimeout(
+            ()=>{
+                copyBtn.textContent =
+                    "📋 SAO CHÉP";
+            },
+            1500
+        );
     }
 );
 
 openBtn.addEventListener(
     "click",
-    ()=>{
+    function(){
 
-        if(currentUrl){
-
-            window.open(
-                currentUrl,
-                "_blank"
-            );
+        if(!currentUrl){
+            return;
         }
+
+        window.open(
+            currentUrl,
+            "_blank",
+            "noopener"
+        );
     }
 );
 
 newBtn.addEventListener(
     "click",
-    ()=>{
+    function(){
 
         fileInput.value = "";
 
-        currentFile = null;
         currentUrl = "";
-        uploading = false;
 
         preview.style.display =
             "none";
 
-        urlResult.style.display =
+        result.style.display =
+            "none";
+
+        progress.style.display =
             "none";
 
         previewImage.removeAttribute(
             "src"
         );
 
-        showStatus(
-            "URL sẽ xuất hiện ngay khi chọn ảnh.",
-            ""
+        dimensions.textContent = "-";
+        ratio.textContent = "-";
+        size.textContent = "-";
+
+        setStatus(
+            "Đang chờ hình ảnh..."
         );
     }
 );
 
 /*
-  Không gọi API khi mở lại trang.
-  Đây là phần sửa lỗi:
-  "Không thể kết nối máy chủ"
+  Không gọi API khi trang được mở lại.
+  Vì vậy reload / thoát vào lại trang
+  không gây lỗi kết nối API.
 */
 
 window.addEventListener(
     "pageshow",
-    ()=>{
-        uploading = false;
+    function(){
+        /* intentionally empty */
     }
 );
 </script>
