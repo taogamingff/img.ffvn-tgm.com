@@ -1,8 +1,9 @@
 {
   "name": "img-ffvn-tgm-com",
-  "version": "8.0.0",
+  "version": "10.0.0",
   "private": true,
   "description": "FFVN.TGM - Công cụ chèn ảnh tạo link URL",
+  "type": "module",
   "dependencies": {
     "@vercel/blob": "^2.8.0"
   }
