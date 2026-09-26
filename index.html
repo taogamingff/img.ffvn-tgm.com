@@ -6,49 +6,37 @@
 <meta charset="UTF-8">
 
 <meta
-    name="viewport"
-    content="width=device-width,initial-scale=1,viewport-fit=cover"
->
-
-<meta
-    name="theme-color"
-    content="#050505"
->
-
-<meta
-    name="description"
-    content="FFVN.TGM IMAGE HOSTING - Upload ảnh nhanh, tự nhận diện khung hình và tạo URL trực tiếp."
+  name="viewport"
+  content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
 >
 
 <title>
-    FFVN.TGM IMAGE HOSTING 🔥
+  FFVN.TGM IMAGE HOSTING 🔥
 </title>
 
+<meta
+  name="description"
+  content="FFVN.TGM Image Hosting - Upload và lưu trữ hình ảnh nhanh chóng."
+>
 
 <style>
 
 /* =========================================================
-   GARENA FREE FIRE FONT
+   GFF FONT
 ========================================================= */
 
 @font-face{
 
-    font-family:
-        "GFF-Latin-Bold";
+  font-family:"GFF-Latin-Bold";
 
-    src:
-        url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/GFFLatinW05-Bold.woff2")
-        format("woff2"),
+  src:
+    url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/website/GFFLatinW05-Bold.woff2")
+      format("woff2"),
 
-        url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/GFFLatinW05-Bold.woff")
-        format("woff");
+    url("https://dl.dir.freefiremobile.com/common/web_event/common/fonts/website/GFFLatinW05-Bold.woff")
+      format("woff");
 
-    font-weight:700;
-
-    font-style:normal;
-
-    font-display:swap;
-
+  font-display:swap;
 }
 
 
@@ -58,166 +46,197 @@
 
 *{
 
-    box-sizing:border-box;
+  box-sizing:border-box;
 
-    margin:0;
+  margin:0;
 
-    padding:0;
+  padding:0;
 
-    -webkit-tap-highlight-color:
-        transparent;
+  font-family:"GFF-Latin-Bold", sans-serif;
 
+  -webkit-font-smoothing:antialiased;
+
+  text-rendering:optimizeLegibility;
 }
 
 
-html{
-
-    scroll-behavior:
-        smooth;
-
-}
-
-
+html,
 body{
 
-    min-height:100vh;
+  width:100%;
 
-    overflow-x:hidden;
+  min-height:100%;
 
-    color:#fff;
-
-    font-family:
-        "GFF-Latin-Bold",
-        Arial,
-        sans-serif;
-
-    background:
-
-        radial-gradient(
-            circle at 10% 5%,
-            rgba(255,100,0,.28),
-            transparent 25%
-        ),
-
-        radial-gradient(
-            circle at 90% 15%,
-            rgba(255,55,0,.16),
-            transparent 28%
-        ),
-
-        radial-gradient(
-            circle at 50% 100%,
-            rgba(255,120,0,.12),
-            transparent 35%
-        ),
-
-        linear-gradient(
-            135deg,
-            #030303,
-            #0b0805 45%,
-            #030303
-        );
-
+  font-family:"GFF-Latin-Bold", sans-serif;
 }
 
 
 /* =========================================================
-   BACKGROUND EFFECT
+   BACKGROUND
+========================================================= */
+
+body{
+
+  min-height:100vh;
+
+  color:#fff;
+
+  background:
+
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(255,110,0,.30),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 90% 20%,
+      rgba(255,40,0,.20),
+      transparent 30%
+    ),
+
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(255,145,0,.18),
+      transparent 35%
+    ),
+
+    linear-gradient(
+      135deg,
+      #050505,
+      #101010 45%,
+      #050505
+    );
+
+  overflow-x:hidden;
+}
+
+
+/* =========================================================
+   LIGHT EFFECT
 ========================================================= */
 
 body::before{
 
-    content:"";
+  content:"";
 
-    position:fixed;
+  position:fixed;
 
-    inset:0;
+  inset:-50%;
 
-    pointer-events:none;
+  pointer-events:none;
 
-    opacity:.5;
+  background:
 
-    background-image:
+    radial-gradient(
+      circle,
+      rgba(255,100,0,.07),
+      transparent 45%
+    );
 
-        linear-gradient(
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        ),
-
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.018) 1px,
-            transparent 1px
-        );
-
-    background-size:
-        45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            #000,
-            transparent
-        );
+  animation:
+    rotateLight 18s linear infinite;
 
 }
 
 
-body::after{
+@keyframes rotateLight{
 
-    content:"";
+  from{
+    transform:rotate(0deg);
+  }
 
-    position:fixed;
-
-    width:380px;
-
-    height:380px;
-
-    right:-180px;
-
-    bottom:-180px;
-
-    border-radius:50%;
-
-    background:
-        rgba(255,80,0,.12);
-
-    filter:
-        blur(100px);
-
-    pointer-events:none;
+  to{
+    transform:rotate(360deg);
+  }
 
 }
 
 
 /* =========================================================
-   MAIN
+   APP
 ========================================================= */
 
-.page{
+.app{
 
-    width:100%;
+  position:relative;
 
-    min-height:100vh;
+  z-index:1;
 
-    padding:
-        25px 15px;
+  width:100%;
 
-    display:flex;
+  max-width:900px;
 
-    justify-content:center;
+  margin:auto;
 
-    align-items:center;
-
+  padding:
+    24px
+    16px
+    40px;
 }
 
 
-.container{
+/* =========================================================
+   HEADER
+========================================================= */
 
-    width:100%;
+.header{
 
-    max-width:700px;
+  text-align:center;
 
+  padding:18px 10px 24px;
+}
+
+
+.logo{
+
+  width:82px;
+
+  height:82px;
+
+  object-fit:cover;
+
+  border-radius:24px;
+
+  border:2px solid rgba(255,140,0,.75);
+
+  box-shadow:
+
+    0 0 30px
+      rgba(255,100,0,.30),
+
+    inset 0 0 20px
+      rgba(255,255,255,.08);
+}
+
+
+.title{
+
+  margin-top:16px;
+
+  font-size:
+    clamp(25px,7vw,46px);
+
+  letter-spacing:.5px;
+
+  color:#fff;
+
+  text-shadow:
+
+    0 0 15px
+      rgba(255,90,0,.5);
+}
+
+
+.subtitle{
+
+  margin-top:8px;
+
+  opacity:.72;
+
+  font-size:14px;
+
+  line-height:1.6;
 }
 
 
@@ -227,241 +246,120 @@ body::after{
 
 .card{
 
-    position:relative;
+  border:
 
-    overflow:hidden;
+    1px solid
+    rgba(255,255,255,.12);
 
-    padding:28px;
+  border-radius:28px;
 
-    border:
-        1px solid
-        rgba(255,115,0,.28);
+  padding:22px;
 
-    border-radius:30px;
+  background:
 
-    background:
-        linear-gradient(
-            145deg,
-            rgba(25,22,20,.90),
-            rgba(8,8,8,.84)
-        );
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.09),
+      rgba(255,255,255,.025)
+    );
 
-    box-shadow:
+  backdrop-filter:
+    blur(22px);
 
-        0 35px 100px
-        rgba(0,0,0,.75),
+  -webkit-backdrop-filter:
+    blur(22px);
 
-        inset 0 1px
-        rgba(255,255,255,.04),
+  box-shadow:
 
-        0 0 80px
-        rgba(255,80,0,.06);
+    0 25px 80px
+      rgba(0,0,0,.40),
 
-    backdrop-filter:
-        blur(22px);
-
-}
-
-
-.card::before{
-
-    content:"";
-
-    position:absolute;
-
-    left:-20%;
-
-    top:-80px;
-
-    width:140%;
-
-    height:150px;
-
-    background:
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(255,100,0,.12),
-            transparent
-        );
-
-    transform:
-        rotate(-5deg);
-
-    pointer-events:none;
-
+    inset 0 1px 0
+      rgba(255,255,255,.08);
 }
 
 
 /* =========================================================
-   HEADER
+   DROP AREA
 ========================================================= */
 
-.logo{
+.drop{
 
-    position:relative;
+  position:relative;
 
-    width:92px;
+  min-height:270px;
 
-    height:92px;
+  border:
 
-    display:block;
+    2px dashed
+    rgba(255,125,0,.45);
 
-    margin:
-        0 auto 18px;
+  border-radius:22px;
 
-    object-fit:cover;
+  display:flex;
 
-    border-radius:25px;
+  align-items:center;
 
-    border:
-        2px solid
-        rgba(255,125,0,.7);
+  justify-content:center;
 
-    box-shadow:
+  text-align:center;
 
-        0 0 35px
-        rgba(255,85,0,.28),
+  padding:30px;
 
-        0 10px 35px
-        rgba(0,0,0,.5);
+  cursor:pointer;
 
+  transition:.25s ease;
+
+  background:
+
+    rgba(255,255,255,.025);
 }
 
 
-h1{
+.drop:hover,
+.drop.active{
 
-    position:relative;
+  border-color:#ff8a00;
 
-    text-align:center;
+  background:
+    rgba(255,110,0,.07);
 
-    color:#ff7b00;
+  box-shadow:
 
-    font-size:
-        clamp(
-            22px,
-            5vw,
-            31px
-        );
-
-    letter-spacing:
-        .4px;
-
-    text-shadow:
-        0 0 22px
-        rgba(255,90,0,.25);
-
+    0 0 40px
+      rgba(255,90,0,.12);
 }
 
 
-.subtitle{
+.drop-icon{
 
-    position:relative;
+  font-size:52px;
 
-    margin-top:9px;
-
-    margin-bottom:25px;
-
-    text-align:center;
-
-    color:#999;
-
-    font-family:
-        "GFF-Latin-Bold",
-        Arial,
-        sans-serif;
-
-    font-size:13px;
-
-    line-height:1.6;
-
+  margin-bottom:12px;
 }
 
 
-/* =========================================================
-   DROP ZONE
-========================================================= */
+.drop-title{
 
-.upload-box{
-
-    position:relative;
-
-    display:block;
-
-    padding:
-        34px 20px;
-
-    text-align:center;
-
-    cursor:pointer;
-
-    border:
-        2px dashed
-        rgba(255,115,0,.38);
-
-    border-radius:24px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    transition:
-        .25s ease;
-
+  font-size:21px;
 }
 
 
-.upload-box:hover,
-.upload-box.drag{
+.drop-desc{
 
-    border-color:
-        #ff7800;
+  margin-top:8px;
 
-    background:
-        rgba(255,90,0,.08);
+  font-size:13px;
 
-    transform:
-        translateY(-2px);
+  opacity:.62;
 
-    box-shadow:
-        0 15px 40px
-        rgba(255,80,0,.08);
-
+  line-height:1.6;
 }
 
 
-.upload-icon{
+input[type=file]{
 
-    font-size:50px;
-
-    line-height:1;
-
-    margin-bottom:13px;
-
-}
-
-
-.upload-title{
-
-    font-size:19px;
-
-    margin-bottom:8px;
-
-}
-
-
-.upload-desc{
-
-    color:#777;
-
-    font-size:12px;
-
-}
-
-
-#fileInput{
-
-    display:none;
-
+  display:none;
 }
 
 
@@ -471,247 +369,158 @@ h1{
 
 .preview{
 
-    display:none;
+  display:none;
 
-    margin-top:20px;
+  margin-top:20px;
 
-    overflow:hidden;
+  overflow:hidden;
 
-    border:
-        1px solid
-        rgba(255,255,255,.08);
+  border-radius:20px;
 
-    border-radius:22px;
+  background:#050505;
 
-    background:#050505;
-
+  border:
+    1px solid
+    rgba(255,255,255,.1);
 }
 
 
-.preview-image-wrap{
+.preview.show{
 
-    position:relative;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    min-height:160px;
-
-    background:
-
-        repeating-conic-gradient(
-            #101010 0 25%,
-            #0b0b0b 0 50%
-        )
-        50% / 24px 24px;
-
+  display:block;
 }
 
 
 .preview img{
 
-    display:block;
+  display:block;
 
-    width:100%;
+  width:100%;
 
-    max-height:400px;
+  max-height:420px;
 
-    object-fit:contain;
+  object-fit:contain;
 
-}
+  background:
 
-
-.image-badge{
-
-    position:absolute;
-
-    left:12px;
-
-    top:12px;
-
-    padding:
-        7px 11px;
-
-    border:
-        1px solid
-        rgba(255,125,0,.4);
-
-    border-radius:10px;
-
-    background:
-        rgba(0,0,0,.7);
-
-    color:#ff9a43;
-
-    font-size:11px;
-
-    backdrop-filter:
-        blur(10px);
-
+    repeating-conic-gradient(
+      #181818 0% 25%,
+      #101010 0% 50%
+    )
+    50% / 20px 20px;
 }
 
 
 /* =========================================================
-   IMAGE INFO
+   INFO
 ========================================================= */
 
-.image-info{
+.info{
 
-    display:grid;
+  display:grid;
 
-    grid-template-columns:
-        repeat(3,1fr);
+  grid-template-columns:
+    repeat(3,1fr);
 
-    gap:8px;
+  gap:10px;
 
-    padding:12px;
-
+  margin-top:14px;
 }
 
 
-.info-item{
+.info-box{
 
-    min-width:0;
+  padding:13px;
 
-    padding:11px 8px;
+  border-radius:15px;
 
-    text-align:center;
+  background:
+    rgba(255,255,255,.045);
 
-    border:
-        1px solid
-        rgba(255,255,255,.06);
+  border:
+    1px solid
+    rgba(255,255,255,.07);
 
-    border-radius:13px;
-
-    background:
-        rgba(255,255,255,.025);
-
+  text-align:center;
 }
 
 
 .info-label{
 
-    color:#666;
+  display:block;
 
-    font-size:9px;
+  font-size:10px;
 
-    margin-bottom:5px;
+  opacity:.55;
 
+  margin-bottom:5px;
 }
 
 
 .info-value{
 
-    overflow:hidden;
-
-    color:#eee;
-
-    font-size:11px;
-
-    white-space:nowrap;
-
-    text-overflow:ellipsis;
-
+  font-size:13px;
 }
 
 
 /* =========================================================
-   BUTTONS
+   BUTTON
 ========================================================= */
 
-button{
+.button{
 
-    width:100%;
+  width:100%;
 
-    border:0;
+  margin-top:18px;
 
-    border-radius:16px;
+  min-height:58px;
 
-    font-family:
-        "GFF-Latin-Bold",
-        Arial,
-        sans-serif;
+  border:0;
 
-    cursor:pointer;
+  border-radius:18px;
 
-    transition:
-        .2s ease;
+  cursor:pointer;
 
+  font-size:17px;
+
+  color:#fff;
+
+  background:
+
+    linear-gradient(
+      135deg,
+      #ff4d00,
+      #ff9d00
+    );
+
+  box-shadow:
+
+    0 10px 30px
+      rgba(255,80,0,.22);
+
+  transition:.2s ease;
 }
 
 
-.upload-btn{
+.button:hover{
 
-    margin-top:15px;
+  transform:
+    translateY(-2px);
 
-    padding:16px;
+  box-shadow:
 
-    color:#fff;
-
-    font-size:16px;
-
-    background:
-
-        linear-gradient(
-            135deg,
-            #ff9a00,
-            #ff4b00
-        );
-
-    box-shadow:
-
-        0 12px 30px
-        rgba(255,75,0,.18);
-
+    0 15px 35px
+      rgba(255,80,0,.30);
 }
 
 
-.upload-btn:hover:not(:disabled){
+.button:disabled{
 
-    transform:
-        translateY(-2px);
+  opacity:.5;
 
-    filter:
-        brightness(1.08);
+  cursor:not-allowed;
 
-}
-
-
-.upload-btn:disabled{
-
-    opacity:.4;
-
-    cursor:not-allowed;
-
-}
-
-
-.secondary{
-
-    margin-top:10px;
-
-    padding:14px;
-
-    color:#ddd;
-
-    background:
-        rgba(255,255,255,.045);
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-}
-
-
-.secondary:hover{
-
-    background:
-        rgba(255,255,255,.08);
-
+  transform:none;
 }
 
 
@@ -719,99 +528,67 @@ button{
    PROGRESS
 ========================================================= */
 
-.progress-wrap{
+.progress-box{
 
-    display:none;
+  display:none;
 
-    margin-top:20px;
-
+  margin-top:20px;
 }
 
 
-.progress-bg{
+.progress-box.show{
 
-    width:100%;
+  display:block;
+}
 
-    height:9px;
 
-    overflow:hidden;
+.progress-top{
 
-    border-radius:20px;
+  display:flex;
 
-    background:#1c1c1c;
+  justify-content:space-between;
 
+  font-size:13px;
+
+  margin-bottom:8px;
+
+  opacity:.85;
 }
 
 
 .progress{
 
-    width:0%;
+  width:100%;
 
-    height:100%;
+  height:10px;
 
-    border-radius:20px;
+  overflow:hidden;
 
-    background:
+  border-radius:20px;
 
-        linear-gradient(
-            90deg,
-            #ff4b00,
-            #ffae00
-        );
-
-    box-shadow:
-        0 0 15px
-        rgba(255,100,0,.5);
-
-    transition:
-        width .15s linear;
-
+  background:
+    rgba(255,255,255,.08);
 }
 
 
-.progress-text{
+.progress-bar{
 
-    margin-top:8px;
+  width:0%;
 
-    text-align:center;
+  height:100%;
 
-    color:#888;
+  border-radius:20px;
 
-    font-size:11px;
+  background:
 
-}
+    linear-gradient(
+      90deg,
+      #ff4b00,
+      #ffb000
+    );
 
-
-/* =========================================================
-   STATUS
-========================================================= */
-
-.status{
-
-    min-height:20px;
-
-    margin-top:14px;
-
-    text-align:center;
-
-    color:#888;
-
-    font-size:12px;
-
-}
-
-
-.status.error{
-
-    color:#ff6868;
-
-}
-
-
-.status.success{
-
-    color:#4cff91;
-
+  transition:
+    width .15s linear;
 }
 
 
@@ -821,92 +598,112 @@ button{
 
 .result{
 
-    display:none;
+  display:none;
 
-    margin-top:20px;
+  margin-top:20px;
 
-    padding:17px;
+  padding:18px;
 
-    border:
-        1px solid
-        rgba(0,230,100,.25);
+  border-radius:20px;
 
-    border-radius:20px;
+  background:
+    rgba(50,255,130,.05);
 
-    background:
-        rgba(0,160,70,.07);
+  border:
+    1px solid
+    rgba(80,255,140,.20);
+}
 
+
+.result.show{
+
+  display:block;
 }
 
 
 .result-title{
 
-    margin-bottom:11px;
+  font-size:18px;
 
-    color:#4cff91;
-
-    font-size:15px;
-
+  margin-bottom:10px;
 }
 
 
-.url-box{
+.url{
 
-    display:flex;
+  width:100%;
 
-    gap:7px;
+  padding:13px;
 
+  border-radius:13px;
+
+  background:#050505;
+
+  border:
+    1px solid
+    rgba(255,255,255,.08);
+
+  color:#fff;
+
+  font-size:12px;
+
+  word-break:break-all;
+
+  line-height:1.6;
 }
 
 
-.url-box input{
+.actions{
 
-    min-width:0;
+  display:grid;
 
-    flex:1;
+  grid-template-columns:
+    1fr 1fr;
 
-    padding:12px;
+  gap:10px;
 
-    outline:none;
-
-    border:
-        1px solid
-        #333;
-
-    border-radius:12px;
-
-    color:#eee;
-
-    background:#090909;
-
-    font-family:
-        Arial,
-        sans-serif;
-
-    font-size:11px;
-
+  margin-top:12px;
 }
 
 
-.copy-btn{
+.action{
 
-    width:auto;
+  min-height:48px;
 
-    margin:0;
+  border:0;
 
-    padding:
-        12px 15px;
+  border-radius:14px;
 
-    color:#fff;
+  cursor:pointer;
 
-    background:#222;
+  color:#fff;
 
-    border:
-        1px solid
-        #383838;
+  background:
+    rgba(255,255,255,.08);
 
-    font-size:12px;
+  border:
+    1px solid
+    rgba(255,255,255,.08);
 
+  font-size:13px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status{
+
+  margin-top:14px;
+
+  min-height:22px;
+
+  text-align:center;
+
+  font-size:13px;
+
+  opacity:.78;
 }
 
 
@@ -916,14 +713,13 @@ button{
 
 .footer{
 
-    margin-top:22px;
+  text-align:center;
 
-    text-align:center;
+  padding:25px 0 5px;
 
-    color:#555;
+  font-size:11px;
 
-    font-size:10px;
-
+  opacity:.45;
 }
 
 
@@ -931,51 +727,39 @@ button{
    MOBILE
 ========================================================= */
 
-@media(max-width:520px){
+@media(max-width:600px){
 
-    .page{
+  .app{
 
-        padding:
-            10px;
+    padding:
+      12px
+      12px
+      30px;
+  }
 
-        align-items:
-            flex-start;
+  .card{
 
-    }
+    padding:14px;
 
+    border-radius:22px;
+  }
 
-    .card{
+  .drop{
 
-        margin-top:10px;
+    min-height:230px;
+  }
 
-        padding:18px;
+  .info{
 
-        border-radius:24px;
+    grid-template-columns:
+      1fr;
+  }
 
-    }
+  .actions{
 
-
-    .image-info{
-
-        grid-template-columns:
-            1fr 1fr 1fr;
-
-    }
-
-
-    .url-box{
-
-        flex-direction:
-            column;
-
-    }
-
-
-    .copy-btn{
-
-        width:100%;
-
-    }
+    grid-template-columns:
+      1fr;
+  }
 
 }
 
@@ -986,271 +770,221 @@ button{
 
 <body>
 
+<main class="app">
 
-<div class="page">
+  <header class="header">
 
+    <img
+      class="logo"
+      src="https://cdn.imagetourls.com/uploads/tyImg/1ggIdgxtr.jpg"
+      alt="FFVN.TGM"
+    >
 
-<div class="container">
+    <h1 class="title">
+      FFVN.TGM IMAGE HOSTING 🔥
+    </h1>
 
+    <p class="subtitle">
+      Upload hình ảnh nhanh chóng • Tự động tạo URL • Không cần đổi tên thủ công
+    </p>
 
-<div class="card">
-
-
-<img
-    class="logo"
-    src="https://cdn.imagetourls.com/uploads/tyImg/1ggIdgxtr.jpg"
-    alt="FFVN.TGM"
->
-
-
-<h1>
-    FFVN.TGM IMAGE HOSTING 🔥
-</h1>
-
-
-<div class="subtitle">
-
-    UPLOAD NHANH • TỰ NHẬN DIỆN KHUNG HÌNH • URL TRỰC TIẾP
-
-</div>
+  </header>
 
 
-<label
-    class="upload-box"
-    id="dropZone"
-    for="fileInput"
->
+  <section class="card">
 
+    <label
+      class="drop"
+      id="drop"
+      for="file"
+    >
 
-    <div class="upload-icon">
-        🖼️
-    </div>
+      <div>
 
-
-    <div class="upload-title">
-
-        CHỌN ẢNH TỪ ALBUM
-
-    </div>
-
-
-    <div class="upload-desc">
-
-        PNG • JPG • JPEG • WEBP • TỐI ĐA 4MB
-
-    </div>
-
-
-</label>
-
-
-<input
-    id="fileInput"
-    type="file"
-    accept="image/png,image/jpeg,image/webp"
->
-
-
-<div
-    class="preview"
-    id="previewBox"
->
-
-
-    <div class="preview-image-wrap">
-
-
-        <img
-            id="previewImage"
-            alt="Preview"
-        >
-
-
-        <div
-            class="image-badge"
-            id="imageBadge"
-        >
-
-            NHẬN DIỆN...
-
+        <div class="drop-icon">
+          🖼️
         </div>
 
+        <div class="drop-title">
+          CHỌN HÌNH ẢNH
+        </div>
+
+        <div class="drop-desc">
+          Nhấn để chọn ảnh từ Album<br>
+          PNG • JPG • JPEG • WEBP • tối đa 4MB
+        </div>
+
+      </div>
+
+    </label>
+
+
+    <input
+      id="file"
+      type="file"
+      accept="image/*"
+    >
+
+
+    <div
+      class="preview"
+      id="preview"
+    >
+
+      <img
+        id="previewImage"
+        alt="Preview"
+      >
 
     </div>
 
 
     <div
-        class="image-info"
+      class="info"
+      id="info"
     >
 
+      <div class="info-box">
 
-        <div class="info-item">
+        <span class="info-label">
+          KÍCH THƯỚC
+        </span>
 
-            <div class="info-label">
-                KÍCH THƯỚC
-            </div>
-
-            <div
-                class="info-value"
-                id="dimensions"
-            >
-                —
-            </div>
-
-        </div>
-
-
-        <div class="info-item">
-
-            <div class="info-label">
-                KHUNG HÌNH
-            </div>
-
-            <div
-                class="info-value"
-                id="ratio"
-            >
-                —
-            </div>
-
-        </div>
-
-
-        <div class="info-item">
-
-            <div class="info-label">
-                DUNG LƯỢNG
-            </div>
-
-            <div
-                class="info-value"
-                id="sizeInfo"
-            >
-                —
-            </div>
-
-        </div>
-
-
-    </div>
-
-</div>
-
-
-<button
-    class="upload-btn"
-    id="uploadBtn"
-    disabled
->
-
-    ⬆️ UPLOAD ẢNH
-
-</button>
-
-
-<button
-    class="secondary"
-    id="resetBtn"
-    style="display:none"
->
-
-    🔄 CHỌN ẢNH KHÁC
-
-</button>
-
-
-<div
-    class="progress-wrap"
-    id="progressWrap"
->
-
-
-    <div class="progress-bg">
-
-        <div
-            class="progress"
-            id="progress"
-        ></div>
-
-    </div>
-
-
-    <div
-        class="progress-text"
-        id="progressText"
-    >
-        0%
-    </div>
-
-</div>
-
-
-<div
-    class="status"
-    id="status"
-></div>
-
-
-<div
-    class="result"
-    id="result"
->
-
-
-    <div class="result-title">
-
-        ✅ UPLOAD THÀNH CÔNG
-
-    </div>
-
-
-    <div class="url-box">
-
-
-        <input
-            id="resultUrl"
-            readonly
+        <span
+          class="info-value"
+          id="dimensions"
         >
+          —
+        </span>
+
+      </div>
 
 
-        <button
-            class="copy-btn"
-            id="copyBtn"
+      <div class="info-box">
+
+        <span class="info-label">
+          TỶ LỆ
+        </span>
+
+        <span
+          class="info-value"
+          id="ratio"
         >
+          —
+        </span>
 
-            COPY
+      </div>
 
-        </button>
 
+      <div class="info-box">
+
+        <span class="info-label">
+          DUNG LƯỢNG
+        </span>
+
+        <span
+          class="info-value"
+          id="size"
+        >
+          —
+        </span>
+
+      </div>
 
     </div>
 
 
     <button
-        class="secondary"
-        id="openBtn"
+      class="button"
+      id="upload"
+      disabled
     >
-
-        🌐 MỞ ẢNH
-
+      🚀 UPLOAD HÌNH ẢNH
     </button>
 
 
-</div>
+    <div
+      class="progress-box"
+      id="progressBox"
+    >
+
+      <div class="progress-top">
+
+        <span id="progressText">
+          ĐANG UPLOAD...
+        </span>
+
+        <span id="progressPercent">
+          0%
+        </span>
+
+      </div>
+
+      <div class="progress">
+
+        <div
+          class="progress-bar"
+          id="progressBar"
+        ></div>
+
+      </div>
+
+    </div>
 
 
-<div class="footer">
+    <div
+      class="status"
+      id="status"
+    >
+      SẴN SÀNG
+    </div>
 
-    FFVN.TGM • IMAGE HOSTING
 
-</div>
+    <div
+      class="result"
+      id="result"
+    >
+
+      <div class="result-title">
+        ✅ UPLOAD THÀNH CÔNG
+      </div>
+
+      <div
+        class="url"
+        id="resultUrl"
+      ></div>
 
 
-</div>
+      <div class="actions">
 
-</div>
+        <button
+          class="action"
+          id="copy"
+        >
+          📋 SAO CHÉP URL
+        </button>
 
-</div>
+        <button
+          class="action"
+          id="open"
+        >
+          🔗 MỞ HÌNH ẢNH
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer class="footer">
+
+    FFVN.TGM IMAGE HOSTING 🔥
+
+  </footer>
+
+</main>
 
 
 <script>
@@ -1260,1152 +994,614 @@ button{
 ========================================================= */
 
 const fileInput =
-    document.getElementById(
-        "fileInput"
-    );
+  document.getElementById("file");
 
-const dropZone =
-    document.getElementById(
-        "dropZone"
-    );
+const drop =
+  document.getElementById("drop");
 
-const uploadBtn =
-    document.getElementById(
-        "uploadBtn"
-    );
-
-const resetBtn =
-    document.getElementById(
-        "resetBtn"
-    );
-
-const previewBox =
-    document.getElementById(
-        "previewBox"
-    );
+const preview =
+  document.getElementById("preview");
 
 const previewImage =
-    document.getElementById(
-        "previewImage"
-    );
+  document.getElementById("previewImage");
 
-const imageBadge =
-    document.getElementById(
-        "imageBadge"
-    );
-
-const dimensions =
-    document.getElementById(
-        "dimensions"
-    );
-
-const ratio =
-    document.getElementById(
-        "ratio"
-    );
-
-const sizeInfo =
-    document.getElementById(
-        "sizeInfo"
-    );
-
-const progressWrap =
-    document.getElementById(
-        "progressWrap"
-    );
-
-const progress =
-    document.getElementById(
-        "progress"
-    );
-
-const progressText =
-    document.getElementById(
-        "progressText"
-    );
+const uploadButton =
+  document.getElementById("upload");
 
 const status =
-    document.getElementById(
-        "status"
-    );
+  document.getElementById("status");
+
+const progressBox =
+  document.getElementById("progressBox");
+
+const progressBar =
+  document.getElementById("progressBar");
+
+const progressText =
+  document.getElementById("progressText");
+
+const progressPercent =
+  document.getElementById("progressPercent");
 
 const result =
-    document.getElementById(
-        "result"
-    );
+  document.getElementById("result");
 
 const resultUrl =
-    document.getElementById(
-        "resultUrl"
-    );
+  document.getElementById("resultUrl");
 
-const copyBtn =
-    document.getElementById(
-        "copyBtn"
-    );
+const dimensions =
+  document.getElementById("dimensions");
 
-const openBtn =
-    document.getElementById(
-        "openBtn"
-    );
+const ratio =
+  document.getElementById("ratio");
 
+const size =
+  document.getElementById("size");
 
-let selectedFile =
-    null;
+const copyButton =
+  document.getElementById("copy");
 
-
-let imageWidth =
-    0;
+const openButton =
+  document.getElementById("open");
 
 
-let imageHeight =
-    0;
-
-
-const MAX_SIZE =
-    4 * 1024 * 1024;
+let selectedFile = null;
 
 
 /* =========================================================
-   STATUS
+   FORMAT SIZE
 ========================================================= */
 
-function setStatus(
-    text,
-    type = ""
-){
+function formatSize(bytes){
 
-    status.textContent =
-        text;
+  if(bytes < 1024){
 
-    status.className =
-        "status " + type;
+    return bytes + " B";
+  }
 
-}
-
-
-/* =========================================================
-   FORMAT BYTES
-========================================================= */
-
-function formatBytes(
-    bytes
-){
-
-    if(
-        bytes <
-        1024
-    ){
-
-        return (
-            bytes + " B"
-        );
-
-    }
-
-
-    if(
-        bytes <
-        1024 * 1024
-    ){
-
-        return (
-            bytes / 1024
-        ).toFixed(1) +
-        " KB";
-
-    }
-
+  if(bytes < 1024 * 1024){
 
     return (
-        bytes /
-        1024 /
-        1024
-    ).toFixed(2) +
-    " MB";
+      bytes / 1024
+    ).toFixed(1) + " KB";
+  }
 
+  return (
+    bytes /
+    1024 /
+    1024
+  ).toFixed(2) + " MB";
 }
 
 
 /* =========================================================
-   GCD
+   RATIO
 ========================================================= */
 
-function gcd(
-    a,
-    b
-){
+function getRatio(w,h){
 
-    while(b){
+  const gcd =
+    (a,b) =>
+      b === 0
+        ? a
+        : gcd(b,a%b);
 
-        const temp =
-            b;
+  const g =
+    gcd(w,h);
 
-        b =
-            a % b;
-
-        a =
-            temp;
-
-    }
-
-    return a;
-
+  return (
+    (w/g) +
+    ":" +
+    (h/g)
+  );
 }
 
 
 /* =========================================================
-   DETECT RATIO
-========================================================= */
-
-function detectRatio(
-    width,
-    height
-){
-
-    const value =
-        width / height;
-
-
-    const known = [
-
-        {
-            name:"1:1",
-            value:1
-        },
-
-        {
-            name:"4:5",
-            value:.8
-        },
-
-        {
-            name:"3:4",
-            value:.75
-        },
-
-        {
-            name:"2:3",
-            value:.6667
-        },
-
-        {
-            name:"9:16",
-            value:.5625
-        },
-
-        {
-            name:"16:9",
-            value:1.7778
-        },
-
-        {
-            name:"4:3",
-            value:1.3333
-        },
-
-        {
-            name:"3:2",
-            value:1.5
-        },
-
-        {
-            name:"21:9",
-            value:2.3333
-        }
-
-    ];
-
-
-    let closest =
-        known[0];
-
-
-    let difference =
-        Math.abs(
-            value -
-            closest.value
-        );
-
-
-    for(
-        const item of known
-    ){
-
-        const current =
-            Math.abs(
-                value -
-                item.value
-            );
-
-
-        if(
-            current <
-            difference
-        ){
-
-            closest =
-                item;
-
-            difference =
-                current;
-
-        }
-
-    }
-
-
-    /*
-    | Nếu gần tỷ lệ chuẩn
-    */
-
-    if(
-        difference <
-        .04
-    ){
-
-        return closest.name;
-
-    }
-
-
-    /*
-    | Tỷ lệ thực tế
-    */
-
-    const divisor =
-        gcd(
-            width,
-            height
-        );
-
-
-    return (
-        Math.round(
-            width / divisor
-        ) +
-        ":" +
-        Math.round(
-            height / divisor
-        )
-    );
-
-}
-
-
-/* =========================================================
-   DETECT ORIENTATION
-========================================================= */
-
-function detectOrientation(
-    width,
-    height
-){
-
-    if(
-        width === height
-    ){
-
-        return "VUÔNG";
-
-    }
-
-
-    if(
-        width > height
-    ){
-
-        return "NGANG";
-
-    }
-
-
-    return "DỌC";
-
-}
-
-
-/* =========================================================
-   SELECT FILE
-========================================================= */
-
-function selectFile(
-    file
-){
-
-    if(!file){
-
-        return;
-
-    }
-
-
-    if(
-        !file.type.startsWith(
-            "image/"
-        )
-    ){
-
-        setStatus(
-            "❌ FILE KHÔNG PHẢI ẢNH.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    if(
-        file.size >
-        MAX_SIZE
-    ){
-
-        setStatus(
-            "❌ ẢNH VƯỢT QUÁ 4MB.",
-            "error"
-        );
-
-        return;
-
-    }
-
-
-    selectedFile =
-        file;
-
-
-    const objectUrl =
-        URL.createObjectURL(
-            file
-        );
-
-
-    const img =
-        new Image();
-
-
-    img.onload =
-        function(){
-
-            imageWidth =
-                img.naturalWidth;
-
-            imageHeight =
-                img.naturalHeight;
-
-
-            const detectedRatio =
-                detectRatio(
-                    imageWidth,
-                    imageHeight
-                );
-
-
-            const orientation =
-                detectOrientation(
-                    imageWidth,
-                    imageHeight
-                );
-
-
-            previewImage.src =
-                objectUrl;
-
-
-            dimensions.textContent =
-                `${imageWidth} × ${imageHeight}`;
-
-
-            ratio.textContent =
-                detectedRatio;
-
-
-            sizeInfo.textContent =
-                formatBytes(
-                    file.size
-                );
-
-
-            imageBadge.textContent =
-                `${detectedRatio} • ${orientation}`;
-
-
-            previewBox.style.display =
-                "block";
-
-
-            uploadBtn.disabled =
-                false;
-
-
-            resetBtn.style.display =
-                "block";
-
-
-            result.style.display =
-                "none";
-
-
-            setStatus(
-                `✅ ĐÃ NHẬN DIỆN: ${detectedRatio} • ${orientation}`,
-                "success"
-            );
-
-        };
-
-
-    img.onerror =
-        function(){
-
-            URL.revokeObjectURL(
-                objectUrl
-            );
-
-
-            setStatus(
-                "❌ KHÔNG ĐỌC ĐƯỢC ẢNH.",
-                "error"
-            );
-
-        };
-
-
-    img.src =
-        objectUrl;
-
-}
-
-
-/* =========================================================
-   FILE INPUT
+   SELECT IMAGE
 ========================================================= */
 
 fileInput.addEventListener(
-    "change",
-    function(){
+  "change",
+  function(){
 
-        selectFile(
-            this.files[0]
-        );
+    if(this.files?.length){
 
+      loadFile(
+        this.files[0]
+      );
     }
+
+  }
 );
 
 
 /* =========================================================
-   DRAG & DROP
+   LOAD IMAGE
 ========================================================= */
 
-dropZone.addEventListener(
-    "dragover",
-    function(e){
+function loadFile(file){
 
-        e.preventDefault();
+  if(
+    !file.type.startsWith("image/")
+  ){
 
-        dropZone.classList.add(
-            "drag"
-        );
+    status.textContent =
+      "❌ FILE KHÔNG PHẢI HÌNH ẢNH";
 
-    }
-);
+    return;
+  }
 
 
-dropZone.addEventListener(
-    "dragleave",
+  if(
+    file.size >
+    4 * 1024 * 1024
+  ){
+
+    status.textContent =
+      "❌ HÌNH ẢNH VƯỢT QUÁ 4MB";
+
+    return;
+  }
+
+
+  selectedFile = file;
+
+  uploadButton.disabled =
+    false;
+
+
+  result.classList.remove(
+    "show"
+  );
+
+
+  const objectURL =
+    URL.createObjectURL(file);
+
+
+  previewImage.onload =
     function(){
 
-        dropZone.classList.remove(
-            "drag"
-        );
+      const w =
+        previewImage.naturalWidth;
 
-    }
-);
+      const h =
+        previewImage.naturalHeight;
 
+      dimensions.textContent =
+        `${w} × ${h}`;
 
-dropZone.addEventListener(
-    "drop",
-    function(e){
+      ratio.textContent =
+        getRatio(w,h);
 
-        e.preventDefault();
+      URL.revokeObjectURL(
+        objectURL
+      );
+    };
 
-        dropZone.classList.remove(
-            "drag"
-        );
 
+  previewImage.src =
+    objectURL;
 
-        selectFile(
-            e.dataTransfer.files[0]
-        );
 
-    }
-);
+  preview.classList.add(
+    "show"
+  );
 
 
-/* =========================================================
-   RESET
-========================================================= */
+  size.textContent =
+    formatSize(file.size);
 
-resetBtn.addEventListener(
-    "click",
-    function(){
 
-        fileInput.value =
-            "";
-
-        selectedFile =
-            null;
-
-
-        previewBox.style.display =
-            "none";
-
-
-        result.style.display =
-            "none";
-
-
-        progressWrap.style.display =
-            "none";
-
-
-        resetBtn.style.display =
-            "none";
-
-
-        uploadBtn.disabled =
-            true;
-
-
-        progress.style.width =
-            "0%";
-
-
-        progressText.textContent =
-            "0%";
-
-
-        setStatus("");
-
-    }
-);
-
-
-/* =========================================================
-   CONVERT TO PNG
-========================================================= */
-
-function convertToPng(
-    file
-){
-
-    /*
-    | PNG giữ chất lượng.
-    | Nếu file đã là PNG thì gửi trực tiếp.
-    */
-
-    if(
-        file.type ===
-        "image/png"
-    ){
-
-        return Promise.resolve(
-            file
-        );
-
-    }
-
-
-    return new Promise(
-        (
-            resolve,
-            reject
-        ) => {
-
-            const reader =
-                new FileReader();
-
-
-            reader.onload =
-                function(){
-
-                    const img =
-                        new Image();
-
-
-                    img.onload =
-                        function(){
-
-                            const canvas =
-                                document.createElement(
-                                    "canvas"
-                                );
-
-
-                            canvas.width =
-                                img.naturalWidth;
-
-
-                            canvas.height =
-                                img.naturalHeight;
-
-
-                            const ctx =
-                                canvas.getContext(
-                                    "2d"
-                                );
-
-
-                            ctx.drawImage(
-                                img,
-                                0,
-                                0
-                            );
-
-
-                            canvas.toBlob(
-                                function(blob){
-
-                                    if(!blob){
-
-                                        reject(
-                                            new Error(
-                                                "KHÔNG THỂ TẠO PNG."
-                                            )
-                                        );
-
-                                        return;
-
-                                    }
-
-
-                                    resolve(
-                                        blob
-                                    );
-
-                                },
-                                "image/png"
-                            );
-
-                        };
-
-
-                    img.onerror =
-                        function(){
-
-                            reject(
-                                new Error(
-                                    "KHÔNG ĐỌC ĐƯỢC ẢNH."
-                                )
-                            );
-
-                        };
-
-
-                    img.src =
-                        reader.result;
-
-                };
-
-
-            reader.onerror =
-                function(){
-
-                    reject(
-                        new Error(
-                            "KHÔNG ĐỌC ĐƯỢC FILE."
-                        )
-                    );
-
-                };
-
-
-            reader.readAsDataURL(
-                file
-            );
-
-        }
-    );
-
+  status.textContent =
+    "✅ ĐÃ CHỌN HÌNH ẢNH";
 }
+
+
+/* =========================================================
+   DRAG
+========================================================= */
+
+[
+  "dragenter",
+  "dragover"
+].forEach(eventName => {
+
+  drop.addEventListener(
+    eventName,
+    e => {
+
+      e.preventDefault();
+
+      drop.classList.add(
+        "active"
+      );
+
+    }
+  );
+
+});
+
+
+[
+  "dragleave",
+  "drop"
+].forEach(eventName => {
+
+  drop.addEventListener(
+    eventName,
+    e => {
+
+      e.preventDefault();
+
+      drop.classList.remove(
+        "active"
+      );
+
+    }
+  );
+
+});
+
+
+drop.addEventListener(
+  "drop",
+  e => {
+
+    const file =
+      e.dataTransfer.files?.[0];
+
+    if(file){
+
+      loadFile(file);
+    }
+
+  }
+);
 
 
 /* =========================================================
    UPLOAD
 ========================================================= */
 
-uploadBtn.addEventListener(
-    "click",
-    async function(){
-
-        if(!selectedFile){
-
-            return;
-
-        }
+uploadButton.addEventListener(
+  "click",
+  uploadImage
+);
 
 
-        uploadBtn.disabled =
-            true;
+function uploadImage(){
+
+  if(!selectedFile){
+
+    return;
+  }
 
 
-        resetBtn.style.display =
-            "none";
+  uploadButton.disabled =
+    true;
 
 
-        progressWrap.style.display =
-            "block";
+  progressBox.classList.add(
+    "show"
+  );
 
 
-        result.style.display =
-            "none";
+  result.classList.remove(
+    "show"
+  );
 
 
-        progress.style.width =
-            "5%";
+  status.textContent =
+    "⚡ ĐANG CHUẨN BỊ UPLOAD...";
 
 
-        progressText.textContent =
-            "5%";
+  progressBar.style.width =
+    "0%";
+
+  progressPercent.textContent =
+    "0%";
 
 
-        setStatus(
-            "⏳ ĐANG CHUẨN BỊ..."
+  /*
+   * Gửi trực tiếp File.
+   *
+   * Không canvas.
+   * Không chuyển đổi PNG.
+   * Không FormData.
+   *
+   * Đây là phần giúp upload
+   * nhanh hơn đáng kể.
+   */
+
+  const xhr =
+    new XMLHttpRequest();
+
+
+  xhr.open(
+    "POST",
+    "/api/upload",
+    true
+  );
+
+
+  /*
+   * Không đặt timeout = 10 giây.
+   *
+   * 10 giây là thời gian mục tiêu,
+   * không phải thời gian tự hủy.
+   */
+
+  xhr.timeout =
+    30000;
+
+
+  xhr.setRequestHeader(
+    "Content-Type",
+    selectedFile.type ||
+    "application/octet-stream"
+  );
+
+
+  xhr.upload.onprogress =
+    function(event){
+
+      if(!event.lengthComputable){
+
+        return;
+      }
+
+
+      const percent =
+        Math.round(
+          event.loaded /
+          event.total *
+          100
         );
 
 
+      progressBar.style.width =
+        percent + "%";
+
+
+      progressPercent.textContent =
+        percent + "%";
+
+
+      if(percent < 100){
+
+        progressText.textContent =
+          "⚡ ĐANG UPLOAD...";
+
+        status.textContent =
+          "⚡ ĐANG GỬI HÌNH ẢNH...";
+      }
+
+      else{
+
+        progressText.textContent =
+          "⚙️ ĐANG LƯU HÌNH ẢNH...";
+      }
+
+    };
+
+
+  xhr.onload =
+    function(){
+
+      uploadButton.disabled =
+        false;
+
+
+      if(
+        xhr.status >= 200 &&
+        xhr.status < 300
+      ){
+
         try{
 
-            /*
-            | PNG
-            */
-
-            const pngBlob =
-                await convertToPng(
-                    selectedFile
-                );
-
-
-            if(
-                pngBlob.size >
-                MAX_SIZE
-            ){
-
-                throw new Error(
-                    "ẢNH SAU KHI XỬ LÝ VƯỢT QUÁ 4MB."
-                );
-
-            }
-
-
-            progress.style.width =
-                "15%";
-
-
-            progressText.textContent =
-                "15%";
-
-
-            setStatus(
-                "⚡ ĐANG UPLOAD..."
+          const data =
+            JSON.parse(
+              xhr.responseText
             );
 
 
-            /*
-            |--------------------------------------------------------------------------
-            | XHR
-            |--------------------------------------------------------------------------
-            */
+          if(
+            !data.success ||
+            !data.url
+          ){
 
-            const xhr =
-                new XMLHttpRequest();
-
-
-            xhr.open(
-                "POST",
-                "/api/upload",
-                true
+            throw new Error(
+              data.error ||
+              "Upload thất bại."
             );
+          }
 
 
-            xhr.setRequestHeader(
-                "Content-Type",
-                "image/png"
-            );
+          progressBar.style.width =
+            "100%";
 
+          progressPercent.textContent =
+            "100%";
 
-            xhr.timeout =
-                15000;
 
+          progressText.textContent =
+            "✅ HOÀN TẤT";
 
-            /*
-            |--------------------------------------------------------------------------
-            | Upload progress
-            |--------------------------------------------------------------------------
-            */
 
-            xhr.upload.onprogress =
-                function(e){
+          resultUrl.textContent =
+            data.url;
 
-                    if(
-                        e.lengthComputable
-                    ){
 
-                        const percent =
-                            15 +
-                            Math.round(
-                                (
-                                    e.loaded /
-                                    e.total
-                                ) * 80
-                            );
+          result.classList.add(
+            "show"
+          );
 
 
-                        progress.style.width =
-                            percent + "%";
+          status.textContent =
+            "✅ UPLOAD THÀNH CÔNG";
 
-
-                        progressText.textContent =
-                            percent + "%";
-
-                    }
-
-                };
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Success
-            |--------------------------------------------------------------------------
-            */
-
-            xhr.onload =
-                function(){
-
-                    let data =
-                        null;
-
-
-                    try{
-
-                        data =
-                            JSON.parse(
-                                xhr.responseText
-                            );
-
-                    }catch{
-
-                        data =
-                            null;
-
-                    }
-
-
-                    if(
-                        xhr.status >= 200 &&
-                        xhr.status < 300 &&
-                        data?.success
-                    ){
-
-                        progress.style.width =
-                            "100%";
-
-
-                        progressText.textContent =
-                            "100%";
-
-
-                        resultUrl.value =
-                            data.url;
-
-
-                        result.style.display =
-                            "block";
-
-
-                        setStatus(
-                            "✅ UPLOAD THÀNH CÔNG!",
-                            "success"
-                        );
-
-
-                    }else{
-
-                        const message =
-                            data?.error ||
-                            "UPLOAD THẤT BẠI.";
-
-
-                        setStatus(
-                            "❌ " +
-                            message,
-                            "error"
-                        );
-
-
-                        progressWrap.style.display =
-                            "none";
-
-                    }
-
-
-                    uploadBtn.disabled =
-                        false;
-
-
-                    resetBtn.style.display =
-                        "block";
-
-                };
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Error
-            |--------------------------------------------------------------------------
-            */
-
-            xhr.onerror =
-                function(){
-
-                    setStatus(
-                        "❌ KHÔNG KẾT NỐI ĐƯỢC API.",
-                        "error"
-                    );
-
-
-                    progressWrap.style.display =
-                        "none";
-
-
-                    uploadBtn.disabled =
-                        false;
-
-
-                    resetBtn.style.display =
-                        "block";
-
-                };
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Timeout
-            |--------------------------------------------------------------------------
-            */
-
-            xhr.ontimeout =
-                function(){
-
-                    setStatus(
-                        "❌ UPLOAD QUÁ THỜI GIAN CHỜ.",
-                        "error"
-                    );
-
-
-                    progressWrap.style.display =
-                        "none";
-
-
-                    uploadBtn.disabled =
-                        false;
-
-
-                    resetBtn.style.display =
-                        "block";
-
-                };
-
-
-            xhr.send(
-                pngBlob
-            );
 
         }catch(error){
 
-            console.error(
-                error
-            );
-
-
-            setStatus(
-                "❌ " +
-                (
-                    error.message ||
-                    "UPLOAD THẤT BẠI."
-                ),
-                "error"
-            );
-
-
-            progressWrap.style.display =
-                "none";
-
-
-            uploadBtn.disabled =
-                false;
-
-
-            resetBtn.style.display =
-                "block";
+          showError(
+            error.message
+          );
 
         }
 
-    }
-);
+      }
+
+      else{
+
+        try{
+
+          const data =
+            JSON.parse(
+              xhr.responseText
+            );
+
+          showError(
+            data.error ||
+            "Server upload lỗi."
+          );
+
+        }catch{
+
+          showError(
+            "Server trả về lỗi " +
+            xhr.status
+          );
+
+        }
+
+      }
+
+    };
+
+
+  xhr.onerror =
+    function(){
+
+      uploadButton.disabled =
+        false;
+
+      showError(
+        "Không thể kết nối Server."
+      );
+
+    };
+
+
+  xhr.ontimeout =
+    function(){
+
+      uploadButton.disabled =
+        false;
+
+      showError(
+        "KẾT NỐI SERVER QUÁ LÂU. HÃY THỬ LẠI."
+      );
+
+    };
+
+
+  xhr.onabort =
+    function(){
+
+      uploadButton.disabled =
+        false;
+
+      showError(
+        "UPLOAD ĐÃ BỊ HỦY."
+      );
+
+    };
+
+
+  /*
+   * Bắt đầu upload ngay
+   */
+
+  xhr.send(
+    selectedFile
+  );
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+function showError(message){
+
+  progressText.textContent =
+    "❌ UPLOAD LỖI";
+
+  status.textContent =
+    "❌ " + message;
+
+  progressBar.style.width =
+    "0%";
+
+  progressPercent.textContent =
+    "0%";
+}
 
 
 /* =========================================================
    COPY
 ========================================================= */
 
-copyBtn.addEventListener(
-    "click",
-    async function(){
+copyButton.addEventListener(
+  "click",
+  async function(){
 
-        const url =
-            resultUrl.value;
+    const url =
+      resultUrl.textContent.trim();
 
+    if(!url){
 
-        if(!url){
-
-            return;
-
-        }
+      return;
+    }
 
 
-        try{
+    try{
 
-            await navigator.clipboard.writeText(
-                url
-            );
+      await navigator.clipboard.writeText(
+        url
+      );
 
-        }catch{
+      status.textContent =
+        "✅ ĐÃ SAO CHÉP URL";
 
-            resultUrl.select();
+    }catch{
 
-            document.execCommand(
-                "copy"
-            );
-
-        }
-
-
-        copyBtn.textContent =
-            "ĐÃ COPY";
-
-
-        setTimeout(
-            function(){
-
-                copyBtn.textContent =
-                    "COPY";
-
-            },
-            1500
+      const textarea =
+        document.createElement(
+          "textarea"
         );
 
+      textarea.value = url;
+
+      document.body.appendChild(
+        textarea
+      );
+
+      textarea.select();
+
+      document.execCommand(
+        "copy"
+      );
+
+      textarea.remove();
+
+      status.textContent =
+        "✅ ĐÃ SAO CHÉP URL";
     }
+
+  }
 );
 
 
@@ -2413,28 +1609,26 @@ copyBtn.addEventListener(
    OPEN
 ========================================================= */
 
-openBtn.addEventListener(
-    "click",
-    function(){
+openButton.addEventListener(
+  "click",
+  function(){
 
-        const url =
-            resultUrl.value;
+    const url =
+      resultUrl.textContent.trim();
 
+    if(url){
 
-        if(url){
-
-            window.open(
-                url,
-                "_blank"
-            );
-
-        }
-
+      window.open(
+        url,
+        "_blank"
+      );
     }
+
+  }
 );
 
 </script>
 
 </body>
 
-    </html>
+</html>
